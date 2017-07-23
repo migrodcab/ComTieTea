@@ -1,33 +1,43 @@
 package com.comtietea.comtietea.Domain;
 
+import java.util.List;
+
 /**
  * Created by HP on 13/07/2017.
  */
 public class SemanticField {
-    String name;
-    int relevance;
+    String nombre;
+    int relevancia;
+    List<CommonWord> palabrasHabituales;
 
     public SemanticField() {
     }
 
-    public SemanticField(String name, int relevance) {
-        this.name = name;
-        this.relevance = relevance;
+    public SemanticField(String nombre, int relevancia, List<CommonWord> palabrasHabituales) {
+        this.nombre = nombre;
+        this.relevancia = relevancia;
+        this.palabrasHabituales = palabrasHabituales;
     }
 
-    public String getName() {
-        return name;
+    public String getNombre() { return nombre; }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public int getRelevancia() {
+        return relevancia;
     }
 
-    public int getRelevance() {
-        return relevance;
+    public void setRelevancia(int relevancia) {
+        this.relevancia = relevancia;
     }
 
-    public void setRelevance(int relevance) {
-        this.relevance = relevance;
+    public List<CommonWord> getPalabrasHabituales() {
+        return palabrasHabituales;
+    }
+
+    public void setPalabrasHabituales(List<CommonWord> palabrasHabituales) {
+        this.palabrasHabituales = palabrasHabituales;
     }
 }

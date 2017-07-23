@@ -11,42 +11,29 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.comtietea.comtietea.MainActivity">
 
-    <LinearLayout
+    <Button
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:text="PALABRAS"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        android:onClick="palabras"
+        />
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:layout_margin="8dp"
-            android:background="@color/colorAccent" />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="DIBUJOS"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        android:onClick="dibujos"
+        />
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/app_name"
-            android:textSize="24sp" />
-
-        <TextView
-            android:id="@+id/emailTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/app_name"
-            android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/idTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/app_name"
-            android:textSize="14sp" />
-
-    </LinearLayout>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="IMAGENES"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        android:onClick="imagenes"
+        />
 
     <Button
         android:layout_width="match_parent"

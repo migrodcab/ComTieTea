@@ -4,13 +4,19 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.comtietea.comtietea.Domain.CommonWord;
 import com.comtietea.comtietea.Domain.FirebaseReferences;
+import com.comtietea.comtietea.Domain.SemanticField;
+import com.comtietea.comtietea.Domain.SymbolicCode;
+import com.comtietea.comtietea.Domain.User;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInApi;
@@ -29,44 +35,117 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class MainActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
-    private ImageView imageView;
-    private TextView textView;
-    private TextView emailTextView;
-    private TextView idTextView;
+public class MainActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
     private GoogleApiClient googleApiClient;
 
     private FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener firebaseAuthListener;
 
+    private String uid;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        imageView = (ImageView) findViewById(R.id.imageView);
-        textView = (TextView) findViewById(R.id.textView);
-        emailTextView = (TextView) findViewById(R.id.emailTextView);
-        idTextView = (TextView) findViewById((R.id.idTextView));
-
         GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
 
         googleApiClient =  new GoogleApiClient.Builder(this).enableAutoManage(this, this).addApi(Auth.GOOGLE_SIGN_IN_API, googleSignInOptions).build();
+
+        FirebaseDatabase db = FirebaseDatabase.getInstance();
+        final DatabaseReference dbRef = db.getReference(FirebaseReferences.USER_REFERENCE);
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
+                final FirebaseUser user = firebaseAuth.getCurrentUser();
                 if(user != null) {
-                    setUserData(user);
+                    uid = user.getUid();
+                    dbRef.orderByChild("uid").equalTo(uid).limitToFirst(1).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            if(dataSnapshot.getChildrenCount() == 0 && !uid.equals("")) {
+                                List<SymbolicCode> codigosSimbolicos = cargaCodigosSimbolicos();
+                                User u = new User(user.getDisplayName(), user.getEmail(), user.getUid(), codigosSimbolicos);
+                                dbRef.push().setValue(u);
+                                uid = "";
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
                 } else {
                     goToLoginActivity();
                 }
             }
         };
+    }
+
+    private List<SymbolicCode> cargaCodigosSimbolicos() {
+        List<SymbolicCode> res = new ArrayList<SymbolicCode>();
+
+        List<SemanticField> camposSemanticosPalabras = cargaCamposSemanticos("Palabras");
+        SymbolicCode codigoSimbolicoPalabra = new SymbolicCode("Palabras", camposSemanticosPalabras);
+
+        List<SemanticField> camposSemanticosDibujos = cargaCamposSemanticos("Dibujos");
+        SymbolicCode codigoSimbolicoDibujo = new SymbolicCode("Dibujos", camposSemanticosDibujos);
+
+        List<SemanticField> camposSemanticosImagenes = cargaCamposSemanticos("Imagenes");
+        SymbolicCode codigoSimbolicoImagen = new SymbolicCode("Imagenes", camposSemanticosImagenes);
+
+        res.add(codigoSimbolicoPalabra);
+        res.add(codigoSimbolicoDibujo);
+        res.add(codigoSimbolicoImagen);
+
+        return res;
+    }
+
+    private List<SemanticField> cargaCamposSemanticos(String codigoSimbolico) {
+        List<SemanticField> res = new ArrayList<SemanticField>();
+
+        List<CommonWord> palabrasColegio = cargaPalabrasHabituales(codigoSimbolico, "Colegio");
+        SemanticField colegio = new SemanticField("Colegio", 8, palabrasColegio);
+
+        List<CommonWord> palabrasFamilia = cargaPalabrasHabituales(codigoSimbolico, "Familia");
+        SemanticField familia = new SemanticField("Familia", 8, palabrasFamilia);
+
+        res.add(colegio);
+        res.add(familia);
+
+        return res;
+    }
+
+    private List<CommonWord> cargaPalabrasHabituales(String codigoSimbolico, String campoSemantico) {
+        List<CommonWord> res = new ArrayList<CommonWord>();
+
+        switch (campoSemantico) {
+            case "Colegio":
+                CommonWord boli = new CommonWord("Boligrafo", 5);
+                CommonWord lapiz = new CommonWord("Lapiz", 4);
+
+                res.add(boli);
+                res.add(lapiz);
+                break;
+
+            case "Familia":
+                CommonWord papa = new CommonWord("Papa", 10);
+                CommonWord primo = new CommonWord("Primo", 3);
+
+                res.add(papa);
+                res.add(primo);
+                break;
+        }
+
+        return res;
     }
 
     @Override
@@ -85,12 +164,12 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         }
     }
 
-    private void setUserData(FirebaseUser user) {
+    /*private void setUserData(FirebaseUser user) {
         textView.setText(user.getDisplayName());
         emailTextView.setText(user.getEmail());
         idTextView.setText(user.getUid());
         Glide.with(this).load(user.getPhotoUrl()).into(imageView);
-    }
+    }*/
 
     private void goToLoginActivity() {
         Intent intent = new Intent(this, LoginActivity.class);
@@ -131,5 +210,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 }
             }
         });
+    }
+
+    public void pasa(View view) {
+        Intent i = new Intent(this, SymbolicCodeActivity.class);
+        startActivity(i);
     }
 }

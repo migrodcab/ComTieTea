@@ -16,6 +16,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".LoginActivity" />
+        <activity android:name=".SemanticFieldActivity" />
+        <activity android:name=".SymbolicCodeActivity"></activity>
     </application>
 
 </manifest>
