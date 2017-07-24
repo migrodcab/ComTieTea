@@ -218,7 +218,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         Intent i = new Intent(this, SemanticFieldActivity.class);
         i.putExtra("type", "Palabras");
         i.putExtra("uid", uid);
-        Log.i("ANTES", uid);
         startActivity(i);
     }
 

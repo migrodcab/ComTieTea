@@ -9,6 +9,8 @@ public class SymbolicCode {
     String tipo;
     List<SemanticField> camposSemanticos;
 
+    public SymbolicCode() { }
+
     public SymbolicCode(String tipo, List<SemanticField> camposSemanticos) {
         this.tipo = tipo;
         this.camposSemanticos = camposSemanticos;

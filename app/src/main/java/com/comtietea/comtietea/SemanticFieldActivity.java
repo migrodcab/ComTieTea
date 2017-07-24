@@ -9,6 +9,8 @@ import android.util.Log;
 import com.comtietea.comtietea.Domain.CommonWord;
 import com.comtietea.comtietea.Domain.FirebaseReferences;
 import com.comtietea.comtietea.Domain.SemanticField;
+import com.comtietea.comtietea.Domain.SymbolicCode;
+import com.comtietea.comtietea.Domain.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -37,14 +39,31 @@ public class SemanticFieldActivity extends AppCompatActivity implements Semantic
         type = bundle.getString("type");
         uid = bundle.getString("uid");
 
-        Log.i("DESPUES", type);
-        Log.i("DESPUES", uid);
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+
+        final SemanticFieldRecyclerViewAdapter adapter = new SemanticFieldRecyclerViewAdapter(this, camposSemanticos, this);
+        recyclerView.setAdapter(adapter);
+
+        GridLayoutManager manager = new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false);
+        recyclerView.setLayoutManager(manager);
 
         FirebaseDatabase.getInstance().getReference(FirebaseReferences.USER_REFERENCE).orderByChild("uid")
                 .equalTo(uid).limitToFirst(1).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        Iterator<DataSnapshot> items = dataSnapshot.getChildren().iterator();
+                        camposSemanticos.clear();
+                        for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            User user = snapshot.getValue(User.class);
+                            for (SymbolicCode codigo : user.getCodigosSimbolicos()) {
+                                if(codigo.getTipo().equals(type)) {
+                                    camposSemanticos.addAll(codigo.getCamposSemanticos());
+                                } else {
+                                    continue;
+                                }
+                            }
+                        }
+                        adapter.notifyDataSetChanged();
+                        /*Iterator<DataSnapshot> items = dataSnapshot.getChildren().iterator();
                         camposSemanticos.clear();
                         while (items.hasNext()) {
                             DataSnapshot item = items.next();
@@ -63,7 +82,7 @@ public class SemanticFieldActivity extends AppCompatActivity implements Semantic
                                     continue;
                                 }
                             }
-                        }
+                        }*/
                     }
 
                     @Override
@@ -71,21 +90,6 @@ public class SemanticFieldActivity extends AppCompatActivity implements Semantic
 
                     }
                 });
-
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-
-        /*camposSemanticos.clear();
-        camposSemanticos.add(new SemanticField("Colegio", 8, new ArrayList<CommonWord>()));
-        camposSemanticos.add(new SemanticField("Familia", 9, new ArrayList<CommonWord>()));*/
-
-        SemanticFieldRecyclerViewAdapter adapter = new SemanticFieldRecyclerViewAdapter(this, camposSemanticos, this);
-        recyclerView.setAdapter(adapter);
-
-        /**
-         Simple GridLayoutManager that spans two columns
-         **/
-        GridLayoutManager manager = new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false);
-        recyclerView.setLayoutManager(manager);
     }
 
     @Override

@@ -7,6 +7,8 @@ public class CommonWord {
     String nombre;
     int relevancia;
 
+    public CommonWord() {   }
+
     public CommonWord(String nombre, int relevancia) {
         this.nombre = nombre;
         this.relevancia = relevancia;
