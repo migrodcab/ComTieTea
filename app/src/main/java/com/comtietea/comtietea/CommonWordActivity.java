@@ -18,17 +18,17 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 /**
  * Created by HP on 23/07/2017.
  */
-public class SemanticFieldActivity extends AppCompatActivity implements SemanticFieldRecyclerViewAdapter.ItemListener {
+public class CommonWordActivity extends AppCompatActivity implements CommonWordRecyclerViewAdapter.ItemListener {
     private String type;
     private String uid;
+    private String nombreCampoSemantico;
 
     RecyclerView recyclerView;
-    ArrayList<SemanticField> camposSemanticos = new ArrayList<SemanticField>();
+    ArrayList<CommonWord> palabrasHabituales = new ArrayList<CommonWord>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,10 +39,11 @@ public class SemanticFieldActivity extends AppCompatActivity implements Semantic
 
         type = bundle.getString("type");
         uid = bundle.getString("uid");
+        nombreCampoSemantico = bundle.getString("campoSemantico");
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
 
-        final SemanticFieldRecyclerViewAdapter adapter = new SemanticFieldRecyclerViewAdapter(this, camposSemanticos, this);
+        final CommonWordRecyclerViewAdapter adapter = new CommonWordRecyclerViewAdapter(this, palabrasHabituales, this);
         recyclerView.setAdapter(adapter);
 
         GridLayoutManager manager = new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false);
@@ -52,12 +53,18 @@ public class SemanticFieldActivity extends AppCompatActivity implements Semantic
                 .equalTo(uid).limitToFirst(1).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        camposSemanticos.clear();
+                        palabrasHabituales.clear();
                         for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             User user = snapshot.getValue(User.class);
                             for (SymbolicCode codigo : user.getCodigosSimbolicos()) {
                                 if(codigo.getTipo().equals(type)) {
-                                    camposSemanticos.addAll(codigo.getCamposSemanticos());
+                                    for (SemanticField campoSemantico : codigo.getCamposSemanticos()) {
+                                        if(campoSemantico.getNombre().equals(nombreCampoSemantico)) {
+                                            palabrasHabituales.addAll(campoSemantico.getPalabrasHabituales());
+                                        } else {
+                                            continue;
+                                        }
+                                    }
                                 } else {
                                     continue;
                                 }
@@ -94,11 +101,8 @@ public class SemanticFieldActivity extends AppCompatActivity implements Semantic
     }
 
     @Override
-    public void onItemClick(SemanticField campoSemantico) {
-        Intent i = new Intent(this, CommonWordActivity.class);
-        i.putExtra("type", type);
-        i.putExtra("uid", uid);
-        i.putExtra("campoSemantico", campoSemantico.getNombre());
-        startActivity(i);
+    public void onItemClick(CommonWord palabraHabitual) {
+        //Intent i = new Intent(this, );
+        Log.i("Hola", palabraHabitual.getNombre());
     }
 }
