@@ -17,7 +17,7 @@
         </activity>
         <activity android:name=".LoginActivity" />
         <activity android:name=".SemanticFieldActivity" />
-        <activity android:name=".SymbolicCodeActivity"></activity>
+        <activity android:name=".ActionsActivity"></activity>
     </application>
 
 </manifest>

@@ -7,14 +7,23 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.comtietea.comtietea.SymbolicCodeActivity">
+    tools:context="com.comtietea.comtietea.ActionsActivity">
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Button"
-        android:id="@+id/button2"
+        android:text="COMUNICACION"
+        android:id="@+id/comunicacionButton"
+        android:layout_marginTop="153dp"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="148dp" />
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="AGENDA"
+        android:id="@+id/agendaButton"
+        android:layout_marginTop="66dp"
+        android:layout_below="@+id/comunicacionButton"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>

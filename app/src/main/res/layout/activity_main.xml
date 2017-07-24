@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:text="PALABRAS"
         style="@style/Widget.AppCompat.Button.Borderless.Colored"
-        android:onClick="palabras"
+        android:onClick="palabrasButton"
         />
 
     <Button
@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:text="DIBUJOS"
         style="@style/Widget.AppCompat.Button.Borderless.Colored"
-        android:onClick="dibujos"
+        android:onClick="dibujosButton"
         />
 
     <Button
@@ -32,7 +32,7 @@
         android:layout_height="wrap_content"
         android:text="IMAGENES"
         style="@style/Widget.AppCompat.Button.Borderless.Colored"
-        android:onClick="imagenes"
+        android:onClick="imagenesButton"
         />
 
     <Button

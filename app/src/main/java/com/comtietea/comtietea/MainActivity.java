@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     private FirebaseAuth.AuthStateListener firebaseAuthListener;
 
     private String uid;
+    private String uidAux;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,15 +67,16 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 final FirebaseUser user = firebaseAuth.getCurrentUser();
                 if(user != null) {
+                    uidAux = user.getUid();
                     uid = user.getUid();
-                    dbRef.orderByChild("uid").equalTo(uid).limitToFirst(1).addValueEventListener(new ValueEventListener() {
+                    dbRef.orderByChild("uid").equalTo(uidAux).limitToFirst(1).addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
-                            if(dataSnapshot.getChildrenCount() == 0 && !uid.equals("")) {
+                            if(dataSnapshot.getChildrenCount() == 0 && !uidAux.equals("")) {
                                 List<SymbolicCode> codigosSimbolicos = cargaCodigosSimbolicos();
                                 User u = new User(user.getDisplayName(), user.getEmail(), user.getUid(), codigosSimbolicos);
                                 dbRef.push().setValue(u);
-                                uid = "";
+                                uidAux = "";
                             }
                         }
 
@@ -212,8 +214,25 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         });
     }
 
-    public void pasa(View view) {
-        Intent i = new Intent(this, SymbolicCodeActivity.class);
+    public void palabrasButton(View view) {
+        Intent i = new Intent(this, SemanticFieldActivity.class);
+        i.putExtra("type", "Palabras");
+        i.putExtra("uid", uid);
+        Log.i("ANTES", uid);
+        startActivity(i);
+    }
+
+    public void dibujosButton(View view) {
+        Intent i = new Intent(this, SemanticFieldActivity.class);
+        i.putExtra("type", "Dibujos");
+        i.putExtra("uid", uid);
+        startActivity(i);
+    }
+
+    public void imagenesButton(View view) {
+        Intent i = new Intent(this, SemanticFieldActivity.class);
+        i.putExtra("type", "Imagenes");
+        i.putExtra("uid", uid);
         startActivity(i);
     }
 }
