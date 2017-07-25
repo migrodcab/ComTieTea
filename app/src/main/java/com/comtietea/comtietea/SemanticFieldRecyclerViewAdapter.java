@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.comtietea.comtietea.Domain.SemanticField;
 
 import java.util.ArrayList;
@@ -52,7 +53,7 @@ public class SemanticFieldRecyclerViewAdapter extends RecyclerView.Adapter<Seman
             this.campoSemantico = campoSemantico;
 
             textView.setText(campoSemantico.getNombre());
-            //imageView.setImageResource(item.drawable);
+            Glide.with(mContext).load(campoSemantico.getImagenURL()).into(imageView);
             relativeLayout.setBackgroundColor(Color.parseColor("#09A9FF"));
 
         }

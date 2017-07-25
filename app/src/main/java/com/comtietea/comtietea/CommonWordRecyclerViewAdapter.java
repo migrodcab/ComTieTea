@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.comtietea.comtietea.Domain.CommonWord;
 import com.comtietea.comtietea.Domain.SemanticField;
 
@@ -53,7 +54,7 @@ public class CommonWordRecyclerViewAdapter extends RecyclerView.Adapter<CommonWo
             this.palabraHabitual = palabraHabitual;
 
             textView.setText(palabraHabitual.getNombre());
-            //imageView.setImageResource(item.drawable);
+            Glide.with(mContext).load(palabraHabitual.getImagenURL()).into(imageView);
             relativeLayout.setBackgroundColor(Color.parseColor("#09A9FF"));
 
         }

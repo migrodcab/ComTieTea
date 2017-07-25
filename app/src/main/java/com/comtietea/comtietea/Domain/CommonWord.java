@@ -5,12 +5,14 @@ package com.comtietea.comtietea.Domain;
  */
 public class CommonWord {
     String nombre;
+    String imagenURL;
     int relevancia;
 
     public CommonWord() {   }
 
-    public CommonWord(String nombre, int relevancia) {
+    public CommonWord(String nombre, String imagenURL, int relevancia) {
         this.nombre = nombre;
+        this.imagenURL = imagenURL;
         this.relevancia = relevancia;
     }
 
@@ -20,6 +22,14 @@ public class CommonWord {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public String getImagenURL() {
+        return imagenURL;
+    }
+
+    public void setImagenURL(String imagenURL) {
+        this.imagenURL = imagenURL;
     }
 
     public int getRelevancia() {

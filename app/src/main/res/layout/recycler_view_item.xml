@@ -24,11 +24,13 @@
 
             <ImageView
                 android:id="@+id/imageView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="150dp"
+                android:layout_height="100dp"
+                android:layout_alignParentTop="true"
+                android:scaleType="fitXY"
                 android:layout_centerInParent="true"
                 android:tint="@android:color/white"
-                android:padding="5dp" />
+                android:padding="10px" />
 
 
             <TextView
@@ -37,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:textColor="@android:color/white"
-                android:layout_below="@+id/imageView" />
+                android:layout_alignParentBottom="true"/>
 
 
         </RelativeLayout>

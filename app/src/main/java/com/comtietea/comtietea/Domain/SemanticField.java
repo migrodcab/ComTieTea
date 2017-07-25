@@ -7,14 +7,16 @@ import java.util.List;
  */
 public class SemanticField {
     String nombre;
+    String imagenURL;
     int relevancia;
     List<CommonWord> palabrasHabituales;
 
     public SemanticField() {
     }
 
-    public SemanticField(String nombre, int relevancia, List<CommonWord> palabrasHabituales) {
+    public SemanticField(String nombre, String imagenURL, int relevancia, List<CommonWord> palabrasHabituales) {
         this.nombre = nombre;
+        this.imagenURL = imagenURL;
         this.relevancia = relevancia;
         this.palabrasHabituales = palabrasHabituales;
     }
@@ -23,6 +25,14 @@ public class SemanticField {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public String getImagenURL() {
+        return imagenURL;
+    }
+
+    public void setImagenURL(String imagenURL) {
+        this.imagenURL = imagenURL;
     }
 
     public int getRelevancia() {
