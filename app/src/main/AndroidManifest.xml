@@ -19,6 +19,7 @@
         <activity android:name=".SemanticFieldActivity" />
         <activity android:name=".ActionsActivity" />
         <activity android:name=".CommonWordActivity" />
+        <activity android:name=".CreateSemanticFieldActivity" />
     </application>
 
 </manifest>

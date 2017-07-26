@@ -2,12 +2,12 @@ package com.comtietea.comtietea;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.view.View;
 
-import com.comtietea.comtietea.Domain.CommonWord;
 import com.comtietea.comtietea.Domain.FirebaseReferences;
 import com.comtietea.comtietea.Domain.SemanticField;
 import com.comtietea.comtietea.Domain.SymbolicCode;
@@ -18,14 +18,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
-/**
- * Created by HP on 23/07/2017.
- */
+
 public class SemanticFieldActivity extends AppCompatActivity implements SemanticFieldRecyclerViewAdapter.ItemListener {
     private String type;
     private String uid;
+
+    private SemanticFieldActivity semanticFieldActivity;
 
     RecyclerView recyclerView;
     ArrayList<SemanticField> camposSemanticos = new ArrayList<SemanticField>();
@@ -39,6 +38,8 @@ public class SemanticFieldActivity extends AppCompatActivity implements Semantic
 
         type = bundle.getString("type");
         uid = bundle.getString("uid");
+
+        semanticFieldActivity = this;
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
 
@@ -64,26 +65,6 @@ public class SemanticFieldActivity extends AppCompatActivity implements Semantic
                             }
                         }
                         adapter.notifyDataSetChanged();
-                        /*Iterator<DataSnapshot> items = dataSnapshot.getChildren().iterator();
-                        camposSemanticos.clear();
-                        while (items.hasNext()) {
-                            DataSnapshot item = items.next();
-                            Iterator<DataSnapshot> codigos = item.child(FirebaseReferences.SYMBOLIC_CODE_REFERENCE).getChildren().iterator();
-                            while (codigos.hasNext()) {
-                                DataSnapshot codigo = codigos.next();
-                                if(codigo.child("tipo").getValue().toString().equals(type)) {
-                                    Iterator<DataSnapshot> campos = codigo.child(FirebaseReferences.SEMANTIC_FIELD_REFERENCE).getChildren().iterator();
-                                    while (campos.hasNext()) {
-                                        DataSnapshot campo = campos.next();
-                                        SemanticField campoSemantico = new SemanticField(campo.child("nombre").getValue().toString(), new Integer(campo.child("relevancia").getValue().toString()), new ArrayList<CommonWord>());
-
-                                        camposSemanticos.add(campoSemantico);
-                                    }
-                                } else {
-                                    continue;
-                                }
-                            }
-                        }*/
                     }
 
                     @Override
@@ -91,6 +72,17 @@ public class SemanticFieldActivity extends AppCompatActivity implements Semantic
 
                     }
                 });
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(semanticFieldActivity, CreateSemanticFieldActivity.class);
+                i.putExtra("type", type);
+                i.putExtra("uid", uid);
+                startActivity(i);
+            }
+        });
     }
 
     @Override
