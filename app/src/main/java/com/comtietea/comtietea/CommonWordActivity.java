@@ -27,6 +27,7 @@ public class CommonWordActivity extends AppCompatActivity implements CommonWordR
     private String type;
     private String uid;
     private String nombreCampoSemantico;
+    private int color;
 
     RecyclerView recyclerView;
     ArrayList<CommonWord> palabrasHabituales = new ArrayList<CommonWord>();
@@ -41,10 +42,11 @@ public class CommonWordActivity extends AppCompatActivity implements CommonWordR
         type = bundle.getString("type");
         uid = bundle.getString("uid");
         nombreCampoSemantico = bundle.getString("campoSemantico");
+        color = new Integer(bundle.getString("color"));
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
 
-        final CommonWordRecyclerViewAdapter adapter = new CommonWordRecyclerViewAdapter(this, palabrasHabituales, this);
+        final CommonWordRecyclerViewAdapter adapter = new CommonWordRecyclerViewAdapter(this, palabrasHabituales, this, color, type);
         recyclerView.setAdapter(adapter);
 
         GridLayoutManager manager = new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false);

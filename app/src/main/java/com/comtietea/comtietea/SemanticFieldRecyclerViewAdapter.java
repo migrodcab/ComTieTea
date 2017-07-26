@@ -23,12 +23,14 @@ public class SemanticFieldRecyclerViewAdapter extends RecyclerView.Adapter<Seman
     ArrayList<SemanticField> camposSemanticos;
     Context mContext;
     protected ItemListener mListener;
+    String type;
 
-    public SemanticFieldRecyclerViewAdapter(Context context, ArrayList<SemanticField> values, ItemListener itemListener) {
+    public SemanticFieldRecyclerViewAdapter(Context context, ArrayList<SemanticField> values, ItemListener itemListener, String type) {
 
         camposSemanticos = values;
         mContext = context;
         mListener=itemListener;
+        this.type = type;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -54,7 +56,14 @@ public class SemanticFieldRecyclerViewAdapter extends RecyclerView.Adapter<Seman
 
             textView.setText(campoSemantico.getNombre());
             Glide.with(mContext).load(campoSemantico.getImagenURL()).into(imageView);
-            relativeLayout.setBackgroundColor(Color.parseColor("#09A9FF"));
+            relativeLayout.setBackgroundColor(campoSemantico.getColor());
+
+            if(type.equals("Palabras")) {
+                imageView.getLayoutParams().height = 0;
+                imageView.getLayoutParams().width = 0;
+
+                textView.setTextSize(textView.getTextSize()*1.5f);
+            }
 
         }
 

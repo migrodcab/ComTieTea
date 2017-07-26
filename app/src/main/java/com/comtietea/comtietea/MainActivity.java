@@ -1,6 +1,7 @@
 package com.comtietea.comtietea;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -50,6 +51,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
@@ -250,27 +252,30 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         List<CommonWord> palabrasFamilia;
         SemanticField familia = null;
 
+        int colorColegio = Color.argb(255, 255, 255, 0);
+        int colorFamilia = Color.argb(255, 180, 4, 0);
+
         switch (codigoSimbolico) {
             case "Palabras":
                 palabrasColegio = cargaPalabrasHabituales(codigoSimbolico, "Colegio");
-                colegio = new SemanticField("Colegio", "", 8, palabrasColegio);
+                colegio = new SemanticField("Colegio", "", 8, colorColegio, palabrasColegio);
 
                 palabrasFamilia = cargaPalabrasHabituales(codigoSimbolico, "Familia");
-                familia = new SemanticField("Familia", "", 8, palabrasFamilia);
+                familia = new SemanticField("Familia", "", 8, colorFamilia, palabrasFamilia);
                 break;
             case "Dibujos":
                 palabrasColegio = cargaPalabrasHabituales(codigoSimbolico, "Colegio");
-                colegio = new SemanticField("Colegio", "https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fcolegio_dibujo.jpg?alt=media&token=dce6f6bd-ffb2-499b-b316-d6bdb33889a7", 8, palabrasColegio);
+                colegio = new SemanticField("Colegio", "https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fcolegio_dibujo.jpg?alt=media&token=dce6f6bd-ffb2-499b-b316-d6bdb33889a7", 8, colorColegio, palabrasColegio);
 
                 palabrasFamilia = cargaPalabrasHabituales(codigoSimbolico, "Familia");
-                familia = new SemanticField("Familia", "https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Ffamilia_dibujo.png?alt=media&token=cbfe05d9-671f-411c-a342-7ab18138b94b", 8, palabrasFamilia);
+                familia = new SemanticField("Familia", "https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Ffamilia_dibujo.png?alt=media&token=cbfe05d9-671f-411c-a342-7ab18138b94b", 8, colorFamilia, palabrasFamilia);
                 break;
             case "Imagenes":
                 palabrasColegio = cargaPalabrasHabituales(codigoSimbolico, "Colegio");
-                colegio = new SemanticField("Colegio", "https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fcolegio_foto.jpg?alt=media&token=9f92d73d-a040-4716-8bdd-c67bd37bc27d", 8, palabrasColegio);
+                colegio = new SemanticField("Colegio", "https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fcolegio_foto.jpg?alt=media&token=9f92d73d-a040-4716-8bdd-c67bd37bc27d", 8, colorColegio, palabrasColegio);
 
                 palabrasFamilia = cargaPalabrasHabituales(codigoSimbolico, "Familia");
-                familia = new SemanticField("Familia", "https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Ffamilia_foto.jpg?alt=media&token=b2b4ca19-611e-48ae-8718-8d206c1f0c13", 8, palabrasFamilia);
+                familia = new SemanticField("Familia", "https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Ffamilia_foto.jpg?alt=media&token=b2b4ca19-611e-48ae-8718-8d206c1f0c13", 8, colorFamilia, palabrasFamilia);
                 break;
         }
 

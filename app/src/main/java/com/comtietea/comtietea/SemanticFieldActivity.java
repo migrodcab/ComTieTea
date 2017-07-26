@@ -44,7 +44,7 @@ public class SemanticFieldActivity extends AppCompatActivity implements Semantic
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
 
-        final SemanticFieldRecyclerViewAdapter adapter = new SemanticFieldRecyclerViewAdapter(this, camposSemanticos, this);
+        final SemanticFieldRecyclerViewAdapter adapter = new SemanticFieldRecyclerViewAdapter(this, camposSemanticos, this, type);
         recyclerView.setAdapter(adapter);
 
         GridLayoutManager manager = new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false);
@@ -94,6 +94,7 @@ public class SemanticFieldActivity extends AppCompatActivity implements Semantic
         i.putExtra("type", type);
         i.putExtra("uid", uid);
         i.putExtra("campoSemantico", campoSemantico.getNombre());
+        i.putExtra("color", ""+campoSemantico.getColor());
         startActivity(i);
     }
 }

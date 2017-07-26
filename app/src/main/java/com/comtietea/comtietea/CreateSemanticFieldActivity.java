@@ -4,11 +4,13 @@ import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.EditText;
@@ -35,6 +37,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Random;
 
 public class CreateSemanticFieldActivity extends AppCompatActivity {
 
@@ -115,7 +118,11 @@ public class CreateSemanticFieldActivity extends AppCompatActivity {
                     dialog.dismiss();
 
                     Toast.makeText(getApplicationContext(), "Imagen subida", Toast.LENGTH_SHORT).show();
-                    final SemanticField campoSemantico = new SemanticField(name.getText().toString(), taskSnapshot.getDownloadUrl().toString(), new Integer(spinner.getSelectedItem().toString()), new ArrayList<CommonWord>());
+
+                    Random rnd = new Random();
+                    int color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
+                    Log.i("COLOR!!!", ""+color);
+                    final SemanticField campoSemantico = new SemanticField(name.getText().toString(), taskSnapshot.getDownloadUrl().toString(), new Integer(spinner.getSelectedItem().toString()), color, new ArrayList<CommonWord>());
 
                     dbRef.orderByChild("uid").equalTo(uid).limitToFirst(1).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override

@@ -6,15 +6,17 @@ public class SemanticField implements Comparable<SemanticField> {
     String nombre;
     String imagenURL;
     int relevancia;
+    int color;
     List<CommonWord> palabrasHabituales;
 
     public SemanticField() {
     }
 
-    public SemanticField(String nombre, String imagenURL, int relevancia, List<CommonWord> palabrasHabituales) {
+    public SemanticField(String nombre, String imagenURL, int relevancia, int color, List<CommonWord> palabrasHabituales) {
         this.nombre = nombre;
         this.imagenURL = imagenURL;
         this.relevancia = relevancia;
+        this.color = color;
         this.palabrasHabituales = palabrasHabituales;
     }
 
@@ -38,6 +40,14 @@ public class SemanticField implements Comparable<SemanticField> {
 
     public void setRelevancia(int relevancia) {
         this.relevancia = relevancia;
+    }
+
+    public int getColor() {
+        return color;
+    }
+
+    public void setColor(int color) {
+        this.color = color;
     }
 
     public List<CommonWord> getPalabrasHabituales() {

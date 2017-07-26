@@ -24,12 +24,16 @@ public class CommonWordRecyclerViewAdapter extends RecyclerView.Adapter<CommonWo
     ArrayList<CommonWord> palabrasHabituales;
     Context mContext;
     protected ItemListener mListener;
+    private int color;
+    String type;
 
-    public CommonWordRecyclerViewAdapter(Context context, ArrayList<CommonWord> values, ItemListener itemListener) {
+    public CommonWordRecyclerViewAdapter(Context context, ArrayList<CommonWord> values, ItemListener itemListener, int color, String type) {
 
         palabrasHabituales = values;
         mContext = context;
         mListener=itemListener;
+        this.color = color;
+        this.type = type;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -55,8 +59,14 @@ public class CommonWordRecyclerViewAdapter extends RecyclerView.Adapter<CommonWo
 
             textView.setText(palabraHabitual.getNombre());
             Glide.with(mContext).load(palabraHabitual.getImagenURL()).into(imageView);
-            relativeLayout.setBackgroundColor(Color.parseColor("#09A9FF"));
+            relativeLayout.setBackgroundColor(color);
 
+            if(type.equals("Palabras")) {
+                imageView.getLayoutParams().height = 0;
+                imageView.getLayoutParams().width = 0;
+
+                textView.setTextSize(textView.getTextSize()*1.5f);
+            }
         }
 
 
