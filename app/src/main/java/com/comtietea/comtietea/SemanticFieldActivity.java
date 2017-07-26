@@ -18,6 +18,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 
 public class SemanticFieldActivity extends AppCompatActivity implements SemanticFieldRecyclerViewAdapter.ItemListener {
@@ -59,6 +60,8 @@ public class SemanticFieldActivity extends AppCompatActivity implements Semantic
                             for (SymbolicCode codigo : user.getCodigosSimbolicos()) {
                                 if(codigo.getTipo().equals(type)) {
                                     camposSemanticos.addAll(codigo.getCamposSemanticos());
+                                    Collections.sort(camposSemanticos);
+                                    Collections.reverse(camposSemanticos);
                                 } else {
                                     continue;
                                 }

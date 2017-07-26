@@ -1,9 +1,6 @@
 package com.comtietea.comtietea.Domain;
 
-/**
- * Created by HP on 23/07/2017.
- */
-public class CommonWord {
+public class CommonWord implements Comparable<CommonWord> {
     String nombre;
     String imagenURL;
     int relevancia;
@@ -38,5 +35,16 @@ public class CommonWord {
 
     public void setRelevancia(int relevancia) {
         this.relevancia = relevancia;
+    }
+
+    @Override
+    public int compareTo(CommonWord palabraHabitual) {
+        if (relevancia < palabraHabitual.getRelevancia()) {
+            return -1;
+        }
+        if (relevancia > palabraHabitual.getRelevancia()) {
+            return 1;
+        }
+        return 0;
     }
 }

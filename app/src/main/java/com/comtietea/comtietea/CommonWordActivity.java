@@ -18,6 +18,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Created by HP on 23/07/2017.
@@ -61,6 +62,8 @@ public class CommonWordActivity extends AppCompatActivity implements CommonWordR
                                     for (SemanticField campoSemantico : codigo.getCamposSemanticos()) {
                                         if(campoSemantico.getNombre().equals(nombreCampoSemantico)) {
                                             palabrasHabituales.addAll(campoSemantico.getPalabrasHabituales());
+                                            Collections.sort(palabrasHabituales);
+                                            Collections.reverse(palabrasHabituales);
                                         } else {
                                             continue;
                                         }

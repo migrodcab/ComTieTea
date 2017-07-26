@@ -2,10 +2,7 @@ package com.comtietea.comtietea.Domain;
 
 import java.util.List;
 
-/**
- * Created by HP on 13/07/2017.
- */
-public class SemanticField {
+public class SemanticField implements Comparable<SemanticField> {
     String nombre;
     String imagenURL;
     int relevancia;
@@ -49,5 +46,16 @@ public class SemanticField {
 
     public void setPalabrasHabituales(List<CommonWord> palabrasHabituales) {
         this.palabrasHabituales = palabrasHabituales;
+    }
+
+    @Override
+    public int compareTo(SemanticField campoSemantico) {
+        if (relevancia < campoSemantico.getRelevancia()) {
+            return -1;
+        }
+        if (relevancia > campoSemantico.getRelevancia()) {
+            return 1;
+        }
+        return 0;
     }
 }
