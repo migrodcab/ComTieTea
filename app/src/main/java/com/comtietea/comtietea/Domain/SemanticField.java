@@ -3,8 +3,9 @@ package com.comtietea.comtietea.Domain;
 import java.util.List;
 
 public class SemanticField implements Comparable<SemanticField> {
+    int id;
     String nombre;
-    String imagenURL;
+    FirebaseImage imagen;
     int relevancia;
     int color;
     List<CommonWord> palabrasHabituales;
@@ -12,12 +13,21 @@ public class SemanticField implements Comparable<SemanticField> {
     public SemanticField() {
     }
 
-    public SemanticField(String nombre, String imagenURL, int relevancia, int color, List<CommonWord> palabrasHabituales) {
+    public SemanticField(int id, String nombre, FirebaseImage imagen, int relevancia, int color, List<CommonWord> palabrasHabituales) {
+        this.id = id;
         this.nombre = nombre;
-        this.imagenURL = imagenURL;
+        this.imagen = imagen;
         this.relevancia = relevancia;
         this.color = color;
         this.palabrasHabituales = palabrasHabituales;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNombre() { return nombre; }
@@ -26,12 +36,12 @@ public class SemanticField implements Comparable<SemanticField> {
         this.nombre = nombre;
     }
 
-    public String getImagenURL() {
-        return imagenURL;
+    public FirebaseImage getImagen() {
+        return imagen;
     }
 
-    public void setImagenURL(String imagenURL) {
-        this.imagenURL = imagenURL;
+    public void setImagen(FirebaseImage imagen) {
+        this.imagen = imagen;
     }
 
     public int getRelevancia() {

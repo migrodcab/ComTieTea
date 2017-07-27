@@ -15,9 +15,6 @@ import com.comtietea.comtietea.Domain.SemanticField;
 
 import java.util.ArrayList;
 
-/**
- * Created by HP on 23/07/2017.
- */
 public class SemanticFieldRecyclerViewAdapter extends RecyclerView.Adapter<SemanticFieldRecyclerViewAdapter.ViewHolder> {
 
     ArrayList<SemanticField> camposSemanticos;
@@ -55,7 +52,6 @@ public class SemanticFieldRecyclerViewAdapter extends RecyclerView.Adapter<Seman
             this.campoSemantico = campoSemantico;
 
             textView.setText(campoSemantico.getNombre());
-            Glide.with(mContext).load(campoSemantico.getImagenURL()).into(imageView);
             relativeLayout.setBackgroundColor(campoSemantico.getColor());
 
             if(type.equals("Palabras")) {
@@ -64,6 +60,8 @@ public class SemanticFieldRecyclerViewAdapter extends RecyclerView.Adapter<Seman
                 imageView.setVisibility(View.GONE);
 
                 textView.setTextSize(textView.getTextSize()*1.5f);
+            } else {
+                Glide.with(mContext).load(campoSemantico.getImagen().getImagenURL()).into(imageView);
             }
 
         }

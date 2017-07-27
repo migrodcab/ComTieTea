@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.comtietea.comtietea.Domain.CommonWord;
+import com.comtietea.comtietea.Domain.FirebaseImage;
 import com.comtietea.comtietea.Domain.FirebaseReferences;
 import com.comtietea.comtietea.Domain.SemanticField;
 import com.comtietea.comtietea.Domain.SymbolicCode;
@@ -101,7 +102,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                                 codigosSimbolicos = cargaCodigosSimbolicos();
 
                                 final User u = new User(user.getDisplayName(), user.getEmail(), user.getUid(), codigosSimbolicos);
-                                dbRef.push().setValue(u);
+                                dbRef.child(uid).setValue(u);
 
                                 uidAux = "";
                             }
@@ -187,6 +188,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         Intent i = new Intent(this, SemanticFieldActivity.class);
         i.putExtra("type", "Palabras");
         i.putExtra("uid", uid);
+        i.putExtra("codSimId", "0");
         startActivity(i);
     }
 
@@ -194,6 +196,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         Intent i = new Intent(this, SemanticFieldActivity.class);
         i.putExtra("type", "Dibujos");
         i.putExtra("uid", uid);
+        i.putExtra("codSimId", "1");
         startActivity(i);
     }
 
@@ -201,41 +204,27 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         Intent i = new Intent(this, SemanticFieldActivity.class);
         i.putExtra("type", "Imagenes");
         i.putExtra("uid", uid);
+        i.putExtra("codSimId", "2");
         startActivity(i);
     }
 
     public void fotoButton(View view) {
-        try {
-            StorageReference boliRef = storageRef.child("images/boli_foto.jpg");
-            InputStream stream = this.getAssets().open("boli_foto.jpg");//new FileInputStream(new File("file:///android_asset/boli_foto.jpg"));
-
-            UploadTask uploadTask = boliRef.putStream(stream);
-            uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    Log.i("FOTO", taskSnapshot.getDownloadUrl().toString());
-                }
-            });
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        DatabaseReference ej = db.getReference(
+                FirebaseReferences.USER_REFERENCE + "/" + uid + "/" + FirebaseReferences.SYMBOLIC_CODE_REFERENCE + "/" + 0);
+        Log.i("DATABASE", ej.toString());
     }
-
-
-
-
 
     private List<SymbolicCode> cargaCodigosSimbolicos() {
         List<SymbolicCode> res = new ArrayList<SymbolicCode>();
 
         List<SemanticField> camposSemanticosPalabras = cargaCamposSemanticos("Palabras");
-        SymbolicCode codigoSimbolicoPalabra = new SymbolicCode("Palabras", camposSemanticosPalabras);
+        SymbolicCode codigoSimbolicoPalabra = new SymbolicCode(0, "Palabras", camposSemanticosPalabras);
 
         List<SemanticField> camposSemanticosDibujos = cargaCamposSemanticos("Dibujos");
-        SymbolicCode codigoSimbolicoDibujo = new SymbolicCode("Dibujos", camposSemanticosDibujos);
+        SymbolicCode codigoSimbolicoDibujo = new SymbolicCode(1, "Dibujos", camposSemanticosDibujos);
 
         List<SemanticField> camposSemanticosImagenes = cargaCamposSemanticos("Imagenes");
-        SymbolicCode codigoSimbolicoImagen = new SymbolicCode("Imagenes", camposSemanticosImagenes);
+        SymbolicCode codigoSimbolicoImagen = new SymbolicCode(2, "Imagenes", camposSemanticosImagenes);
 
         res.add(codigoSimbolicoPalabra);
         res.add(codigoSimbolicoDibujo);
@@ -258,24 +247,24 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         switch (codigoSimbolico) {
             case "Palabras":
                 palabrasColegio = cargaPalabrasHabituales(codigoSimbolico, "Colegio");
-                colegio = new SemanticField("Colegio", "", 8, colorColegio, palabrasColegio);
 
+                colegio = new SemanticField(0, "Colegio", null, 8, colorColegio, palabrasColegio);
                 palabrasFamilia = cargaPalabrasHabituales(codigoSimbolico, "Familia");
-                familia = new SemanticField("Familia", "", 8, colorFamilia, palabrasFamilia);
+                familia = new SemanticField(1, "Familia", null, 8, colorFamilia, palabrasFamilia);
                 break;
             case "Dibujos":
                 palabrasColegio = cargaPalabrasHabituales(codigoSimbolico, "Colegio");
-                colegio = new SemanticField("Colegio", "https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fcolegio_dibujo.jpg?alt=media&token=dce6f6bd-ffb2-499b-b316-d6bdb33889a7", 8, colorColegio, palabrasColegio);
+                colegio = new SemanticField(0, "Colegio", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fcolegio_dibujo.jpg?alt=media&token=dce6f6bd-ffb2-499b-b316-d6bdb33889a7", "gs://comtietea.appspot.com/images/default/colegio_dibujo.jpg"), 8, colorColegio, palabrasColegio);
 
                 palabrasFamilia = cargaPalabrasHabituales(codigoSimbolico, "Familia");
-                familia = new SemanticField("Familia", "https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Ffamilia_dibujo.png?alt=media&token=cbfe05d9-671f-411c-a342-7ab18138b94b", 8, colorFamilia, palabrasFamilia);
+                familia = new SemanticField(1, "Familia", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Ffamilia_dibujo.png?alt=media&token=cbfe05d9-671f-411c-a342-7ab18138b94b", "gs://comtietea.appspot.com/images/default/familia_dibujo.png"), 8, colorFamilia, palabrasFamilia);
                 break;
             case "Imagenes":
                 palabrasColegio = cargaPalabrasHabituales(codigoSimbolico, "Colegio");
-                colegio = new SemanticField("Colegio", "https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fcolegio_foto.jpg?alt=media&token=9f92d73d-a040-4716-8bdd-c67bd37bc27d", 8, colorColegio, palabrasColegio);
+                colegio = new SemanticField(0, "Colegio", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fcolegio_foto.jpg?alt=media&token=9f92d73d-a040-4716-8bdd-c67bd37bc27d", "gs://comtietea.appspot.com/images/default/colegio_foto.png"), 8, colorColegio, palabrasColegio);
 
                 palabrasFamilia = cargaPalabrasHabituales(codigoSimbolico, "Familia");
-                familia = new SemanticField("Familia", "https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Ffamilia_foto.jpg?alt=media&token=b2b4ca19-611e-48ae-8718-8d206c1f0c13", 8, colorFamilia, palabrasFamilia);
+                familia = new SemanticField(1, "Familia", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Ffamilia_foto.jpg?alt=media&token=b2b4ca19-611e-48ae-8718-8d206c1f0c13", "gs://comtietea.appspot.com/images/default/familia_foto.png"), 8, colorFamilia, palabrasFamilia);
                 break;
         }
 
@@ -292,16 +281,16 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             case "Palabras":
                 switch (campoSemantico) {
                     case "Colegio":
-                        CommonWord boli = new CommonWord("Boligrafo", "", 5);
-                        CommonWord lapiz = new CommonWord("Lapiz", "", 4);
+                        CommonWord boli = new CommonWord(0, "Boligrafo", null, 5);
+                        CommonWord lapiz = new CommonWord(1, "Lapiz", null, 4);
 
                         res.add(boli);
                         res.add(lapiz);
                         break;
 
                     case "Familia":
-                        CommonWord papa = new CommonWord("Papa", "", 10);
-                        CommonWord primo = new CommonWord("Primo", "", 3);
+                        CommonWord papa = new CommonWord(0, "Papa", null, 10);
+                        CommonWord primo = new CommonWord(1, "Primo", null, 3);
 
                         res.add(papa);
                         res.add(primo);
@@ -312,16 +301,16 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             case "Dibujos":
                 switch (campoSemantico) {
                     case "Colegio":
-                        CommonWord boli = new CommonWord("Boligrafo", "https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fboli_dibujo.png?alt=media&token=303830d6-689e-4207-a50f-74dc795c34df", 5);
-                        CommonWord lapiz = new CommonWord("Lapiz", "https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Flapiz_dibujo.png?alt=media&token=0283555f-c65c-434f-bda4-5d3e89768ef2", 4);
+                        CommonWord boli = new CommonWord(0, "Boligrafo", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fboli_dibujo.png?alt=media&token=303830d6-689e-4207-a50f-74dc795c34df", "gs://comtietea.appspot.com/images/default/boli_dibujo.png"), 5);
+                        CommonWord lapiz = new CommonWord(1, "Lapiz", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Flapiz_dibujo.png?alt=media&token=0283555f-c65c-434f-bda4-5d3e89768ef2", "gs://comtietea.appspot.com/images/default/lapiz_dibujo.png"), 4);
 
                         res.add(boli);
                         res.add(lapiz);
                         break;
 
                     case "Familia":
-                        CommonWord papa = new CommonWord("Papa", "https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fpadre_dibujo.png?alt=media&token=0d5bc5a1-775b-4200-8e2c-194623e62eb6", 10);
-                        CommonWord primo = new CommonWord("Primo", "https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fprimo_dibujo.jpg?alt=media&token=864e1ae7-d38e-4888-820c-e61ff6888f3f", 3);
+                        CommonWord papa = new CommonWord(0, "Papa", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fpadre_dibujo.png?alt=media&token=0d5bc5a1-775b-4200-8e2c-194623e62eb6", "gs://comtietea.appspot.com/images/default/padre_dibujo.png"), 10);
+                        CommonWord primo = new CommonWord(1, "Primo", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fprimo_dibujo.jpg?alt=media&token=864e1ae7-d38e-4888-820c-e61ff6888f3f", "gs://comtietea.appspot.com/images/default/primo_dibujo.png"), 3);
 
                         res.add(papa);
                         res.add(primo);
@@ -332,16 +321,16 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             case "Imagenes":
                 switch (campoSemantico) {
                     case "Colegio":
-                        CommonWord boli = new CommonWord("Boligrafo", "https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fboli_foto.jpg?alt=media&token=7a74ef05-6294-4853-a3ae-30df3e2ac0e9", 5);
-                        CommonWord lapiz = new CommonWord("Lapiz", "https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Flapiz_foto.jpg?alt=media&token=7323a398-a15d-4741-a8bd-11dc96ec4384", 4);
+                        CommonWord boli = new CommonWord(0, "Boligrafo", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fboli_foto.jpg?alt=media&token=7a74ef05-6294-4853-a3ae-30df3e2ac0e9", "gs://comtietea.appspot.com/images/default/boli_foto.png"), 5);
+                        CommonWord lapiz = new CommonWord(1, "Lapiz", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Flapiz_foto.jpg?alt=media&token=7323a398-a15d-4741-a8bd-11dc96ec4384", "gs://comtietea.appspot.com/images/default/lapiz_foto.png"), 4);
 
                         res.add(boli);
                         res.add(lapiz);
                         break;
 
                     case "Familia":
-                        CommonWord papa = new CommonWord("Papa", "https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fpadre_foto.jpg?alt=media&token=82b2a9b6-2783-4a2f-b53b-2c471d4d6b3d", 10);
-                        CommonWord primo = new CommonWord("Primo", "https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fprimo_foto.jpg?alt=media&token=7b566fcd-06c1-4605-99b3-992ba2f6ddc0", 3);
+                        CommonWord papa = new CommonWord(0, "Papa", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fpadre_foto.jpg?alt=media&token=82b2a9b6-2783-4a2f-b53b-2c471d4d6b3d", "gs://comtietea.appspot.com/images/default/padre_foto.png"), 10);
+                        CommonWord primo = new CommonWord(1, "Primo", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fprimo_foto.jpg?alt=media&token=7b566fcd-06c1-4605-99b3-992ba2f6ddc0", "gs://comtietea.appspot.com/images/default/primo_foto.png"), 3);
 
                         res.add(papa);
                         res.add(primo);

@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.comtietea.comtietea.Domain.CommonWord;
 import com.comtietea.comtietea.Domain.FirebaseReferences;
@@ -28,6 +30,8 @@ public class CommonWordActivity extends AppCompatActivity implements CommonWordR
     private String uid;
     private String nombreCampoSemantico;
     private int color;
+    private String codSimId;
+    private String camSemId;
 
     RecyclerView recyclerView;
     ArrayList<CommonWord> palabrasHabituales = new ArrayList<CommonWord>();
@@ -43,59 +47,28 @@ public class CommonWordActivity extends AppCompatActivity implements CommonWordR
         uid = bundle.getString("uid");
         nombreCampoSemantico = bundle.getString("campoSemantico");
         color = new Integer(bundle.getString("color"));
+        codSimId = bundle.getString("codSimId");
+        camSemId = bundle.getString("camSemId");
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
 
-        final CommonWordRecyclerViewAdapter adapter = new CommonWordRecyclerViewAdapter(this, palabrasHabituales, this, color, type);
+        final CommonWordRecyclerViewAdapter adapter = new CommonWordRecyclerViewAdapter(this, palabrasHabituales, this, type, color);
         recyclerView.setAdapter(adapter);
 
         GridLayoutManager manager = new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(manager);
 
-        FirebaseDatabase.getInstance().getReference(FirebaseReferences.USER_REFERENCE).orderByChild("uid")
-                .equalTo(uid).limitToFirst(1).addValueEventListener(new ValueEventListener() {
+        FirebaseDatabase.getInstance().getReference(FirebaseReferences.USER_REFERENCE + "/" + uid + "/" +
+                FirebaseReferences.SYMBOLIC_CODE_REFERENCE + "/" + codSimId + "/" + FirebaseReferences.SEMANTIC_FIELD_REFERENCE + "/" + camSemId)
+                .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         palabrasHabituales.clear();
-                        for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                            User user = snapshot.getValue(User.class);
-                            for (SymbolicCode codigo : user.getCodigosSimbolicos()) {
-                                if(codigo.getTipo().equals(type)) {
-                                    for (SemanticField campoSemantico : codigo.getCamposSemanticos()) {
-                                        if(campoSemantico.getNombre().equals(nombreCampoSemantico)) {
-                                            palabrasHabituales.addAll(campoSemantico.getPalabrasHabituales());
-                                            Collections.sort(palabrasHabituales);
-                                            Collections.reverse(palabrasHabituales);
-                                        } else {
-                                            continue;
-                                        }
-                                    }
-                                } else {
-                                    continue;
-                                }
-                            }
-                        }
+                        SemanticField camposSemantico = dataSnapshot.getValue(SemanticField.class);
+                        palabrasHabituales.addAll(camposSemantico.getPalabrasHabituales());
+                        Collections.sort(palabrasHabituales);
+                        Collections.reverse(palabrasHabituales);
                         adapter.notifyDataSetChanged();
-                        /*Iterator<DataSnapshot> items = dataSnapshot.getChildren().iterator();
-                        camposSemanticos.clear();
-                        while (items.hasNext()) {
-                            DataSnapshot item = items.next();
-                            Iterator<DataSnapshot> codigos = item.child(FirebaseReferences.SYMBOLIC_CODE_REFERENCE).getChildren().iterator();
-                            while (codigos.hasNext()) {
-                                DataSnapshot codigo = codigos.next();
-                                if(codigo.child("tipo").getValue().toString().equals(type)) {
-                                    Iterator<DataSnapshot> campos = codigo.child(FirebaseReferences.SEMANTIC_FIELD_REFERENCE).getChildren().iterator();
-                                    while (campos.hasNext()) {
-                                        DataSnapshot campo = campos.next();
-                                        SemanticField campoSemantico = new SemanticField(campo.child("nombre").getValue().toString(), new Integer(campo.child("relevancia").getValue().toString()), new ArrayList<CommonWord>());
-
-                                        camposSemanticos.add(campoSemantico);
-                                    }
-                                } else {
-                                    continue;
-                                }
-                            }
-                        }*/
                     }
 
                     @Override
@@ -109,5 +82,31 @@ public class CommonWordActivity extends AppCompatActivity implements CommonWordR
     public void onItemClick(CommonWord palabraHabitual) {
         //Intent i = new Intent(this, );
         Log.i("Hola", palabraHabitual.getNombre());
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_activity_actions, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.action_edit:
+                Intent i = new Intent(this, CreateSemanticFieldActivity.class);
+                i.putExtra("uid", uid);
+                i.putExtra("type", type);
+                i.putExtra("color", ""+color);
+                i.putExtra("action", "editar");
+                startActivity(i);
+                return true;
+            case R.id.action_delete:
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
     }
 }

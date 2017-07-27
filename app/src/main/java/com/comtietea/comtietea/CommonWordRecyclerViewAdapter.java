@@ -16,24 +16,21 @@ import com.comtietea.comtietea.Domain.SemanticField;
 
 import java.util.ArrayList;
 
-/**
- * Created by HP on 23/07/2017.
- */
 public class CommonWordRecyclerViewAdapter extends RecyclerView.Adapter<CommonWordRecyclerViewAdapter.ViewHolder> {
 
     ArrayList<CommonWord> palabrasHabituales;
     Context mContext;
     protected ItemListener mListener;
-    private int color;
     String type;
+    int color;
 
-    public CommonWordRecyclerViewAdapter(Context context, ArrayList<CommonWord> values, ItemListener itemListener, int color, String type) {
+    public CommonWordRecyclerViewAdapter(Context context, ArrayList<CommonWord> values, ItemListener itemListener, String type, int color) {
 
         palabrasHabituales = values;
         mContext = context;
         mListener=itemListener;
-        this.color = color;
         this.type = type;
+        this.color = color;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -58,15 +55,18 @@ public class CommonWordRecyclerViewAdapter extends RecyclerView.Adapter<CommonWo
             this.palabraHabitual = palabraHabitual;
 
             textView.setText(palabraHabitual.getNombre());
-            Glide.with(mContext).load(palabraHabitual.getImagenURL()).into(imageView);
             relativeLayout.setBackgroundColor(color);
 
             if(type.equals("Palabras")) {
                 imageView.getLayoutParams().height = 0;
                 imageView.getLayoutParams().width = 0;
+                imageView.setVisibility(View.GONE);
 
                 textView.setTextSize(textView.getTextSize()*1.5f);
+            } else {
+                Glide.with(mContext).load(palabraHabitual.getImagen().getImagenURL()).into(imageView);
             }
+
         }
 
 

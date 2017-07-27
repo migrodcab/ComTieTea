@@ -24,6 +24,7 @@ import java.util.Collections;
 public class SemanticFieldActivity extends AppCompatActivity implements SemanticFieldRecyclerViewAdapter.ItemListener {
     private String type;
     private String uid;
+    private String codSimId;
 
     private SemanticFieldActivity semanticFieldActivity;
 
@@ -39,6 +40,7 @@ public class SemanticFieldActivity extends AppCompatActivity implements Semantic
 
         type = bundle.getString("type");
         uid = bundle.getString("uid");
+        codSimId = bundle.getString("codSimId");
 
         semanticFieldActivity = this;
 
@@ -50,23 +52,15 @@ public class SemanticFieldActivity extends AppCompatActivity implements Semantic
         GridLayoutManager manager = new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(manager);
 
-        FirebaseDatabase.getInstance().getReference(FirebaseReferences.USER_REFERENCE).orderByChild("uid")
-                .equalTo(uid).limitToFirst(1).addValueEventListener(new ValueEventListener() {
+        FirebaseDatabase.getInstance().getReference(FirebaseReferences.USER_REFERENCE + "/" + uid + "/" + FirebaseReferences.SYMBOLIC_CODE_REFERENCE + "/" + codSimId)
+                .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         camposSemanticos.clear();
-                        for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                            User user = snapshot.getValue(User.class);
-                            for (SymbolicCode codigo : user.getCodigosSimbolicos()) {
-                                if(codigo.getTipo().equals(type)) {
-                                    camposSemanticos.addAll(codigo.getCamposSemanticos());
-                                    Collections.sort(camposSemanticos);
-                                    Collections.reverse(camposSemanticos);
-                                } else {
-                                    continue;
-                                }
-                            }
-                        }
+                        SymbolicCode codigo = dataSnapshot.getValue(SymbolicCode.class);
+                        camposSemanticos.addAll(codigo.getCamposSemanticos());
+                        Collections.sort(camposSemanticos);
+                        Collections.reverse(camposSemanticos);
                         adapter.notifyDataSetChanged();
                     }
 
@@ -83,6 +77,7 @@ public class SemanticFieldActivity extends AppCompatActivity implements Semantic
                 Intent i = new Intent(semanticFieldActivity, CreateSemanticFieldActivity.class);
                 i.putExtra("type", type);
                 i.putExtra("uid", uid);
+                i.putExtra("codSimId", codSimId);
                 startActivity(i);
             }
         });
@@ -93,7 +88,8 @@ public class SemanticFieldActivity extends AppCompatActivity implements Semantic
         Intent i = new Intent(this, CommonWordActivity.class);
         i.putExtra("type", type);
         i.putExtra("uid", uid);
-        i.putExtra("campoSemantico", campoSemantico.getNombre());
+        i.putExtra("codSimId", codSimId);
+        i.putExtra("camSemId", ""+campoSemantico.getId());
         i.putExtra("color", ""+campoSemantico.getColor());
         startActivity(i);
     }

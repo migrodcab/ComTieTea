@@ -1,16 +1,26 @@
 package com.comtietea.comtietea.Domain;
 
 public class CommonWord implements Comparable<CommonWord> {
+    int id;
     String nombre;
-    String imagenURL;
+    FirebaseImage imagen;
     int relevancia;
 
     public CommonWord() {   }
 
-    public CommonWord(String nombre, String imagenURL, int relevancia) {
+    public CommonWord(int id, String nombre, FirebaseImage imagen, int relevancia) {
+        this.id = id;
         this.nombre = nombre;
-        this.imagenURL = imagenURL;
+        this.imagen = imagen;
         this.relevancia = relevancia;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNombre() {
@@ -21,12 +31,12 @@ public class CommonWord implements Comparable<CommonWord> {
         this.nombre = nombre;
     }
 
-    public String getImagenURL() {
-        return imagenURL;
+    public FirebaseImage getImagen() {
+        return imagen;
     }
 
-    public void setImagenURL(String imagenURL) {
-        this.imagenURL = imagenURL;
+    public void setImagen(FirebaseImage imagen) {
+        this.imagen = imagen;
     }
 
     public int getRelevancia() {

@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.comtietea.comtietea.Domain.CommonWord;
+import com.comtietea.comtietea.Domain.FirebaseImage;
 import com.comtietea.comtietea.Domain.FirebaseReferences;
 import com.comtietea.comtietea.Domain.SemanticField;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -47,6 +48,9 @@ public class CreateSemanticFieldActivity extends AppCompatActivity {
 
     private String uid;
     private String tipo;
+    private String action;
+    private String codSimId;
+    private String camSemId;
 
     private EditText name;
     private ImageButton img;
@@ -64,20 +68,28 @@ public class CreateSemanticFieldActivity extends AppCompatActivity {
 
         createSemanticFieldActivity = this;
 
-        storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(FirebaseReferences.FIREBASE_STORAGE_REFERENCE);
-        dbRef = FirebaseDatabase.getInstance().getReference(FirebaseReferences.USER_REFERENCE);
-
         img = (ImageButton) findViewById(R.id.imageView);
         name = (EditText) findViewById(R.id.editText);
         spinner = (Spinner) findViewById(R.id.spinner);
         textView = (TextView) findViewById(R.id.textView3);
 
-        name.setText("");
-
         Bundle bundle = getIntent().getExtras();
 
         tipo = bundle.getString("type");
         uid = bundle.getString("uid");
+        action = bundle.getString("action");
+        codSimId = bundle.getString("codSimId");
+        camSemId= bundle.getString("camSemId");
+
+        storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(FirebaseReferences.FIREBASE_STORAGE_REFERENCE);
+        dbRef = FirebaseDatabase.getInstance().getReference(
+                FirebaseReferences.USER_REFERENCE + "/" + uid + "/" + FirebaseReferences.SYMBOLIC_CODE_REFERENCE + "/" + codSimId);
+
+        name.setText("");
+
+        /*if (action.equals("editar")) {
+            //name.setText();
+        }*/
 
         if (tipo.equals("Palabras")) {
             img.setVisibility(View.GONE);
@@ -121,7 +133,8 @@ public class CreateSemanticFieldActivity extends AppCompatActivity {
             dialog.setTitle("Subiendo imagen");
             dialog.show();
 
-            StorageReference ref = storageReference.child("images/" + uid + "/" + name.getText().toString() + "/" + name.getText().toString() + "." + getImageExt(imgUri));
+            final String path = "images/" + uid + "/" + name.getText().toString() + "/" + name.getText().toString() + "." + getImageExt(imgUri);
+            StorageReference ref = storageReference.child(path);
             ref.putFile(imgUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -131,32 +144,22 @@ public class CreateSemanticFieldActivity extends AppCompatActivity {
 
                     Random rnd = new Random();
                     int color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
-                    final SemanticField campoSemantico = new SemanticField(name.getText().toString(), taskSnapshot.getDownloadUrl().toString(), new Integer(spinner.getSelectedItem().toString()), color, new ArrayList<CommonWord>());
+                    final SemanticField campoSemantico = new SemanticField(100, name.getText().toString(), new FirebaseImage(taskSnapshot.getDownloadUrl().toString(), path), new Integer(spinner.getSelectedItem().toString()), color, new ArrayList<CommonWord>());
 
-                    dbRef.orderByChild("uid").equalTo(uid).limitToFirst(1).addListenerForSingleValueEvent(new ValueEventListener() {
+                    dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
-                            Iterator<DataSnapshot> items = dataSnapshot.getChildren().iterator();
-                            while (items.hasNext()) {
-                                DataSnapshot item = items.next();
-                                Iterator<DataSnapshot> codigos = item.child(FirebaseReferences.SYMBOLIC_CODE_REFERENCE).getChildren().iterator();
-                                while (codigos.hasNext()) {
-                                    DataSnapshot codigo = codigos.next();
-                                    if (codigo.child("tipo").getValue().toString().equals(tipo)) {
-                                        String uploadId = "" + codigo.child(FirebaseReferences.SEMANTIC_FIELD_REFERENCE).getChildrenCount();
-                                        codigo.child(FirebaseReferences.SEMANTIC_FIELD_REFERENCE).getRef().child(uploadId).setValue(campoSemantico);
+                            String uploadId = "" + dataSnapshot.child(FirebaseReferences.SEMANTIC_FIELD_REFERENCE).getChildrenCount();
+                            campoSemantico.setId(new Integer(uploadId));
+                            dataSnapshot.child(FirebaseReferences.SEMANTIC_FIELD_REFERENCE).getRef().child(uploadId).setValue(campoSemantico);
 
-                                        Toast.makeText(getApplicationContext(), "El campo semántico ha sido creado correctamente.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "El campo semántico ha sido creado correctamente.", Toast.LENGTH_SHORT).show();
 
-                                        Intent i = new Intent(createSemanticFieldActivity, SemanticFieldActivity.class);
-                                        i.putExtra("type", tipo);
-                                        i.putExtra("uid", uid);
-                                        startActivity(i);
-                                    } else {
-                                        continue;
-                                    }
-                                }
-                            }
+                            Intent i = new Intent(createSemanticFieldActivity, SemanticFieldActivity.class);
+                            i.putExtra("type", tipo);
+                            i.putExtra("uid", uid);
+                            i.putExtra("codSimId", codSimId);
+                            startActivity(i);
                         }
 
                         @Override
@@ -164,7 +167,6 @@ public class CreateSemanticFieldActivity extends AppCompatActivity {
 
                         }
                     });
-
                 }
             })
                     .addOnFailureListener(new OnFailureListener() {
@@ -185,32 +187,22 @@ public class CreateSemanticFieldActivity extends AppCompatActivity {
         } else if(imgUri == null && tipo.equals("Palabras") && !name.getText().toString().equals("")) {
             Random rnd = new Random();
             int color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
-            final SemanticField campoSemantico = new SemanticField(name.getText().toString(), "", new Integer(spinner.getSelectedItem().toString()), color, new ArrayList<CommonWord>());
+            final SemanticField campoSemantico = new SemanticField(100, name.getText().toString(), null, new Integer(spinner.getSelectedItem().toString()), color, new ArrayList<CommonWord>());
 
-            dbRef.orderByChild("uid").equalTo(uid).limitToFirst(1).addListenerForSingleValueEvent(new ValueEventListener() {
+            dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    Iterator<DataSnapshot> items = dataSnapshot.getChildren().iterator();
-                    while (items.hasNext()) {
-                        DataSnapshot item = items.next();
-                        Iterator<DataSnapshot> codigos = item.child(FirebaseReferences.SYMBOLIC_CODE_REFERENCE).getChildren().iterator();
-                        while (codigos.hasNext()) {
-                            DataSnapshot codigo = codigos.next();
-                            if (codigo.child("tipo").getValue().toString().equals(tipo)) {
-                                String uploadId = "" + codigo.child(FirebaseReferences.SEMANTIC_FIELD_REFERENCE).getChildrenCount();
-                                codigo.child(FirebaseReferences.SEMANTIC_FIELD_REFERENCE).getRef().child(uploadId).setValue(campoSemantico);
+                    String uploadId = "" + dataSnapshot.child(FirebaseReferences.SEMANTIC_FIELD_REFERENCE).getChildrenCount();
+                    campoSemantico.setId(new Integer(uploadId));
+                    dataSnapshot.child(FirebaseReferences.SEMANTIC_FIELD_REFERENCE).getRef().child(uploadId).setValue(campoSemantico);
 
-                                Toast.makeText(getApplicationContext(), "El campo semántico ha sido creado correctamente.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "El campo semántico ha sido creado correctamente.", Toast.LENGTH_SHORT).show();
 
-                                Intent i = new Intent(createSemanticFieldActivity, SemanticFieldActivity.class);
-                                i.putExtra("type", tipo);
-                                i.putExtra("uid", uid);
-                                startActivity(i);
-                            } else {
-                                continue;
-                            }
-                        }
-                    }
+                    Intent i = new Intent(createSemanticFieldActivity, SemanticFieldActivity.class);
+                    i.putExtra("type", tipo);
+                    i.putExtra("uid", uid);
+                    i.putExtra("codSimId", codSimId);
+                    startActivity(i);
                 }
 
                 @Override
@@ -227,6 +219,7 @@ public class CreateSemanticFieldActivity extends AppCompatActivity {
         Intent i = new Intent(this, SemanticFieldActivity.class);
         i.putExtra("type", tipo);
         i.putExtra("uid", uid);
+        i.putExtra("codSimId", codSimId);
         startActivity(i);
     }
 }
