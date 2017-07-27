@@ -61,6 +61,7 @@ public class SemanticFieldRecyclerViewAdapter extends RecyclerView.Adapter<Seman
             if(type.equals("Palabras")) {
                 imageView.getLayoutParams().height = 0;
                 imageView.getLayoutParams().width = 0;
+                imageView.setVisibility(View.GONE);
 
                 textView.setTextSize(textView.getTextSize()*1.5f);
             }

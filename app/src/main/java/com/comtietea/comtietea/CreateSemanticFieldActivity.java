@@ -16,6 +16,7 @@ import android.webkit.MimeTypeMap;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.comtietea.comtietea.Domain.CommonWord;
@@ -51,6 +52,7 @@ public class CreateSemanticFieldActivity extends AppCompatActivity {
     private ImageButton img;
     private Spinner spinner;
     private Uri imgUri;
+    private TextView textView;
 
     public static final int REQUEST_CODE = 1995;
     private CreateSemanticFieldActivity createSemanticFieldActivity;
@@ -68,11 +70,19 @@ public class CreateSemanticFieldActivity extends AppCompatActivity {
         img = (ImageButton) findViewById(R.id.imageView);
         name = (EditText) findViewById(R.id.editText);
         spinner = (Spinner) findViewById(R.id.spinner);
+        textView = (TextView) findViewById(R.id.textView3);
+
+        name.setText("");
 
         Bundle bundle = getIntent().getExtras();
 
         tipo = bundle.getString("type");
         uid = bundle.getString("uid");
+
+        if (tipo.equals("Palabras")) {
+            img.setVisibility(View.GONE);
+            textView.setVisibility(View.GONE);
+        }
     }
 
     public void cargaImagen(View v) {
@@ -106,7 +116,7 @@ public class CreateSemanticFieldActivity extends AppCompatActivity {
     }
 
     public void botonGuardar(View v) {
-        if (imgUri != null) {
+        if (imgUri != null && !tipo.equals("Palabras") && !name.getText().toString().equals("")) {
             final ProgressDialog dialog = new ProgressDialog(this);
             dialog.setTitle("Subiendo imagen");
             dialog.show();
@@ -121,7 +131,6 @@ public class CreateSemanticFieldActivity extends AppCompatActivity {
 
                     Random rnd = new Random();
                     int color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
-                    Log.i("COLOR!!!", ""+color);
                     final SemanticField campoSemantico = new SemanticField(name.getText().toString(), taskSnapshot.getDownloadUrl().toString(), new Integer(spinner.getSelectedItem().toString()), color, new ArrayList<CommonWord>());
 
                     dbRef.orderByChild("uid").equalTo(uid).limitToFirst(1).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -173,6 +182,42 @@ public class CreateSemanticFieldActivity extends AppCompatActivity {
                             dialog.setMessage("En proceso " + (int) progress + "%");
                         }
                     });
+        } else if(imgUri == null && tipo.equals("Palabras") && !name.getText().toString().equals("")) {
+            Random rnd = new Random();
+            int color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
+            final SemanticField campoSemantico = new SemanticField(name.getText().toString(), "", new Integer(spinner.getSelectedItem().toString()), color, new ArrayList<CommonWord>());
+
+            dbRef.orderByChild("uid").equalTo(uid).limitToFirst(1).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    Iterator<DataSnapshot> items = dataSnapshot.getChildren().iterator();
+                    while (items.hasNext()) {
+                        DataSnapshot item = items.next();
+                        Iterator<DataSnapshot> codigos = item.child(FirebaseReferences.SYMBOLIC_CODE_REFERENCE).getChildren().iterator();
+                        while (codigos.hasNext()) {
+                            DataSnapshot codigo = codigos.next();
+                            if (codigo.child("tipo").getValue().toString().equals(tipo)) {
+                                String uploadId = "" + codigo.child(FirebaseReferences.SEMANTIC_FIELD_REFERENCE).getChildrenCount();
+                                codigo.child(FirebaseReferences.SEMANTIC_FIELD_REFERENCE).getRef().child(uploadId).setValue(campoSemantico);
+
+                                Toast.makeText(getApplicationContext(), "El campo semántico ha sido creado correctamente.", Toast.LENGTH_SHORT).show();
+
+                                Intent i = new Intent(createSemanticFieldActivity, SemanticFieldActivity.class);
+                                i.putExtra("type", tipo);
+                                i.putExtra("uid", uid);
+                                startActivity(i);
+                            } else {
+                                continue;
+                            }
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
         } else {
             Toast.makeText(getApplicationContext(), "Por favor, rellene todos los campos.", Toast.LENGTH_SHORT).show();
         }
