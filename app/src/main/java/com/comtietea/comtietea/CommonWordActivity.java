@@ -96,9 +96,11 @@ public class CommonWordActivity extends AppCompatActivity implements CommonWordR
         switch (item.getItemId()) {
             case R.id.action_edit:
                 Intent i = new Intent(this, CreateSemanticFieldActivity.class);
-                i.putExtra("uid", uid);
                 i.putExtra("type", type);
-                i.putExtra("color", ""+color);
+                i.putExtra("uid", uid);
+                i.putExtra("codSimId", codSimId);
+                i.putExtra("camSemId", camSemId);
+                i.putExtra("color", "" + color);
                 i.putExtra("action", "editar");
                 startActivity(i);
                 return true;

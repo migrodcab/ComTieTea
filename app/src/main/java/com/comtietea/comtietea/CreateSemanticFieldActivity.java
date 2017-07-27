@@ -19,6 +19,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.comtietea.comtietea.Domain.CommonWord;
 import com.comtietea.comtietea.Domain.FirebaseImage;
 import com.comtietea.comtietea.Domain.FirebaseReferences;
@@ -82,14 +83,35 @@ public class CreateSemanticFieldActivity extends AppCompatActivity {
         camSemId= bundle.getString("camSemId");
 
         storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(FirebaseReferences.FIREBASE_STORAGE_REFERENCE);
-        dbRef = FirebaseDatabase.getInstance().getReference(
-                FirebaseReferences.USER_REFERENCE + "/" + uid + "/" + FirebaseReferences.SYMBOLIC_CODE_REFERENCE + "/" + codSimId);
 
         name.setText("");
 
-        /*if (action.equals("editar")) {
-            //name.setText();
-        }*/
+        if (action.equals("editar")) {
+            dbRef = FirebaseDatabase.getInstance().getReference(
+                    FirebaseReferences.USER_REFERENCE + "/" + uid + "/" + FirebaseReferences.SYMBOLIC_CODE_REFERENCE + "/" + codSimId +
+                    "/" + FirebaseReferences.SEMANTIC_FIELD_REFERENCE + "/" + camSemId);
+
+            dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    SemanticField campoSemantico = dataSnapshot.getValue(SemanticField.class);
+
+                    name.setText(campoSemantico.getNombre());
+                    spinner.setSelection(campoSemantico.getRelevancia() - 1);
+                    if(!tipo.equals("Palabras")) {
+                        Glide.with(createSemanticFieldActivity).load(campoSemantico.getImagen().getImagenURL()).into(img);
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+        } else {
+            dbRef = FirebaseDatabase.getInstance().getReference(
+                    FirebaseReferences.USER_REFERENCE + "/" + uid + "/" + FirebaseReferences.SYMBOLIC_CODE_REFERENCE + "/" + codSimId);
+        }
 
         if (tipo.equals("Palabras")) {
             img.setVisibility(View.GONE);
