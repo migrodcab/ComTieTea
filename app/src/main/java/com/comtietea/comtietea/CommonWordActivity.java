@@ -2,12 +2,14 @@ package com.comtietea.comtietea;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.comtietea.comtietea.Domain.CommonWord;
 import com.comtietea.comtietea.Domain.FirebaseReferences;
@@ -28,10 +30,12 @@ import java.util.Collections;
 public class CommonWordActivity extends AppCompatActivity implements CommonWordRecyclerViewAdapter.ItemListener {
     private String type;
     private String uid;
-    private String nombreCampoSemantico;
     private int color;
     private String codSimId;
     private String camSemId;
+    private String nombreCampoSemantico;
+
+    private CommonWordActivity commonWordActivity;
 
     RecyclerView recyclerView;
     ArrayList<CommonWord> palabrasHabituales = new ArrayList<CommonWord>();
@@ -41,11 +45,12 @@ public class CommonWordActivity extends AppCompatActivity implements CommonWordR
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recycler_view);
 
+        commonWordActivity = this;
+
         Bundle bundle = getIntent().getExtras();
 
         type = bundle.getString("type");
         uid = bundle.getString("uid");
-        nombreCampoSemantico = bundle.getString("campoSemantico");
         color = new Integer(bundle.getString("color"));
         codSimId = bundle.getString("codSimId");
         camSemId = bundle.getString("camSemId");
@@ -65,9 +70,12 @@ public class CommonWordActivity extends AppCompatActivity implements CommonWordR
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         palabrasHabituales.clear();
                         SemanticField camposSemantico = dataSnapshot.getValue(SemanticField.class);
-                        palabrasHabituales.addAll(camposSemantico.getPalabrasHabituales());
-                        Collections.sort(palabrasHabituales);
-                        Collections.reverse(palabrasHabituales);
+                        nombreCampoSemantico = camposSemantico.getNombre();
+                        if(camposSemantico.getPalabrasHabituales() != null) {
+                            palabrasHabituales.addAll(camposSemantico.getPalabrasHabituales());
+                            Collections.sort(palabrasHabituales);
+                            Collections.reverse(palabrasHabituales);
+                        }
                         adapter.notifyDataSetChanged();
                     }
 
@@ -76,6 +84,22 @@ public class CommonWordActivity extends AppCompatActivity implements CommonWordR
 
                     }
                 });
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(commonWordActivity, CreateCommonWordActivity.class);
+                i.putExtra("type", type);
+                i.putExtra("uid", uid);
+                i.putExtra("codSimId", codSimId);
+                i.putExtra("camSemId", camSemId);
+                i.putExtra("action", "crear");
+                i.putExtra("color", "" + color);
+                i.putExtra("nombreCampoSemantico", nombreCampoSemantico);
+                startActivity(i);
+            }
+        });
     }
 
     @Override

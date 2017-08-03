@@ -6,16 +6,14 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,10 +38,9 @@ import com.google.firebase.storage.UploadTask;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Random;
 
-public class CreateSemanticFieldActivity extends AppCompatActivity {
+public class CreateCommonWordActivity extends AppCompatActivity {
 
     private StorageReference storageReference;
     private DatabaseReference dbRef;
@@ -53,6 +50,8 @@ public class CreateSemanticFieldActivity extends AppCompatActivity {
     private String action;
     private String codSimId;
     private String camSemId;
+    private String color;
+    private String nombreCampoSemantico;
 
     private EditText name;
     private ImageButton img;
@@ -60,17 +59,17 @@ public class CreateSemanticFieldActivity extends AppCompatActivity {
     private Uri imgUri;
     private TextView textView;
 
-    private SemanticField campoSemantico;
+    //private SemanticField campoSemantico;
 
     public static final int REQUEST_CODE = 1995;
-    private CreateSemanticFieldActivity createSemanticFieldActivity;
+    private CreateCommonWordActivity createCommonWordActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create);
 
-        createSemanticFieldActivity = this;
+        createCommonWordActivity = this;
 
         img = (ImageButton) findViewById(R.id.imageView);
         name = (EditText) findViewById(R.id.editText);
@@ -84,13 +83,15 @@ public class CreateSemanticFieldActivity extends AppCompatActivity {
         action = bundle.getString("action");
         codSimId = bundle.getString("codSimId");
         camSemId = bundle.getString("camSemId");
+        color = bundle.getString("color");
+        nombreCampoSemantico = bundle.getString("nombreCampoSemantico");
 
         storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(FirebaseReferences.FIREBASE_STORAGE_REFERENCE);
 
         name.setText("");
 
         if (action.equals("editar")) {
-            dbRef = FirebaseDatabase.getInstance().getReference(
+            /*dbRef = FirebaseDatabase.getInstance().getReference(
                     FirebaseReferences.USER_REFERENCE + "/" + uid + "/" + FirebaseReferences.SYMBOLIC_CODE_REFERENCE + "/" + codSimId +
                             "/" + FirebaseReferences.SEMANTIC_FIELD_REFERENCE + "/" + camSemId);
 
@@ -110,10 +111,11 @@ public class CreateSemanticFieldActivity extends AppCompatActivity {
                 public void onCancelled(DatabaseError databaseError) {
 
                 }
-            });
+            });*/
         } else {
             dbRef = FirebaseDatabase.getInstance().getReference(
-                    FirebaseReferences.USER_REFERENCE + "/" + uid + "/" + FirebaseReferences.SYMBOLIC_CODE_REFERENCE + "/" + codSimId);
+                    FirebaseReferences.USER_REFERENCE + "/" + uid + "/" + FirebaseReferences.SYMBOLIC_CODE_REFERENCE + "/" + codSimId +
+                            "/" + FirebaseReferences.SEMANTIC_FIELD_REFERENCE + "/" + camSemId);
         }
 
         if (tipo.equals("Palabras")) {
@@ -159,7 +161,7 @@ public class CreateSemanticFieldActivity extends AppCompatActivity {
                 dialog.setTitle("Subiendo imagen");
                 dialog.show();
 
-                final String path = "images/" + uid + "/" + tipo + "/" + name.getText().toString() + "/" + name.getText().toString() + "." + getImageExt(imgUri);
+                final String path = "images/" + uid + "/" + tipo + "/" + nombreCampoSemantico + "/" + name.getText().toString() + "." + getImageExt(imgUri);
                 StorageReference ref = storageReference.child(path);
                 ref.putFile(imgUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
@@ -168,23 +170,23 @@ public class CreateSemanticFieldActivity extends AppCompatActivity {
 
                         Toast.makeText(getApplicationContext(), "Imagen subida", Toast.LENGTH_SHORT).show();
 
-                        Random rnd = new Random();
-                        int color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
-                        final SemanticField campoSemantico = new SemanticField(100, name.getText().toString(), new FirebaseImage(taskSnapshot.getDownloadUrl().toString(), path), new Integer(spinner.getSelectedItem().toString()), color, new ArrayList<CommonWord>());
+                        final CommonWord palabraHabitual = new CommonWord(100, name.getText().toString(), new FirebaseImage(taskSnapshot.getDownloadUrl().toString(), path), new Integer(spinner.getSelectedItem().toString()));
 
                         dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
-                                String uploadId = "" + dataSnapshot.child(FirebaseReferences.SEMANTIC_FIELD_REFERENCE).getChildrenCount();
-                                campoSemantico.setId(new Integer(uploadId));
-                                dataSnapshot.child(FirebaseReferences.SEMANTIC_FIELD_REFERENCE).getRef().child(uploadId).setValue(campoSemantico);
+                                String uploadId = "" + dataSnapshot.child(FirebaseReferences.COMMON_WORD_REFERENCE).getChildrenCount();
+                                palabraHabitual.setId(new Integer(uploadId));
+                                dataSnapshot.child(FirebaseReferences.COMMON_WORD_REFERENCE).getRef().child(uploadId).setValue(palabraHabitual);
 
-                                Toast.makeText(getApplicationContext(), "El campo semántico ha sido creado correctamente.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "La palabra habitual ha sido creada correctamente.", Toast.LENGTH_SHORT).show();
 
-                                Intent i = new Intent(createSemanticFieldActivity, SemanticFieldActivity.class);
+                                Intent i = new Intent(createCommonWordActivity, CommonWordActivity.class);
                                 i.putExtra("type", tipo);
                                 i.putExtra("uid", uid);
                                 i.putExtra("codSimId", codSimId);
+                                i.putExtra("camSemId", camSemId);
+                                i.putExtra("color", color);
                                 startActivity(i);
                             }
 
@@ -211,23 +213,23 @@ public class CreateSemanticFieldActivity extends AppCompatActivity {
                             }
                         });
             } else if (imgUri == null && tipo.equals("Palabras") && !name.getText().toString().equals("")) {
-                Random rnd = new Random();
-                int color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
-                final SemanticField campoSemantico = new SemanticField(100, name.getText().toString(), null, new Integer(spinner.getSelectedItem().toString()), color, new ArrayList<CommonWord>());
+                final CommonWord palabraHabitual = new CommonWord(100, name.getText().toString(), null, new Integer(spinner.getSelectedItem().toString()));
 
                 dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        String uploadId = "" + dataSnapshot.child(FirebaseReferences.SEMANTIC_FIELD_REFERENCE).getChildrenCount();
-                        campoSemantico.setId(new Integer(uploadId));
-                        dataSnapshot.child(FirebaseReferences.SEMANTIC_FIELD_REFERENCE).getRef().child(uploadId).setValue(campoSemantico);
+                        String uploadId = "" + dataSnapshot.child(FirebaseReferences.COMMON_WORD_REFERENCE).getChildrenCount();
+                        palabraHabitual.setId(new Integer(uploadId));
+                        dataSnapshot.child(FirebaseReferences.COMMON_WORD_REFERENCE).getRef().child(uploadId).setValue(palabraHabitual);
 
-                        Toast.makeText(getApplicationContext(), "El campo semántico ha sido creado correctamente.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "La palabra habitual ha sido creada correctamente.", Toast.LENGTH_SHORT).show();
 
-                        Intent i = new Intent(createSemanticFieldActivity, SemanticFieldActivity.class);
+                        Intent i = new Intent(createCommonWordActivity, CommonWordActivity.class);
                         i.putExtra("type", tipo);
                         i.putExtra("uid", uid);
                         i.putExtra("codSimId", codSimId);
+                        i.putExtra("camSemId", camSemId);
+                        i.putExtra("color", color);
                         startActivity(i);
                     }
 
@@ -239,7 +241,7 @@ public class CreateSemanticFieldActivity extends AppCompatActivity {
             } else {
                 Toast.makeText(getApplicationContext(), "Por favor, rellene todos los campos.", Toast.LENGTH_SHORT).show();
             }
-        } else {
+        } /*else {
             if (imgUri != null && !tipo.equals("Palabras") && !name.getText().toString().equals("")) {
                 final ProgressDialog dialog = new ProgressDialog(this);
                 dialog.setTitle("Subiendo imagen");
@@ -320,24 +322,26 @@ public class CreateSemanticFieldActivity extends AppCompatActivity {
             } else {
                 Toast.makeText(getApplicationContext(), "Por favor, rellene todos los campos.", Toast.LENGTH_SHORT).show();
             }
-        }
+        }*/
     }
 
     public void botonCancelar(View v) {
         if (action.equals("crear")) {
-            Intent i = new Intent(this, SemanticFieldActivity.class);
+            Intent i = new Intent(createCommonWordActivity, CommonWordActivity.class);
             i.putExtra("type", tipo);
             i.putExtra("uid", uid);
             i.putExtra("codSimId", codSimId);
+            i.putExtra("camSemId", camSemId);
+            i.putExtra("color", color);
             startActivity(i);
         } else if (action.equals("editar")) {
-            Intent i = new Intent(this, CommonWordActivity.class);
+            /*Intent i = new Intent(this, CommonWordActivity.class);
             i.putExtra("type", tipo);
             i.putExtra("uid", uid);
             i.putExtra("codSimId", codSimId);
             i.putExtra("camSemId", ""+campoSemantico.getId());
             i.putExtra("color", ""+campoSemantico.getColor());
-            startActivity(i);
+            startActivity(i);*/
         }
     }
 }

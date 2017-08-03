@@ -257,7 +257,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 colegio = new SemanticField(0, "Colegio", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fcolegio_dibujo.jpg?alt=media&token=dce6f6bd-ffb2-499b-b316-d6bdb33889a7", "gs://comtietea.appspot.com/images/default/colegio_dibujo.jpg"), 8, colorColegio, palabrasColegio);
 
                 palabrasFamilia = cargaPalabrasHabituales(codigoSimbolico, "Familia");
-                familia = new SemanticField(1, "Familia", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Ffamilia_dibujo.png?alt=media&token=cbfe05d9-671f-411c-a342-7ab18138b94b", "gs://comtietea.appspot.com/images/default/familia_dibujo.png"), 8, colorFamilia, palabrasFamilia);
+                familia = new SemanticField(1, "Familia", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Ffamilia_dibujo.png?alt=media&token=deba80eb-a62e-4b18-ad8e-a2f0c7de8b0d", "gs://comtietea.appspot.com/images/default/familia_dibujo.png"), 8, colorFamilia, palabrasFamilia);
                 break;
             case "Imagenes":
                 palabrasColegio = cargaPalabrasHabituales(codigoSimbolico, "Colegio");

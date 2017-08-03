@@ -78,6 +78,8 @@ public class SemanticFieldActivity extends AppCompatActivity implements Semantic
                 i.putExtra("type", type);
                 i.putExtra("uid", uid);
                 i.putExtra("codSimId", codSimId);
+                i.putExtra("camSemId", "");
+                i.putExtra("action", "crear");
                 startActivity(i);
             }
         });
