@@ -20,7 +20,8 @@
         <activity android:name=".ActionsActivity" />
         <activity android:name=".CommonWordActivity" />
         <activity android:name=".CreateSemanticFieldActivity" />
-        <activity android:name=".CreateCommonWordActivity"/>
+        <activity android:name=".CreateCommonWordActivity" />
+        <activity android:name=".CommonWordDetailActivity"></activity>
     </application>
 
 </manifest>

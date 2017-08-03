@@ -104,8 +104,15 @@ public class CommonWordActivity extends AppCompatActivity implements CommonWordR
 
     @Override
     public void onItemClick(CommonWord palabraHabitual) {
-        //Intent i = new Intent(this, );
-        Log.i("Hola", palabraHabitual.getNombre());
+        Intent i = new Intent(this, CommonWordDetailActivity.class);
+        i.putExtra("type", type);
+        i.putExtra("uid", uid);
+        i.putExtra("codSimId", codSimId);
+        i.putExtra("camSemId", camSemId);
+        i.putExtra("color", "" + color);
+        i.putExtra("nombreCampoSemantico", nombreCampoSemantico);
+        i.putExtra("palHabId", ""+palabraHabitual.getId());
+        startActivity(i);
     }
 
     @Override

@@ -52,6 +52,7 @@ public class CreateCommonWordActivity extends AppCompatActivity {
     private String camSemId;
     private String color;
     private String nombreCampoSemantico;
+    private String palHabId;
 
     private EditText name;
     private ImageButton img;
@@ -59,7 +60,7 @@ public class CreateCommonWordActivity extends AppCompatActivity {
     private Uri imgUri;
     private TextView textView;
 
-    //private SemanticField campoSemantico;
+    private CommonWord palabraHabitual;
 
     public static final int REQUEST_CODE = 1995;
     private CreateCommonWordActivity createCommonWordActivity;
@@ -85,25 +86,27 @@ public class CreateCommonWordActivity extends AppCompatActivity {
         camSemId = bundle.getString("camSemId");
         color = bundle.getString("color");
         nombreCampoSemantico = bundle.getString("nombreCampoSemantico");
+        palHabId = bundle.getString("palHabId");
 
         storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(FirebaseReferences.FIREBASE_STORAGE_REFERENCE);
 
         name.setText("");
 
         if (action.equals("editar")) {
-            /*dbRef = FirebaseDatabase.getInstance().getReference(
+            dbRef = FirebaseDatabase.getInstance().getReference(
                     FirebaseReferences.USER_REFERENCE + "/" + uid + "/" + FirebaseReferences.SYMBOLIC_CODE_REFERENCE + "/" + codSimId +
-                            "/" + FirebaseReferences.SEMANTIC_FIELD_REFERENCE + "/" + camSemId);
+                            "/" + FirebaseReferences.SEMANTIC_FIELD_REFERENCE + "/" + camSemId + "/" + FirebaseReferences.COMMON_WORD_REFERENCE +
+            "/" + palHabId);
 
             dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    campoSemantico = dataSnapshot.getValue(SemanticField.class);
+                    palabraHabitual = dataSnapshot.getValue(CommonWord.class);
 
-                    name.setText(campoSemantico.getNombre());
-                    spinner.setSelection(campoSemantico.getRelevancia() - 1);
+                    name.setText(palabraHabitual.getNombre());
+                    spinner.setSelection(palabraHabitual.getRelevancia() - 1);
                     if (!tipo.equals("Palabras")) {
-                        Glide.with(createSemanticFieldActivity).load(campoSemantico.getImagen().getImagenURL()).into(img);
+                        Glide.with(createCommonWordActivity).load(palabraHabitual.getImagen().getImagenURL()).into(img);
                     }
                 }
 
@@ -111,7 +114,7 @@ public class CreateCommonWordActivity extends AppCompatActivity {
                 public void onCancelled(DatabaseError databaseError) {
 
                 }
-            });*/
+            });
         } else {
             dbRef = FirebaseDatabase.getInstance().getReference(
                     FirebaseReferences.USER_REFERENCE + "/" + uid + "/" + FirebaseReferences.SYMBOLIC_CODE_REFERENCE + "/" + codSimId +
@@ -241,21 +244,18 @@ public class CreateCommonWordActivity extends AppCompatActivity {
             } else {
                 Toast.makeText(getApplicationContext(), "Por favor, rellene todos los campos.", Toast.LENGTH_SHORT).show();
             }
-        } /*else {
+        } else {
             if (imgUri != null && !tipo.equals("Palabras") && !name.getText().toString().equals("")) {
                 final ProgressDialog dialog = new ProgressDialog(this);
                 dialog.setTitle("Subiendo imagen");
                 dialog.show();
 
-                //AQUIIIII ----------------------------------------------------
-                //final String path = campoSemantico.getImagen().getImagenRuta();
-                //storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(path);
-                if (campoSemantico.getImagen().getImagenRuta().contains(uid)) {
-                    StorageReference sf = storageReference.child(campoSemantico.getImagen().getImagenRuta());
+                if (palabraHabitual.getImagen().getImagenRuta().contains(uid)) {
+                    StorageReference sf = storageReference.child(palabraHabitual.getImagen().getImagenRuta());
                     sf.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            final String path = "images/" + uid + "/" + tipo + "/" + name.getText().toString() + "/" + name.getText().toString() + "." + getImageExt(imgUri);
+                            final String path = "images/" + uid + "/" + tipo + "/" + nombreCampoSemantico + "/" + name.getText().toString() + "." + getImageExt(imgUri);
                             StorageReference sfAux = storageReference.child(path);
                             sfAux.putFile(imgUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                                 @Override
@@ -264,25 +264,29 @@ public class CreateCommonWordActivity extends AppCompatActivity {
 
                                     Toast.makeText(getApplicationContext(), "Imagen subida", Toast.LENGTH_SHORT).show();
 
-                                    campoSemantico.setNombre(name.getText().toString());
-                                    campoSemantico.setRelevancia(new Integer(spinner.getSelectedItem().toString()));
-                                    campoSemantico.setImagen(new FirebaseImage(taskSnapshot.getDownloadUrl().toString(), path));
+                                    palabraHabitual.setNombre(name.getText().toString());
+                                    palabraHabitual.setRelevancia(new Integer(spinner.getSelectedItem().toString()));
+                                    palabraHabitual.setImagen(new FirebaseImage(taskSnapshot.getDownloadUrl().toString(), path));
 
-                                    dbRef.setValue(campoSemantico);
+                                    dbRef.setValue(palabraHabitual);
 
-                                    Toast.makeText(getApplicationContext(), "El campo semántico ha sido editado correctamente.", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getApplicationContext(), "La palabra habitual ha sido editada correctamente.", Toast.LENGTH_SHORT).show();
 
-                                    Intent i = new Intent(createSemanticFieldActivity, SemanticFieldActivity.class);
+                                    Intent i = new Intent(createCommonWordActivity, CommonWordDetailActivity.class);
                                     i.putExtra("type", tipo);
                                     i.putExtra("uid", uid);
                                     i.putExtra("codSimId", codSimId);
+                                    i.putExtra("camSemId", camSemId);
+                                    i.putExtra("color", "" + color);
+                                    i.putExtra("nombreCampoSemantico", nombreCampoSemantico);
+                                    i.putExtra("palHabId", ""+palabraHabitual.getId());
                                     startActivity(i);
                                 }
                             });
                         }
                     });
                 } else {
-                    final String path = "images/" + uid + "/" + tipo +  "/" + name.getText().toString() + "/" + name.getText().toString() + "." + getImageExt(imgUri);
+                    final String path = "images/" + uid + "/" + tipo + "/" + nombreCampoSemantico + "/" + name.getText().toString() + "." + getImageExt(imgUri);
                     StorageReference ref = storageReference.child(path);
                     ref.putFile(imgUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
@@ -291,38 +295,46 @@ public class CreateCommonWordActivity extends AppCompatActivity {
 
                             Toast.makeText(getApplicationContext(), "Imagen subida", Toast.LENGTH_SHORT).show();
 
-                            campoSemantico.setNombre(name.getText().toString());
-                            campoSemantico.setRelevancia(new Integer(spinner.getSelectedItem().toString()));
-                            campoSemantico.setImagen(new FirebaseImage(taskSnapshot.getDownloadUrl().toString(), path));
+                            palabraHabitual.setNombre(name.getText().toString());
+                            palabraHabitual.setRelevancia(new Integer(spinner.getSelectedItem().toString()));
+                            palabraHabitual.setImagen(new FirebaseImage(taskSnapshot.getDownloadUrl().toString(), path));
 
-                            dbRef.setValue(campoSemantico);
+                            dbRef.setValue(palabraHabitual);
 
-                            Toast.makeText(getApplicationContext(), "El campo semántico ha sido editado correctamente.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "La palabra habitual ha sido editada correctamente.", Toast.LENGTH_SHORT).show();
 
-                            Intent i = new Intent(createSemanticFieldActivity, SemanticFieldActivity.class);
+                            Intent i = new Intent(createCommonWordActivity, CommonWordDetailActivity.class);
                             i.putExtra("type", tipo);
                             i.putExtra("uid", uid);
                             i.putExtra("codSimId", codSimId);
+                            i.putExtra("camSemId", camSemId);
+                            i.putExtra("color", "" + color);
+                            i.putExtra("nombreCampoSemantico", nombreCampoSemantico);
+                            i.putExtra("palHabId", ""+palabraHabitual.getId());
                             startActivity(i);
                         }
                     });
                 }
             } else if (imgUri == null && !name.getText().toString().equals("")) {
-                campoSemantico.setNombre(name.getText().toString());
-                campoSemantico.setRelevancia(new Integer(spinner.getSelectedItem().toString()));
-                dbRef.setValue(campoSemantico);
+                palabraHabitual.setNombre(name.getText().toString());
+                palabraHabitual.setRelevancia(new Integer(spinner.getSelectedItem().toString()));
+                dbRef.setValue(palabraHabitual);
 
-                Toast.makeText(getApplicationContext(), "El campo semántico ha sido editado correctamente.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "La palabra habitual ha sido editada correctamente.", Toast.LENGTH_SHORT).show();
 
-                Intent i = new Intent(createSemanticFieldActivity, SemanticFieldActivity.class);
+                Intent i = new Intent(createCommonWordActivity, CommonWordDetailActivity.class);
                 i.putExtra("type", tipo);
                 i.putExtra("uid", uid);
                 i.putExtra("codSimId", codSimId);
+                i.putExtra("camSemId", camSemId);
+                i.putExtra("color", "" + color);
+                i.putExtra("nombreCampoSemantico", nombreCampoSemantico);
+                i.putExtra("palHabId", ""+palabraHabitual.getId());
                 startActivity(i);
             } else {
                 Toast.makeText(getApplicationContext(), "Por favor, rellene todos los campos.", Toast.LENGTH_SHORT).show();
             }
-        }*/
+        }
     }
 
     public void botonCancelar(View v) {
@@ -335,13 +347,15 @@ public class CreateCommonWordActivity extends AppCompatActivity {
             i.putExtra("color", color);
             startActivity(i);
         } else if (action.equals("editar")) {
-            /*Intent i = new Intent(this, CommonWordActivity.class);
+            Intent i = new Intent(this, CommonWordDetailActivity.class);
             i.putExtra("type", tipo);
             i.putExtra("uid", uid);
             i.putExtra("codSimId", codSimId);
-            i.putExtra("camSemId", ""+campoSemantico.getId());
-            i.putExtra("color", ""+campoSemantico.getColor());
-            startActivity(i);*/
+            i.putExtra("camSemId", camSemId);
+            i.putExtra("color", "" + color);
+            i.putExtra("nombreCampoSemantico", nombreCampoSemantico);
+            i.putExtra("palHabId", ""+palabraHabitual.getId());
+            startActivity(i);
         }
     }
 }
