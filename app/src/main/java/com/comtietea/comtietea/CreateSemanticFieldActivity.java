@@ -245,9 +245,6 @@ public class CreateSemanticFieldActivity extends AppCompatActivity {
                 dialog.setTitle("Subiendo imagen");
                 dialog.show();
 
-                //AQUIIIII ----------------------------------------------------
-                //final String path = campoSemantico.getImagen().getImagenRuta();
-                //storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(path);
                 if (campoSemantico.getImagen().getImagenRuta().contains(uid)) {
                     StorageReference sf = storageReference.child(campoSemantico.getImagen().getImagenRuta());
                     sf.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
