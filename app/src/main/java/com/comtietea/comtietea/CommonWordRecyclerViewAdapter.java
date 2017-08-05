@@ -1,7 +1,7 @@
 package com.comtietea.comtietea;
 
 import android.content.Context;
-import android.graphics.Color;
+import android.os.Build;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.comtietea.comtietea.Domain.CommonWord;
-import com.comtietea.comtietea.Domain.SemanticField;
 
 import java.util.ArrayList;
 
@@ -58,15 +57,23 @@ public class CommonWordRecyclerViewAdapter extends RecyclerView.Adapter<CommonWo
             relativeLayout.setBackgroundColor(color);
 
             if(type.equals("Palabras")) {
-                imageView.getLayoutParams().height = 0;
-                imageView.getLayoutParams().width = 0;
+                if (textView.getText().toString().length() > 7) {
+                    textView.setTextSize(textView.getTextSize()*1.25f);
+                } else {
+                    textView.setTextSize(textView.getTextSize()*1.5f);
+                }
+
                 imageView.setVisibility(View.GONE);
 
-                textView.setTextSize(textView.getTextSize()*1.5f);
+                RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) textView.getLayoutParams();
+                layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                    layoutParams.removeRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+                }
+                textView.setLayoutParams(layoutParams);
             } else {
                 Glide.with(mContext).load(palabraHabitual.getImagen().getImagenURL()).into(imageView);
             }
-
         }
 
 

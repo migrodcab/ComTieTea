@@ -1,15 +1,13 @@
 package com.comtietea.comtietea;
 
-import android.app.ActionBar;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.speech.tts.TextToSpeech;
-import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.CardView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -84,6 +82,12 @@ public class CommonWordDetailActivity extends AppCompatActivity {
                 name.setText(palabraHabitual.getNombre());
                 if(!type.equals("Palabras")) {
                     Glide.with(commonWordDetailActivity).load(palabraHabitual.getImagen().getImagenURL()).into(img);
+                } else {
+                    img.setVisibility(View.GONE);
+                    CardView cardView = (CardView) findViewById(R.id.cardView);
+                    RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) cardView.getLayoutParams();
+                    layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT);
+                    cardView.setLayoutParams(layoutParams);
                 }
                 relativeLayout.setBackgroundColor(new Integer(color));
 
@@ -96,6 +100,10 @@ public class CommonWordDetailActivity extends AppCompatActivity {
                         }
                     }
                 });
+
+                if (name.getText().toString().length() > 7) {
+                    name.setTextSize(50f);
+                }
             }
 
             @Override
