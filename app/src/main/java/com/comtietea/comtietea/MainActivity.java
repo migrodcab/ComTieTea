@@ -185,7 +185,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     }
 
     public void palabrasButton(View view) {
-        Intent i = new Intent(this, SemanticFieldActivity.class);
+        Intent i = new Intent(this, ActionsActivity.class);
         i.putExtra("type", "Palabras");
         i.putExtra("uid", uid);
         i.putExtra("codSimId", "0");
@@ -193,7 +193,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     }
 
     public void dibujosButton(View view) {
-        Intent i = new Intent(this, SemanticFieldActivity.class);
+        Intent i = new Intent(this, ActionsActivity.class);
         i.putExtra("type", "Dibujos");
         i.putExtra("uid", uid);
         i.putExtra("codSimId", "1");
@@ -201,17 +201,11 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     }
 
     public void imagenesButton(View view) {
-        Intent i = new Intent(this, SemanticFieldActivity.class);
+        Intent i = new Intent(this, ActionsActivity.class);
         i.putExtra("type", "Imagenes");
         i.putExtra("uid", uid);
         i.putExtra("codSimId", "2");
         startActivity(i);
-    }
-
-    public void fotoButton(View view) {
-        DatabaseReference ej = db.getReference(
-                FirebaseReferences.USER_REFERENCE + "/" + uid + "/" + FirebaseReferences.SYMBOLIC_CODE_REFERENCE + "/" + 0);
-        Log.i("DATABASE", ej.toString());
     }
 
     private List<SymbolicCode> cargaCodigosSimbolicos() {

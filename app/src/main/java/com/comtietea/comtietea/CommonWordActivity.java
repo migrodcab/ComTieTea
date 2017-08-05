@@ -1,5 +1,6 @@
 package com.comtietea.comtietea;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.comtietea.comtietea.Domain.CommonWord;
 import com.comtietea.comtietea.Domain.FirebaseReferences;
@@ -81,9 +83,15 @@ public class CommonWordActivity extends AppCompatActivity implements CommonWordR
                         SemanticField camposSemantico = dataSnapshot.getValue(SemanticField.class);
                         nombreCampoSemantico = camposSemantico.getNombre();
                         if(camposSemantico.getPalabrasHabituales() != null) {
-                            palabrasHabituales.addAll(camposSemantico.getPalabrasHabituales());
-                            Collections.sort(palabrasHabituales);
-                            Collections.reverse(palabrasHabituales);
+                            for(CommonWord palabraHabitual : camposSemantico.getPalabrasHabituales()) {
+                                if(palabraHabitual != null) {
+                                    palabrasHabituales.add(palabraHabitual);
+                                }
+                            }
+                            if(palabrasHabituales.size() >= 2) {
+                                Collections.sort(palabrasHabituales);
+                                Collections.reverse(palabrasHabituales);
+                            }
                         }
                         adapter.notifyDataSetChanged();
                     }
@@ -109,6 +117,8 @@ public class CommonWordActivity extends AppCompatActivity implements CommonWordR
                 startActivity(i);
             }
         });
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
@@ -158,6 +168,10 @@ public class CommonWordActivity extends AppCompatActivity implements CommonWordR
                 .setPositiveButton("Si", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        final ProgressDialog dialogAux = new ProgressDialog(commonWordActivity);
+                        dialogAux.setTitle("Borrando campo semántico");
+                        dialogAux.show();
+
                         dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -165,34 +179,46 @@ public class CommonWordActivity extends AppCompatActivity implements CommonWordR
 
                                 for(DataSnapshot data : dataSnapshot.child(FirebaseReferences.COMMON_WORD_REFERENCE).getChildren()) {
                                     CommonWord palabraHabitual = data.getValue(CommonWord.class);
-                                    if (palabraHabitual.getImagen().getImagenRuta().contains(uid)) {
+                                    if (palabraHabitual.getImagen() != null && palabraHabitual.getImagen().getImagenRuta().contains(uid)) {
                                         FirebaseStorage.getInstance().getReferenceFromUrl(FirebaseReferences.FIREBASE_STORAGE_REFERENCE)
                                                 .child(palabraHabitual.getImagen().getImagenRuta()).delete();
                                     }
                                 }
 
-                                if (campoSemantico.getImagen().getImagenRuta().contains(uid)) {
+                                if (campoSemantico.getImagen() != null && campoSemantico.getImagen().getImagenRuta().contains(uid)) {
                                     FirebaseStorage.getInstance().getReferenceFromUrl(FirebaseReferences.FIREBASE_STORAGE_REFERENCE)
                                             .child(campoSemantico.getImagen().getImagenRuta()).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void aVoid) {
-                                            dbRef.setValue(null);
+                                            dbRef.removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                    dialogAux.dismiss();
+
+                                                    Intent i = new Intent(commonWordActivity, SemanticFieldActivity.class);
+                                                    i.putExtra("type", type);
+                                                    i.putExtra("uid", uid);
+                                                    i.putExtra("codSimId", codSimId);
+                                                    Toast.makeText(getApplicationContext(), "El campo semántico ha sido borrado correctamente.", Toast.LENGTH_SHORT).show();
+                                                    startActivity(i);
+                                                }
+                                            });
+                                        }
+                                    });
+                                } else {
+                                    dbRef.removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            dialogAux.dismiss();
 
                                             Intent i = new Intent(commonWordActivity, SemanticFieldActivity.class);
                                             i.putExtra("type", type);
                                             i.putExtra("uid", uid);
                                             i.putExtra("codSimId", codSimId);
+                                            Toast.makeText(getApplicationContext(), "El campo semántico ha sido borrado correctamente.", Toast.LENGTH_SHORT).show();
                                             startActivity(i);
                                         }
                                     });
-                                } else {
-                                    dbRef.setValue(null);
-
-                                    Intent i = new Intent(commonWordActivity, SemanticFieldActivity.class);
-                                    i.putExtra("type", type);
-                                    i.putExtra("uid", uid);
-                                    i.putExtra("codSimId", codSimId);
-                                    startActivity(i);
                                 }
                             }
 
@@ -212,5 +238,15 @@ public class CommonWordActivity extends AppCompatActivity implements CommonWordR
         AlertDialog dialog = builder.create();
         dialog.setTitle("Confirmar");
         dialog.show();
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        Intent i = new Intent(this, SemanticFieldActivity.class);
+        i.putExtra("type", type);
+        i.putExtra("uid", uid);
+        i.putExtra("codSimId", codSimId);
+        startActivity(i);
+        return false;
     }
 }

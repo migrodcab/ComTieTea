@@ -6,8 +6,10 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 
+import com.comtietea.comtietea.Domain.CommonWord;
 import com.comtietea.comtietea.Domain.FirebaseReferences;
 import com.comtietea.comtietea.Domain.SemanticField;
 import com.comtietea.comtietea.Domain.SymbolicCode;
@@ -58,10 +60,16 @@ public class SemanticFieldActivity extends AppCompatActivity implements Semantic
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         camposSemanticos.clear();
                         SymbolicCode codigo = dataSnapshot.getValue(SymbolicCode.class);
-                        if(codigo.getCamposSemanticos() != null) {
-                            camposSemanticos.addAll(codigo.getCamposSemanticos());
-                            Collections.sort(camposSemanticos);
-                            Collections.reverse(camposSemanticos);
+                        if(codigo.getCamposSemanticos() != null ) {
+                            for(SemanticField campoSemantico : codigo.getCamposSemanticos()) {
+                                if(campoSemantico != null) {
+                                    camposSemanticos.add(campoSemantico);
+                                }
+                            }
+                            if(camposSemanticos.size() >= 2) {
+                                Collections.sort(camposSemanticos);
+                                Collections.reverse(camposSemanticos);
+                            }
                         }
                         adapter.notifyDataSetChanged();
                     }
@@ -85,6 +93,8 @@ public class SemanticFieldActivity extends AppCompatActivity implements Semantic
                 startActivity(i);
             }
         });
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
@@ -96,5 +106,15 @@ public class SemanticFieldActivity extends AppCompatActivity implements Semantic
         i.putExtra("camSemId", ""+campoSemantico.getId());
         i.putExtra("color", ""+campoSemantico.getColor());
         startActivity(i);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        Intent i = new Intent(this, ActionsActivity.class);
+        i.putExtra("type", type);
+        i.putExtra("uid", uid);
+        i.putExtra("codSimId", codSimId);
+        startActivity(i);
+        return false;
     }
 }

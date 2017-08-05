@@ -1,63 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.comtietea.comtietea.MainActivity">
 
-    <Button
-        android:layout_width="match_parent"
+    <ImageButton
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="PALABRAS"
-        style="@style/Widget.AppCompat.Button.Borderless.Colored"
-        android:onClick="palabrasButton"
-        />
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="DIBUJOS"
-        style="@style/Widget.AppCompat.Button.Borderless.Colored"
-        android:onClick="dibujosButton"
-        />
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="IMAGENES"
-        style="@style/Widget.AppCompat.Button.Borderless.Colored"
-        android:onClick="imagenesButton"
-        />
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/log_out"
-        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        android:id="@+id/logo"
+        android:layout_alignParentTop="true"
+        android:src="@drawable/logo"
+        android:layout_centerHorizontal="true"
         android:onClick="logOut"
         />
 
-    <Button
-        android:layout_width="match_parent"
+    <ImageButton
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/revoke"
-        style="@style/Widget.AppCompat.Button.Borderless"
-        android:onClick="revoke"
+        android:id="@+id/palabras"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:layout_below="@+id/logo"
+        android:onClick="palabrasButton"
+        android:background="@null"
+        android:src="@drawable/palabras"
         />
 
-    <Button
-        android:layout_width="match_parent"
+    <ImageButton
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="FOTO"
-        style="@style/Widget.AppCompat.Button.Borderless"
-        android:onClick="fotoButton"
-        android:id="@+id/button" />
+        android:id="@+id/dibujos"
+        android:layout_below="@+id/palabras"
+        android:layout_centerHorizontal="true"
+        android:background="@null"
+        android:onClick="dibujosButton"
+        android:src="@drawable/dibujos"
+        />
 
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imagenes"
+        android:layout_below="@+id/dibujos"
+        android:layout_centerHorizontal="true"
+        android:background="@null"
+        android:onClick="imagenesButton"
+        android:src="@drawable/imagenes"
+        />
 
-</LinearLayout>
+</RelativeLayout>

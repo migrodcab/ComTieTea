@@ -39,7 +39,6 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:textColor="@android:color/black"
-                android:background="@drawable/rectangle"
                 android:layout_alignParentBottom="true"/>
 
 
