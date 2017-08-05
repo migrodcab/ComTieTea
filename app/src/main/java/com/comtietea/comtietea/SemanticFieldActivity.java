@@ -58,9 +58,11 @@ public class SemanticFieldActivity extends AppCompatActivity implements Semantic
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         camposSemanticos.clear();
                         SymbolicCode codigo = dataSnapshot.getValue(SymbolicCode.class);
-                        camposSemanticos.addAll(codigo.getCamposSemanticos());
-                        Collections.sort(camposSemanticos);
-                        Collections.reverse(camposSemanticos);
+                        if(codigo.getCamposSemanticos() != null) {
+                            camposSemanticos.addAll(codigo.getCamposSemanticos());
+                            Collections.sort(camposSemanticos);
+                            Collections.reverse(camposSemanticos);
+                        }
                         adapter.notifyDataSetChanged();
                     }
 

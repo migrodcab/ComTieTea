@@ -281,15 +281,15 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             case "Palabras":
                 switch (campoSemantico) {
                     case "Colegio":
-                        CommonWord boli = new CommonWord(0, "Boligrafo", null, 5);
-                        CommonWord lapiz = new CommonWord(1, "Lapiz", null, 4);
+                        CommonWord boli = new CommonWord(0, "Bolígrafo", null, 5);
+                        CommonWord lapiz = new CommonWord(1, "Lápiz", null, 4);
 
                         res.add(boli);
                         res.add(lapiz);
                         break;
 
                     case "Familia":
-                        CommonWord papa = new CommonWord(0, "Papa", null, 10);
+                        CommonWord papa = new CommonWord(0, "Papá", null, 10);
                         CommonWord primo = new CommonWord(1, "Primo", null, 3);
 
                         res.add(papa);
@@ -301,15 +301,15 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             case "Dibujos":
                 switch (campoSemantico) {
                     case "Colegio":
-                        CommonWord boli = new CommonWord(0, "Boligrafo", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fboli_dibujo.png?alt=media&token=303830d6-689e-4207-a50f-74dc795c34df", "gs://comtietea.appspot.com/images/default/boli_dibujo.png"), 5);
-                        CommonWord lapiz = new CommonWord(1, "Lapiz", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Flapiz_dibujo.png?alt=media&token=0283555f-c65c-434f-bda4-5d3e89768ef2", "gs://comtietea.appspot.com/images/default/lapiz_dibujo.png"), 4);
+                        CommonWord boli = new CommonWord(0, "Bolígrafo", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fboli_dibujo.png?alt=media&token=303830d6-689e-4207-a50f-74dc795c34df", "gs://comtietea.appspot.com/images/default/boli_dibujo.png"), 5);
+                        CommonWord lapiz = new CommonWord(1, "Lápiz", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Flapiz_dibujo.png?alt=media&token=0283555f-c65c-434f-bda4-5d3e89768ef2", "gs://comtietea.appspot.com/images/default/lapiz_dibujo.png"), 4);
 
                         res.add(boli);
                         res.add(lapiz);
                         break;
 
                     case "Familia":
-                        CommonWord papa = new CommonWord(0, "Papa", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fpadre_dibujo.png?alt=media&token=0d5bc5a1-775b-4200-8e2c-194623e62eb6", "gs://comtietea.appspot.com/images/default/padre_dibujo.png"), 10);
+                        CommonWord papa = new CommonWord(0, "Papá", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fpadre_dibujo.png?alt=media&token=0d5bc5a1-775b-4200-8e2c-194623e62eb6", "gs://comtietea.appspot.com/images/default/padre_dibujo.png"), 10);
                         CommonWord primo = new CommonWord(1, "Primo", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fprimo_dibujo.jpg?alt=media&token=864e1ae7-d38e-4888-820c-e61ff6888f3f", "gs://comtietea.appspot.com/images/default/primo_dibujo.png"), 3);
 
                         res.add(papa);
@@ -321,15 +321,15 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             case "Imagenes":
                 switch (campoSemantico) {
                     case "Colegio":
-                        CommonWord boli = new CommonWord(0, "Boligrafo", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fboli_foto.jpg?alt=media&token=7a74ef05-6294-4853-a3ae-30df3e2ac0e9", "gs://comtietea.appspot.com/images/default/boli_foto.png"), 5);
-                        CommonWord lapiz = new CommonWord(1, "Lapiz", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Flapiz_foto.jpg?alt=media&token=7323a398-a15d-4741-a8bd-11dc96ec4384", "gs://comtietea.appspot.com/images/default/lapiz_foto.png"), 4);
+                        CommonWord boli = new CommonWord(0, "Bolígrafo", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fboli_foto.jpg?alt=media&token=7a74ef05-6294-4853-a3ae-30df3e2ac0e9", "gs://comtietea.appspot.com/images/default/boli_foto.png"), 5);
+                        CommonWord lapiz = new CommonWord(1, "Lápiz", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Flapiz_foto.jpg?alt=media&token=7323a398-a15d-4741-a8bd-11dc96ec4384", "gs://comtietea.appspot.com/images/default/lapiz_foto.png"), 4);
 
                         res.add(boli);
                         res.add(lapiz);
                         break;
 
                     case "Familia":
-                        CommonWord papa = new CommonWord(0, "Papa", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fpadre_foto.jpg?alt=media&token=82b2a9b6-2783-4a2f-b53b-2c471d4d6b3d", "gs://comtietea.appspot.com/images/default/padre_foto.png"), 10);
+                        CommonWord papa = new CommonWord(0, "Papá", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fpadre_foto.jpg?alt=media&token=82b2a9b6-2783-4a2f-b53b-2c471d4d6b3d", "gs://comtietea.appspot.com/images/default/padre_foto.png"), 10);
                         CommonWord primo = new CommonWord(1, "Primo", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fprimo_foto.jpg?alt=media&token=7b566fcd-06c1-4605-99b3-992ba2f6ddc0", "gs://comtietea.appspot.com/images/default/primo_foto.png"), 3);
 
                         res.add(papa);
