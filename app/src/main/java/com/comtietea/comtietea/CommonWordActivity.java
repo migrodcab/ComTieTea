@@ -157,6 +157,10 @@ public class CommonWordActivity extends AppCompatActivity implements CommonWordR
             case R.id.action_delete:
                 deleteSemanticField();
                 return true;
+            case R.id.action_settings:
+                Intent intent = new Intent(this, ProfileInfoActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
             default:
                 return super.onOptionsItemSelected(item);
         }

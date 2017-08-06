@@ -21,7 +21,8 @@
         <activity android:name=".CommonWordActivity" />
         <activity android:name=".CreateSemanticFieldActivity" />
         <activity android:name=".CreateCommonWordActivity" />
-        <activity android:name=".CommonWordDetailActivity"></activity>
+        <activity android:name=".CommonWordDetailActivity" />
+        <activity android:name=".ProfileInfoActivity" />
     </application>
 
 </manifest>

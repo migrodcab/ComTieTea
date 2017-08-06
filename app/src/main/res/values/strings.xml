@@ -1,11 +1,10 @@
 <resources>
     <string name="app_name">ComTieTea</string>
-    <string name="revoke">Revoke</string>
-    <string name="log_out">LOG OUT</string>
+    <string name="log_out">CERRAR SESIÓN</string>
 
     <string name="action_edit">Editar</string>
     <string name="action_delete">Borrar</string>
-    <string name="action_settings">Ajustes</string>
+    <string name="action_settings">Cuenta asociada</string>
 
     <string name="numbers_prompt">Importancia (1-10)</string>
     <string-array name="numbers">
