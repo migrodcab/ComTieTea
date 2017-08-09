@@ -64,7 +64,7 @@ public class SemanticFieldActivity extends AppCompatActivity implements Semantic
                         SymbolicCode codigo = dataSnapshot.getValue(SymbolicCode.class);
                         if(codigo.getCamposSemanticos() != null ) {
                             for(SemanticField campoSemantico : codigo.getCamposSemanticos()) {
-                                if(campoSemantico != null) {
+                                if(campoSemantico != null && campoSemantico.getId() != -1) {
                                     camposSemanticos.add(campoSemantico);
                                 }
                             }
@@ -134,6 +134,7 @@ public class SemanticFieldActivity extends AppCompatActivity implements Semantic
                 Intent intent = new Intent(this, ProfileInfoActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

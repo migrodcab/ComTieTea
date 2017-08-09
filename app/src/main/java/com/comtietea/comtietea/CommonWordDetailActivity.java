@@ -80,7 +80,7 @@ public class CommonWordDetailActivity extends AppCompatActivity {
                 palabraHabitual = dataSnapshot.getValue(CommonWord.class);
 
                 name.setText(palabraHabitual.getNombre());
-                if(!type.equals("Palabras")) {
+                if (!type.equals("Palabras")) {
                     Glide.with(commonWordDetailActivity).load(palabraHabitual.getImagen().getImagenURL()).into(img);
                 } else {
                     img.setVisibility(View.GONE);
@@ -91,10 +91,10 @@ public class CommonWordDetailActivity extends AppCompatActivity {
                 }
                 relativeLayout.setBackgroundColor(new Integer(color));
 
-                textToSpeech=new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
+                textToSpeech = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
                     @Override
                     public void onInit(int status) {
-                        if(status != TextToSpeech.ERROR) {
+                        if (status != TextToSpeech.ERROR) {
                             Locale locSpanish = new Locale("spa", "ESP");
                             textToSpeech.setLanguage(locSpanish);
                         }
@@ -138,17 +138,19 @@ public class CommonWordDetailActivity extends AppCompatActivity {
                 return true;
             case R.id.action_delete:
                 deleteCommonWord();
+                return true;
             case R.id.action_settings:
                 Intent intent = new Intent(this, ProfileInfoActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
 
     }
 
-    private void deleteCommonWord(){
+    private void deleteCommonWord() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("¿Desea borrar esta palabra habitual?").setCancelable(false)
                 .setPositiveButton("Si", new DialogInterface.OnClickListener() {
@@ -163,27 +165,7 @@ public class CommonWordDetailActivity extends AppCompatActivity {
                             sf.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
-                                    dbRef.removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void aVoid) {
-                                            dialogAux.dismiss();
-
-                                            Intent i = new Intent(commonWordDetailActivity, CommonWordActivity.class);
-                                            i.putExtra("type", type);
-                                            i.putExtra("uid", uid);
-                                            i.putExtra("codSimId", codSimId);
-                                            i.putExtra("camSemId", camSemId);
-                                            i.putExtra("color", color);
-                                            Toast.makeText(getApplicationContext(), "La palabra habitual ha sido borrada correctamente.", Toast.LENGTH_SHORT).show();
-                                            startActivity(i);
-                                        }
-                                    });
-                                }
-                            });
-                        } else {
-                            dbRef.removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void aVoid) {
+                                    dbRef.setValue(new CommonWord(-1, null, null, -1));
                                     dialogAux.dismiss();
 
                                     Intent i = new Intent(commonWordDetailActivity, CommonWordActivity.class);
@@ -194,8 +176,22 @@ public class CommonWordDetailActivity extends AppCompatActivity {
                                     i.putExtra("color", color);
                                     Toast.makeText(getApplicationContext(), "La palabra habitual ha sido borrada correctamente.", Toast.LENGTH_SHORT).show();
                                     startActivity(i);
+
                                 }
                             });
+                        } else {
+                            dbRef.setValue(new CommonWord(-1, null, null, -1));
+                            dialogAux.dismiss();
+
+                            Intent i = new Intent(commonWordDetailActivity, CommonWordActivity.class);
+                            i.putExtra("type", type);
+                            i.putExtra("uid", uid);
+                            i.putExtra("codSimId", codSimId);
+                            i.putExtra("camSemId", camSemId);
+                            i.putExtra("color", color);
+                            Toast.makeText(getApplicationContext(), "La palabra habitual ha sido borrada correctamente.", Toast.LENGTH_SHORT).show();
+                            startActivity(i);
+
                         }
                     }
                 })
@@ -214,8 +210,8 @@ public class CommonWordDetailActivity extends AppCompatActivity {
         textToSpeech.speak(name.getText().toString(), TextToSpeech.QUEUE_FLUSH, null);
     }
 
-    public void onPause(){
-        if(textToSpeech !=null){
+    public void onPause() {
+        if (textToSpeech != null) {
             textToSpeech.stop();
             textToSpeech.shutdown();
         }
