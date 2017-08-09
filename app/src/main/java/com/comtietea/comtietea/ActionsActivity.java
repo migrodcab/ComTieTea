@@ -53,6 +53,14 @@ public class ActionsActivity extends AppCompatActivity {
         startActivity(i);
     }
 
+    public void agendaButton(View view) {
+        Intent i = new Intent(this, CalendarActivity.class);
+        i.putExtra("type", type);
+        i.putExtra("uid", uid);
+        i.putExtra("codSimId", codSimId);
+        startActivity(i);
+    }
+
     @Override
     public boolean onSupportNavigateUp() {
         Intent i = new Intent(this, MainActivity.class);

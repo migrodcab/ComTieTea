@@ -58,9 +58,9 @@ public class CommonWordRecyclerViewAdapter extends RecyclerView.Adapter<CommonWo
 
             if(type.equals("Palabras")) {
                 if (textView.getText().toString().length() > 7) {
-                    textView.setTextSize(textView.getTextSize()*1.25f);
+                    //textView.setTextSize(textView.getTextSize()*1.125f);
                 } else {
-                    textView.setTextSize(textView.getTextSize()*1.5f);
+                    //textView.setTextSize(textView.getTextSize()*1.25f);
                 }
 
                 imageView.setVisibility(View.GONE);

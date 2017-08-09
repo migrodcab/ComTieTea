@@ -203,13 +203,13 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         List<SymbolicCode> res = new ArrayList<SymbolicCode>();
 
         List<SemanticField> camposSemanticosPalabras = cargaCamposSemanticos("Palabras");
-        SymbolicCode codigoSimbolicoPalabra = new SymbolicCode(0, "Palabras", camposSemanticosPalabras);
+        SymbolicCode codigoSimbolicoPalabra = new SymbolicCode(0, "Palabras", camposSemanticosPalabras, null);
 
         List<SemanticField> camposSemanticosDibujos = cargaCamposSemanticos("Dibujos");
-        SymbolicCode codigoSimbolicoDibujo = new SymbolicCode(1, "Dibujos", camposSemanticosDibujos);
+        SymbolicCode codigoSimbolicoDibujo = new SymbolicCode(1, "Dibujos", camposSemanticosDibujos, null);
 
         List<SemanticField> camposSemanticosImagenes = cargaCamposSemanticos("Imagenes");
-        SymbolicCode codigoSimbolicoImagen = new SymbolicCode(2, "Imagenes", camposSemanticosImagenes);
+        SymbolicCode codigoSimbolicoImagen = new SymbolicCode(2, "Imagenes", camposSemanticosImagenes, null);
 
         res.add(codigoSimbolicoPalabra);
         res.add(codigoSimbolicoDibujo);

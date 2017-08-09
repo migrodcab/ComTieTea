@@ -35,6 +35,7 @@
         android:id="@+id/agenda"
         android:layout_below="@+id/comunicacion"
         android:layout_centerHorizontal="true"
+        android:onClick="agendaButton"
         android:background="@null"
         />
 </RelativeLayout>

@@ -23,6 +23,9 @@
         <activity android:name=".CreateCommonWordActivity" />
         <activity android:name=".CommonWordDetailActivity" />
         <activity android:name=".ProfileInfoActivity" />
+        <activity android:name=".CalendarActivity" />
+        <activity android:name=".ActivityScheduleActivity" />
+        <activity android:name=".CreateActivityScheduleActivity"></activity>
     </application>
 
 </manifest>

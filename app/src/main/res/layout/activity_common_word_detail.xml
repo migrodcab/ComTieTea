@@ -24,8 +24,11 @@
         android:id="@+id/cardView"
         android:layout_width="match_parent"
         android:layout_height="150dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginRight="2dp"
         android:layout_below="@+id/imageView"
-        card_view:cardCornerRadius="0dp"
+        card_view:cardCornerRadius="10dp"
+        card_view:cardBackgroundColor="@android:color/black"
         card_view:cardElevation="10dp"
         card_view:cardMaxElevation="10dp"
         card_view:contentPadding="10dp">
