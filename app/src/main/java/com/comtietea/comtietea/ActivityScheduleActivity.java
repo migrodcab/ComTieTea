@@ -29,6 +29,8 @@ public class ActivityScheduleActivity extends AppCompatActivity implements Activ
     private String codSimId;
     private String calActId;
 
+    private ActivityScheduleActivity activityScheduleActivity;
+
     RecyclerView recyclerView;
     ArrayList<ActivitySchedule> actividades = new ArrayList<ActivitySchedule>();
 
@@ -36,6 +38,8 @@ public class ActivityScheduleActivity extends AppCompatActivity implements Activ
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_activity_schedule);
+
+        activityScheduleActivity = this;
 
         Bundle bundle = getIntent().getExtras();
 
@@ -80,6 +84,19 @@ public class ActivityScheduleActivity extends AppCompatActivity implements Activ
 
                     }
                 });
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(activityScheduleActivity, CreateActivityScheduleActivity.class);
+                i.putExtra("type", type);
+                i.putExtra("uid", uid);
+                i.putExtra("codSimId", codSimId);
+                i.putExtra("action", "crear");
+                startActivity(i);
+            }
+        });
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }

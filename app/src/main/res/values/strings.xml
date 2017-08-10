@@ -21,7 +21,7 @@
     </string-array>
 
     <string name="alarma_prompt">Alarma</string>
-    <string name="aviso_prompt">Aviso</string>
+    <string name="aviso_prompt">Notificación</string>
     <string name="antelacion_prompt">Antelación</string>
     <string-array name="si_no">
         <item>Si</item>
