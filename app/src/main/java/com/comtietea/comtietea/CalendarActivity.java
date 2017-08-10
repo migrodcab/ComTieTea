@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 
+import com.comtietea.comtietea.Domain.ActivitySchedule;
 import com.comtietea.comtietea.Domain.CalendarObject;
 import com.comtietea.comtietea.Domain.FirebaseReferences;
 import com.comtietea.comtietea.Domain.SemanticField;
@@ -73,19 +74,19 @@ public class CalendarActivity extends AppCompatActivity implements CalendarObjec
                             }
                         }
                         if (calendario.size() == 0) {
-                            String id;
+                            int id;
                             String diaSemana = calculaDiaSemana(calendar.get(Calendar.DAY_OF_WEEK) - 1);
                             String mes = calculaMes(calendar.get(Calendar.MONTH) + 1);
 
                             if (codigo.getCalendario() != null) {
-                                id = "" + codigo.getCalendario().size();
+                                id = codigo.getCalendario().size();
                             } else {
-                                id = "0";
+                                id = 0;
                             }
 
                             CalendarObject co = new CalendarObject(id, fechaActual, diaSemana, mes, null);
 
-                            dataSnapshot.child(FirebaseReferences.CALENDAR_OBJECT_REFERENCE).getRef().child(id).setValue(co);
+                            dataSnapshot.child(FirebaseReferences.CALENDAR_OBJECT_REFERENCE).getRef().child(""+id).setValue(co);
 
                         } else if (calendario.size() > 0 && calendario.size() < 7) {
                             String fechaMasAlta = calendario.get(calendario.size() - 1).getFecha();
@@ -98,19 +99,19 @@ public class CalendarActivity extends AppCompatActivity implements CalendarObjec
                             calendarAux.set(year, month, day);
                             calendarAux.add(Calendar.DATE, 1);
 
-                            String id;
+                            int id;
                             String diaSemana = calculaDiaSemana(calendarAux.get(Calendar.DAY_OF_WEEK) - 1);
                             String mes = calculaMes(calendarAux.get(Calendar.MONTH) + 1);
 
                             if (codigo.getCalendario() != null) {
-                                id = "" + codigo.getCalendario().size();
+                                id = codigo.getCalendario().size();
                             } else {
-                                id = "0";
+                                id = 0;
                             }
 
                             CalendarObject co = new CalendarObject(id, calculaFecha(calendarAux), diaSemana, mes, null);
 
-                            dataSnapshot.child(FirebaseReferences.CALENDAR_OBJECT_REFERENCE).getRef().child(id).setValue(co);
+                            dataSnapshot.child(FirebaseReferences.CALENDAR_OBJECT_REFERENCE).getRef().child(""+id).setValue(co);
 
                         } else if (calendario.size() >= 7) {
                             Collections.sort(calendario);
@@ -147,19 +148,19 @@ public class CalendarActivity extends AppCompatActivity implements CalendarObjec
                                 calendarAux.set(year, month, day);
                                 calendarAux.add(Calendar.DATE, 1);
 
-                                String id;
+                                int id;
                                 String diaSemana = calculaDiaSemana(calendarAux.get(Calendar.DAY_OF_WEEK) - 1);
                                 String mes = calculaMes(calendarAux.get(Calendar.MONTH) + 1);
 
                                 if (codigo.getCalendario() != null) {
-                                    id = "" + codigo.getCalendario().size();
+                                    id = codigo.getCalendario().size();
                                 } else {
-                                    id = "0";
+                                    id = 0;
                                 }
 
                                 CalendarObject co = new CalendarObject(id, calculaFecha(calendarAux), diaSemana, mes, null);
 
-                                dataSnapshot.child(FirebaseReferences.CALENDAR_OBJECT_REFERENCE).getRef().child(id).setValue(co);
+                                dataSnapshot.child(FirebaseReferences.CALENDAR_OBJECT_REFERENCE).getRef().child(""+id).setValue(co);
                             }
 
                             @Override
@@ -175,10 +176,11 @@ public class CalendarActivity extends AppCompatActivity implements CalendarObjec
 
     @Override
     public void onItemClick(CalendarObject calendarObject) {
-        Intent i = new Intent(this, CreateActivityScheduleActivity.class);
+        Intent i = new Intent(this, ActivityScheduleActivity.class);
         i.putExtra("type", type);
         i.putExtra("uid", uid);
         i.putExtra("codSimId", codSimId);
+        i.putExtra("calActId", ""+calendarObject.getId());
         startActivity(i);
     }
 

@@ -4,27 +4,27 @@ import java.util.List;
 
 
 public class CalendarObject implements Comparable<CalendarObject> {
-    String id;
+    int id;
     String fecha;
     String diaSemana;
     String mes;
-    List<ActivitySchedule> activitiesSchedule;
+    List<ActivitySchedule> actividades;
 
     public CalendarObject() {}
 
-    public CalendarObject(String id, String fecha, String diaSemana, String mes, List<ActivitySchedule> activitiesSchedule) {
+    public CalendarObject(int id, String fecha, String diaSemana, String mes, List<ActivitySchedule> actividades) {
         this.id = id;
         this.fecha = fecha;
         this.diaSemana = diaSemana;
         this.mes = mes;
-        this.activitiesSchedule = activitiesSchedule;
+        this.actividades = actividades;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -52,12 +52,13 @@ public class CalendarObject implements Comparable<CalendarObject> {
         this.mes = mes;
     }
 
-    public List<ActivitySchedule> getActivitiesSchedule() {
-        return activitiesSchedule;
+
+    public List<ActivitySchedule> getActividades() {
+        return actividades;
     }
 
-    public void setActivitiesSchedule(List<ActivitySchedule> activitiesSchedule) {
-        this.activitiesSchedule = activitiesSchedule;
+    public void setActividades(List<ActivitySchedule> actividades) {
+        this.actividades = actividades;
     }
 
     @Override
