@@ -27,7 +27,7 @@ public class ActivityScheduleActivity extends AppCompatActivity implements Activ
     private String type;
     private String uid;
     private String codSimId;
-    private String calActId;
+    private String calObjId;
 
     private ActivityScheduleActivity activityScheduleActivity;
 
@@ -46,7 +46,7 @@ public class ActivityScheduleActivity extends AppCompatActivity implements Activ
         type = bundle.getString("type");
         uid = bundle.getString("uid");
         codSimId = bundle.getString("codSimId");
-        calActId = bundle.getString("calActId");
+        calObjId = bundle.getString("calObjId");
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
 
@@ -57,7 +57,7 @@ public class ActivityScheduleActivity extends AppCompatActivity implements Activ
         recyclerView.setLayoutManager(manager);
 
         FirebaseDatabase.getInstance().getReference(FirebaseReferences.USER_REFERENCE + "/" + uid + "/" + FirebaseReferences.SYMBOLIC_CODE_REFERENCE + "/" + codSimId +
-                "/" + FirebaseReferences.CALENDAR_OBJECT_REFERENCE + "/" + calActId)
+                "/" + FirebaseReferences.CALENDAR_OBJECT_REFERENCE + "/" + calObjId)
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -93,6 +93,7 @@ public class ActivityScheduleActivity extends AppCompatActivity implements Activ
                 i.putExtra("type", type);
                 i.putExtra("uid", uid);
                 i.putExtra("codSimId", codSimId);
+                i.putExtra("calObjId", calObjId);
                 i.putExtra("action", "crear");
                 startActivity(i);
             }
@@ -112,7 +113,7 @@ public class ActivityScheduleActivity extends AppCompatActivity implements Activ
 
     @Override
     public boolean onSupportNavigateUp() {
-        Intent i = new Intent(this, ActionsActivity.class);
+        Intent i = new Intent(this, CalendarActivity.class);
         i.putExtra("type", type);
         i.putExtra("uid", uid);
         i.putExtra("codSimId", codSimId);
