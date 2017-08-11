@@ -12,7 +12,9 @@ import android.view.View;
 
 import com.comtietea.comtietea.Domain.ActivitySchedule;
 import com.comtietea.comtietea.Domain.CalendarObject;
+import com.comtietea.comtietea.Domain.CommonWord;
 import com.comtietea.comtietea.Domain.FirebaseReferences;
+import com.comtietea.comtietea.Domain.SemanticField;
 import com.comtietea.comtietea.Domain.SymbolicCode;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -64,19 +66,48 @@ public class ActivityScheduleActivity extends AppCompatActivity implements Activ
                         actividades.clear();
                         CalendarObject calendarObject = dataSnapshot.getValue(CalendarObject.class);
                         if (calendarObject.getActividades() != null) {
-                            for (ActivitySchedule activitySchedule : calendarObject.getActividades()) {
-                                if (activitySchedule != null) {
-                                    actividades.add(activitySchedule);
+                            for (final ActivitySchedule activitySchedule : calendarObject.getActividades()) {
+                                if (activitySchedule != null && activitySchedule.getId() != -1) {
+                                    FirebaseDatabase.getInstance().getReference(FirebaseReferences.USER_REFERENCE + "/" + uid + "/" + FirebaseReferences.SYMBOLIC_CODE_REFERENCE + "/" + codSimId +
+                                            "/" + FirebaseReferences.SEMANTIC_FIELD_REFERENCE + "/" + activitySchedule.getCamSemId()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(DataSnapshot dataSnapshot) {
+                                            SemanticField sf = dataSnapshot.getValue(SemanticField.class);
+                                            if(sf != null && sf.getId() != -1 && sf.getId() == activitySchedule.getCamSemId()) {
+                                                FirebaseDatabase.getInstance().getReference(FirebaseReferences.USER_REFERENCE + "/" + uid + "/" + FirebaseReferences.SYMBOLIC_CODE_REFERENCE + "/" + codSimId +
+                                                        "/" + FirebaseReferences.SEMANTIC_FIELD_REFERENCE + "/" + sf.getId() + "/" + FirebaseReferences.COMMON_WORD_REFERENCE + "/" +
+                                                        activitySchedule.getPalHabId()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                                    @Override
+                                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                                        CommonWord cw = dataSnapshot.getValue(CommonWord.class);
+                                                        if (cw != null && cw.getId() != -1) {
+                                                            actividades.add(activitySchedule);
+
+                                                            if (actividades.size() >= 2) {
+                                                                Collections.sort(actividades);
+                                                                Collections.reverse(actividades);
+                                                            }
+
+                                                            adapter.notifyDataSetChanged();
+                                                        }
+                                                    }
+
+                                                    @Override
+                                                    public void onCancelled(DatabaseError databaseError) {
+
+                                                    }
+                                                });
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onCancelled(DatabaseError databaseError) {
+
+                                        }
+                                    });
                                 }
                             }
                         }
-
-                        if (actividades.size() >= 2) {
-                            Collections.sort(actividades);
-                            Collections.reverse(actividades);
-                        }
-
-                        adapter.notifyDataSetChanged();
                     }
 
                     @Override
@@ -104,11 +135,18 @@ public class ActivityScheduleActivity extends AppCompatActivity implements Activ
 
     @Override
     public void onItemClick(ActivitySchedule activitySchedule) {
-        /*Intent i = new Intent(this, CreateActivityScheduleActivity.class);
+        Intent i = new Intent(this, CommonWordDetailActivity.class);
         i.putExtra("type", type);
         i.putExtra("uid", uid);
         i.putExtra("codSimId", codSimId);
-        startActivity(i);*/
+        i.putExtra("camSemId", ""+activitySchedule.getCamSemId());
+        i.putExtra("color", ""+activitySchedule.getColor());
+        i.putExtra("nombreCampoSemantico", "");
+        i.putExtra("palHabId", "" + activitySchedule.getPalHabId());
+        i.putExtra("anterior", "agenda");
+        i.putExtra("calObjId", calObjId);
+        i.putExtra("actSchId", ""+activitySchedule.getId());
+        startActivity(i);
     }
 
     @Override

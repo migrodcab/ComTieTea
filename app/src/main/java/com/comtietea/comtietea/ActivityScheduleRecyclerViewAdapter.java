@@ -105,7 +105,6 @@ public class ActivityScheduleRecyclerViewAdapter extends RecyclerView.Adapter<Ac
 
             hora.setText(actividad.getHora());
             nombre.setText(actividad.getCamSemId() + " - " + actividad.getPalHabId());
-            Log.i("PRUEBA", hora.getText().toString());
         }
 
 

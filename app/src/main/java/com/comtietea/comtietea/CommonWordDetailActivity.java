@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.comtietea.comtietea.Domain.ActivitySchedule;
 import com.comtietea.comtietea.Domain.CommonWord;
 import com.comtietea.comtietea.Domain.FirebaseReferences;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -38,6 +39,9 @@ public class CommonWordDetailActivity extends AppCompatActivity {
     private String color;
     private String nombreCampoSemantico;
     private String palHabId;
+    private String anterior;
+    private String calObjId;
+    private String actSchId;
 
     private ImageView img;
     private TextView name;
@@ -70,6 +74,9 @@ public class CommonWordDetailActivity extends AppCompatActivity {
         color = bundle.getString("color");
         nombreCampoSemantico = bundle.getString("nombreCampoSemantico");
         palHabId = bundle.getString("palHabId");
+        anterior = bundle.getString("anterior");
+        calObjId = bundle.getString("calObjId");
+        actSchId = bundle.getString("actSchId");
 
         dbRef = FirebaseDatabase.getInstance().getReference(FirebaseReferences.USER_REFERENCE + "/" + uid + "/" +
                 FirebaseReferences.SYMBOLIC_CODE_REFERENCE + "/" + codSimId + "/" + FirebaseReferences.SEMANTIC_FIELD_REFERENCE +
@@ -125,19 +132,34 @@ public class CommonWordDetailActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_edit:
-                Intent i = new Intent(this, CreateCommonWordActivity.class);
-                i.putExtra("type", type);
-                i.putExtra("uid", uid);
-                i.putExtra("codSimId", codSimId);
-                i.putExtra("camSemId", camSemId);
-                i.putExtra("color", color);
-                i.putExtra("nombreCampoSemantico", nombreCampoSemantico);
-                i.putExtra("palHabId", palHabId);
-                i.putExtra("action", "editar");
-                startActivity(i);
+                if (anterior.equals("comunicacion")) {
+                    Intent i = new Intent(this, CreateCommonWordActivity.class);
+                    i.putExtra("type", type);
+                    i.putExtra("uid", uid);
+                    i.putExtra("codSimId", codSimId);
+                    i.putExtra("camSemId", camSemId);
+                    i.putExtra("color", color);
+                    i.putExtra("nombreCampoSemantico", nombreCampoSemantico);
+                    i.putExtra("palHabId", palHabId);
+                    i.putExtra("action", "editar");
+                    startActivity(i);
+                } else if (anterior.equals("agenda")) {
+                    Intent i = new Intent(this, CreateActivityScheduleActivity.class);
+                    i.putExtra("type", type);
+                    i.putExtra("uid", uid);
+                    i.putExtra("codSimId", codSimId);
+                    i.putExtra("calObjId", calObjId);
+                    i.putExtra("actSchId", actSchId);
+                    i.putExtra("action", "editar");
+                    startActivity(i);
+                }
                 return true;
             case R.id.action_delete:
-                deleteCommonWord();
+                if (anterior.equals("comunicacion")) {
+                    deleteCommonWord();
+                } else if (anterior.equals("agenda")) {
+                    deleteActivitySchedule();
+                }
                 return true;
             case R.id.action_settings:
                 Intent intent = new Intent(this, ProfileInfoActivity.class);
@@ -206,6 +228,45 @@ public class CommonWordDetailActivity extends AppCompatActivity {
         dialog.show();
     }
 
+    private void deleteActivitySchedule() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("¿Desea borrar esta actividad?").setCancelable(false)
+                .setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        final ProgressDialog dialogAux = new ProgressDialog(commonWordDetailActivity);
+                        dialogAux.setTitle("Borrando actividad");
+                        dialogAux.show();
+
+                        dbRef = FirebaseDatabase.getInstance().getReference(
+                                FirebaseReferences.USER_REFERENCE + "/" + uid + "/" + FirebaseReferences.SYMBOLIC_CODE_REFERENCE + "/" + codSimId + "/" +
+                                        FirebaseReferences.CALENDAR_OBJECT_REFERENCE + "/" + calObjId + "/" + FirebaseReferences.ACTIVITY_SCHEDULE_REFERENCE +
+                                        "/" + actSchId);
+
+                        dbRef.setValue(new ActivitySchedule(-1, null, null, null, null, null, -1, -1, -1));
+                        dialogAux.dismiss();
+
+                        Intent i = new Intent(commonWordDetailActivity, ActivityScheduleActivity.class);
+                        i.putExtra("type", type);
+                        i.putExtra("uid", uid);
+                        i.putExtra("codSimId", codSimId);
+                        i.putExtra("calObjId", calObjId);
+                        Toast.makeText(getApplicationContext(), "La actividad ha sido borrada correctamente.", Toast.LENGTH_SHORT).show();
+                        startActivity(i);
+
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+        AlertDialog dialog = builder.create();
+        dialog.setTitle("Confirmar");
+        dialog.show();
+    }
+
     public void suenaPalabra(View view) {
         textToSpeech.speak(name.getText().toString(), TextToSpeech.QUEUE_FLUSH, null);
     }
@@ -220,13 +281,22 @@ public class CommonWordDetailActivity extends AppCompatActivity {
 
     @Override
     public boolean onSupportNavigateUp() {
-        Intent i = new Intent(this, CommonWordActivity.class);
-        i.putExtra("type", type);
-        i.putExtra("uid", uid);
-        i.putExtra("codSimId", codSimId);
-        i.putExtra("camSemId", camSemId);
-        i.putExtra("color", color);
-        startActivity(i);
+        if (anterior.equals("comunicacion")) {
+            Intent i = new Intent(this, CommonWordActivity.class);
+            i.putExtra("type", type);
+            i.putExtra("uid", uid);
+            i.putExtra("codSimId", codSimId);
+            i.putExtra("camSemId", camSemId);
+            i.putExtra("color", color);
+            startActivity(i);
+        } else if (anterior.equals("agenda")) {
+            Intent i = new Intent(this, ActivityScheduleActivity.class);
+            i.putExtra("type", type);
+            i.putExtra("uid", uid);
+            i.putExtra("codSimId", codSimId);
+            i.putExtra("calObjId", calObjId);
+            startActivity(i);
+        }
         return false;
     }
 }

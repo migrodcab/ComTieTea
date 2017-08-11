@@ -50,11 +50,14 @@ public class CreateActivityScheduleActivity extends AppCompatActivity {
     private String action;
     private String codSimId;
     private String calObjId;
+    private String actSchId;
 
     private List<String> palabras = new ArrayList<String>();
     private List<SemanticField> camposSemanticos = new ArrayList<>();
 
     private CreateActivityScheduleActivity createActivityScheduleActivity;
+
+    private ActivitySchedule activitySchedule;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +80,7 @@ public class CreateActivityScheduleActivity extends AppCompatActivity {
         action = bundle.getString("action");
         codSimId = bundle.getString("codSimId");
         calObjId = bundle.getString("calObjId");
+        actSchId = bundle.getString("actSchId");
 
         dbRef = FirebaseDatabase.getInstance().getReference(
                 FirebaseReferences.USER_REFERENCE + "/" + uid + "/" + FirebaseReferences.SYMBOLIC_CODE_REFERENCE + "/" + codSimId);
@@ -84,12 +88,15 @@ public class CreateActivityScheduleActivity extends AppCompatActivity {
         dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                palabras.clear();
+                camposSemanticos.clear();
                 SymbolicCode codigo = dataSnapshot.getValue(SymbolicCode.class);
                 if (codigo != null && codigo.getCamposSemanticos() != null) {
                     for (SemanticField campoSemantico : codigo.getCamposSemanticos()) {
-                        if (campoSemantico != null && campoSemantico.getPalabrasHabituales() != null) {
+                        if (campoSemantico != null && campoSemantico.getId() != -1 && campoSemantico.getPalabrasHabituales() != null) {
                             camposSemanticos.add(campoSemantico);
                             for (CommonWord palabraHabitual : campoSemantico.getPalabrasHabituales()) {
+                                if(palabraHabitual != null && palabraHabitual.getId() != -1)
                                 palabras.add(palabraHabitual.getNombre() + " - " + campoSemantico.getNombre());
                             }
                         }
@@ -126,17 +133,82 @@ public class CreateActivityScheduleActivity extends AppCompatActivity {
 
             }
         });
+
+        if (action.equals("editar")) {
+            dbRef = FirebaseDatabase.getInstance().getReference(
+                    FirebaseReferences.USER_REFERENCE + "/" + uid + "/" + FirebaseReferences.SYMBOLIC_CODE_REFERENCE + "/" + codSimId + "/" +
+                            FirebaseReferences.CALENDAR_OBJECT_REFERENCE + "/" + calObjId + "/" + FirebaseReferences.ACTIVITY_SCHEDULE_REFERENCE +
+                            "/" + actSchId);
+            dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    activitySchedule = dataSnapshot.getValue(ActivitySchedule.class);
+
+                    hora.setText(activitySchedule.getHora());
+                    autoComplete.setText(activitySchedule.getNombre());
+                    if (activitySchedule.getAlarma().equals("Si")) {
+                        spinner1.setSelection(0);
+                    } else {
+                        spinner1.setSelection(1);
+                    }
+                    if (activitySchedule.getAviso().equals("Si")) {
+                        spinner2.setSelection(0);
+
+                        switch (activitySchedule.getAntelacion()) {
+                            case "5 Minutos":
+                                spinner3.setSelection(0);
+                                break;
+                            case "10 Minutos":
+                                spinner3.setSelection(1);
+                                break;
+                            case "15 Minutos":
+                                spinner3.setSelection(2);
+                                break;
+                            case "30 Minutos":
+                                spinner3.setSelection(3);
+                                break;
+                            case "1 Hora":
+                                spinner3.setSelection(4);
+                                break;
+                        }
+
+                    } else {
+                        spinner2.setSelection(1);
+                        spinner3.setVisibility(View.GONE);
+                    }
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+        }
     }
 
     public void botonHora(View v) {
-        final Calendar c = Calendar.getInstance();
-        int hour = c.get(Calendar.HOUR_OF_DAY);
-        int minutes = c.get(Calendar.MINUTE);
+        int hour, minutes;
+
+        String[] horaArray = hora.getText().toString().split(":");
+        hour = Integer.parseInt(horaArray[0]);
+        minutes = Integer.parseInt(horaArray[1]);
+
 
         TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                hora.setText(hourOfDay + ":" + minute);
+                String hourAux, minuteAux;
+
+                hourAux = "" + hourOfDay;
+                minuteAux = "" + minute;
+
+                if (hourAux.length() == 1)
+                    hourAux = "0" + hourAux;
+                if (minuteAux.length() == 1)
+                    minuteAux = "0" + minuteAux;
+
+                hora.setText(hourAux + ":" + minuteAux);
             }
         }, hour, minutes, true);
         timePickerDialog.show();
@@ -146,6 +218,7 @@ public class CreateActivityScheduleActivity extends AppCompatActivity {
     public void botonGuardar(View v) {
         String antelacion;
         int camSemId, palHabId, color;
+        List<Integer> datos;
 
         if (spinner2.getSelectedItem().toString().equals("Si")) {
             antelacion = spinner3.getSelectedItem().toString();
@@ -153,53 +226,95 @@ public class CreateActivityScheduleActivity extends AppCompatActivity {
             antelacion = null;
         }
 
-        camSemId = encuentraPalabraHabitual(autoComplete.getText().toString()).get(0);
-        color = encuentraPalabraHabitual(autoComplete.getText().toString()).get(1);
-        palHabId = encuentraPalabraHabitual(autoComplete.getText().toString()).get(2);
+        if (!autoComplete.getText().equals("")) {
+            datos = encuentraPalabraHabitual(autoComplete.getText().toString());
+            if (datos != null) {
 
-        final ActivitySchedule activitySchedule = new ActivitySchedule(100, hora.getText().toString(), spinner1.getSelectedItem().toString(), spinner2.getSelectedItem().toString(), antelacion, camSemId, palHabId, color);
-        dbRef = FirebaseDatabase.getInstance().getReference(
-                FirebaseReferences.USER_REFERENCE + "/" + uid + "/" + FirebaseReferences.SYMBOLIC_CODE_REFERENCE + "/" + codSimId + "/" +
-        FirebaseReferences.CALENDAR_OBJECT_REFERENCE + "/" + calObjId);
-        dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                String uploadId = "" + dataSnapshot.child(FirebaseReferences.ACTIVITY_SCHEDULE_REFERENCE).getChildrenCount();
-                activitySchedule.setId(new Integer(uploadId));
-                dataSnapshot.child(FirebaseReferences.ACTIVITY_SCHEDULE_REFERENCE).getRef().child(uploadId).setValue(activitySchedule);
+                camSemId = datos.get(0);
+                color = datos.get(1);
+                palHabId = datos.get(2);
 
-                Toast.makeText(getApplicationContext(), "La actividad ha sido creada correctamente.", Toast.LENGTH_SHORT).show();
+                if (action.equals("crear")) {
+                    final ActivitySchedule activitySchedule = new ActivitySchedule(100, autoComplete.getText().toString(), hora.getText().toString(), spinner1.getSelectedItem().toString(), spinner2.getSelectedItem().toString(), antelacion, camSemId, palHabId, color);
+                    dbRef = FirebaseDatabase.getInstance().getReference(
+                            FirebaseReferences.USER_REFERENCE + "/" + uid + "/" + FirebaseReferences.SYMBOLIC_CODE_REFERENCE + "/" + codSimId + "/" +
+                                    FirebaseReferences.CALENDAR_OBJECT_REFERENCE + "/" + calObjId);
+                    dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            String uploadId = "" + dataSnapshot.child(FirebaseReferences.ACTIVITY_SCHEDULE_REFERENCE).getChildrenCount();
+                            activitySchedule.setId(new Integer(uploadId));
+                            dataSnapshot.child(FirebaseReferences.ACTIVITY_SCHEDULE_REFERENCE).getRef().child(uploadId).setValue(activitySchedule);
 
-                Intent i = new Intent(createActivityScheduleActivity, ActivityScheduleActivity.class);
-                i.putExtra("type", tipo);
-                i.putExtra("uid", uid);
-                i.putExtra("codSimId", codSimId);
-                i.putExtra("calObjId", calObjId);
-                startActivity(i);
+                            Toast.makeText(getApplicationContext(), "La actividad ha sido creada correctamente.", Toast.LENGTH_SHORT).show();
+
+                            Intent i = new Intent(createActivityScheduleActivity, ActivityScheduleActivity.class);
+                            i.putExtra("type", tipo);
+                            i.putExtra("uid", uid);
+                            i.putExtra("codSimId", codSimId);
+                            i.putExtra("calObjId", calObjId);
+                            startActivity(i);
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+                } else if (action.equals("editar")) {
+                    activitySchedule.setNombre(autoComplete.getText().toString());
+                    activitySchedule.setAlarma(spinner1.getSelectedItem().toString());
+                    activitySchedule.setAviso(spinner2.getSelectedItem().toString());
+                    activitySchedule.setAntelacion(antelacion);
+                    activitySchedule.setCamSemId(camSemId);
+                    activitySchedule.setColor(color);
+                    activitySchedule.setPalHabId(palHabId);
+
+                    dbRef.setValue(activitySchedule);
+                    Toast.makeText(getApplicationContext(), "La actividad ha sido editada correctamente.", Toast.LENGTH_SHORT).show();
+
+                    Intent i = new Intent(this, CommonWordDetailActivity.class);
+                    i.putExtra("type", tipo);
+                    i.putExtra("uid", uid);
+                    i.putExtra("codSimId", codSimId);
+                    i.putExtra("camSemId", ""+activitySchedule.getCamSemId());
+                    i.putExtra("color", ""+activitySchedule.getColor());
+                    i.putExtra("nombreCampoSemantico", "");
+                    i.putExtra("palHabId", "" + activitySchedule.getPalHabId());
+                    i.putExtra("anterior", "agenda");
+                    i.putExtra("calObjId", calObjId);
+                    i.putExtra("actSchId", ""+activitySchedule.getId());
+                    startActivity(i);
+                }
+            } else {
+                Toast.makeText(getApplicationContext(), "Por favor, indique una tarea ya existente.", Toast.LENGTH_SHORT).show();
             }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+        } else {
+            Toast.makeText(getApplicationContext(), "Por favor, rellene todos los campos.", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void botonCancelar(View v) {
         if (action.equals("crear")) {
-            Intent i = new Intent(this, ActivityScheduleActivity.class);
+            Intent i = new Intent(createActivityScheduleActivity, ActivityScheduleActivity.class);
             i.putExtra("type", tipo);
             i.putExtra("uid", uid);
             i.putExtra("codSimId", codSimId);
+            i.putExtra("calObjId", calObjId);
             startActivity(i);
         } else if (action.equals("editar")) {
-            /*Intent i = new Intent(this, CommonWordActivity.class);
+            Intent i = new Intent(this, CommonWordDetailActivity.class);
             i.putExtra("type", tipo);
             i.putExtra("uid", uid);
             i.putExtra("codSimId", codSimId);
-            i.putExtra("camSemId", ""+campoSemantico.getId());
-            i.putExtra("color", ""+campoSemantico.getColor());
-            startActivity(i);*/
+            i.putExtra("camSemId", ""+activitySchedule.getCamSemId());
+            i.putExtra("color", ""+activitySchedule.getColor());
+            i.putExtra("nombreCampoSemantico", "");
+            i.putExtra("palHabId", "" + activitySchedule.getPalHabId());
+            i.putExtra("anterior", "agenda");
+            i.putExtra("calObjId", calObjId);
+            i.putExtra("actSchId", ""+activitySchedule.getId());
+            startActivity(i);
         }
     }
 
@@ -207,16 +322,18 @@ public class CreateActivityScheduleActivity extends AppCompatActivity {
         List<Integer> res = new ArrayList<>();
         String nombreCampo, nombrePalabra;
 
-        Log.i("Hola1", palHab);
+        if (!palabras.contains(palHab)) {
+            return null;
+        }
+
         String[] nombres = palHab.trim().split(" - ");
-        Log.i("Hola2", nombres.toString());
         nombrePalabra = nombres[0];
         nombreCampo = nombres[1];
 
-        for(SemanticField campoSemantico : camposSemanticos) {
-            if(nombreCampo.equals(campoSemantico.getNombre())) {
-                for(CommonWord palabraHabitual : campoSemantico.getPalabrasHabituales()) {
-                    if(palabraHabitual != null && nombrePalabra.equals(palabraHabitual.getNombre())) {
+        for (SemanticField campoSemantico : camposSemanticos) {
+            if (nombreCampo.equals(campoSemantico.getNombre())) {
+                for (CommonWord palabraHabitual : campoSemantico.getPalabrasHabituales()) {
+                    if (palabraHabitual != null && nombrePalabra.equals(palabraHabitual.getNombre())) {
                         res.add(campoSemantico.getId());
                         res.add(campoSemantico.getColor());
                         res.add(palabraHabitual.getId());

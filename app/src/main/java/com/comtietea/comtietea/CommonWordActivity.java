@@ -131,6 +131,9 @@ public class CommonWordActivity extends AppCompatActivity implements CommonWordR
         i.putExtra("color", "" + color);
         i.putExtra("nombreCampoSemantico", nombreCampoSemantico);
         i.putExtra("palHabId", "" + palabraHabitual.getId());
+        i.putExtra("anterior", "comunicacion");
+        i.putExtra("calObjId", "");
+        i.putExtra("actSchId", "");
         startActivity(i);
     }
 

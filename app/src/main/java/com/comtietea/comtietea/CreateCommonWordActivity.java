@@ -279,8 +279,10 @@ public class CreateCommonWordActivity extends AppCompatActivity {
                                     i.putExtra("camSemId", camSemId);
                                     i.putExtra("color", "" + color);
                                     i.putExtra("nombreCampoSemantico", nombreCampoSemantico);
-                                    i.putExtra("palHabId", ""+palabraHabitual.getId());
-                                    startActivity(i);
+                                    i.putExtra("palHabId", palHabId);
+                                    i.putExtra("anterior", "comunicacion");
+                                    i.putExtra("calObjId", "");
+                                    i.putExtra("actSchId", "");
                                 }
                             });
                         }
@@ -310,8 +312,10 @@ public class CreateCommonWordActivity extends AppCompatActivity {
                             i.putExtra("camSemId", camSemId);
                             i.putExtra("color", "" + color);
                             i.putExtra("nombreCampoSemantico", nombreCampoSemantico);
-                            i.putExtra("palHabId", ""+palabraHabitual.getId());
-                            startActivity(i);
+                            i.putExtra("palHabId", palHabId);
+                            i.putExtra("anterior", "comunicacion");
+                            i.putExtra("calObjId", "");
+                            i.putExtra("actSchId", "");
                         }
                     });
                 }
@@ -329,8 +333,10 @@ public class CreateCommonWordActivity extends AppCompatActivity {
                 i.putExtra("camSemId", camSemId);
                 i.putExtra("color", "" + color);
                 i.putExtra("nombreCampoSemantico", nombreCampoSemantico);
-                i.putExtra("palHabId", ""+palabraHabitual.getId());
-                startActivity(i);
+                i.putExtra("palHabId", palHabId);
+                i.putExtra("anterior", "comunicacion");
+                i.putExtra("calObjId", "");
+                i.putExtra("actSchId", "");
             } else {
                 Toast.makeText(getApplicationContext(), "Por favor, rellene todos los campos.", Toast.LENGTH_SHORT).show();
             }
@@ -354,7 +360,10 @@ public class CreateCommonWordActivity extends AppCompatActivity {
             i.putExtra("camSemId", camSemId);
             i.putExtra("color", "" + color);
             i.putExtra("nombreCampoSemantico", nombreCampoSemantico);
-            i.putExtra("palHabId", ""+palabraHabitual.getId());
+            i.putExtra("palHabId", palHabId);
+            i.putExtra("anterior", "comunicacion");
+            i.putExtra("calObjId", "");
+            i.putExtra("actSchId", "");
             startActivity(i);
         }
     }

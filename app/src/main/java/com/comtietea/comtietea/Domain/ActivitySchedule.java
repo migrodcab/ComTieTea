@@ -2,6 +2,7 @@ package com.comtietea.comtietea.Domain;
 
 public class ActivitySchedule implements Comparable<ActivitySchedule> {
     int id;
+    String nombre;
     String hora;
     String alarma;
     String aviso;
@@ -12,8 +13,9 @@ public class ActivitySchedule implements Comparable<ActivitySchedule> {
 
     public ActivitySchedule() {}
 
-    public ActivitySchedule(int id, String hora, String alarma, String aviso, String antelacion, int camSemId, int palHabId, int color) {
+    public ActivitySchedule(int id, String nombre, String hora, String alarma, String aviso, String antelacion, int camSemId, int palHabId, int color) {
         this.id = id;
+        this.nombre = nombre;
         this.hora = hora;
         this.alarma = alarma;
         this.aviso = aviso;
@@ -29,6 +31,14 @@ public class ActivitySchedule implements Comparable<ActivitySchedule> {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public String getHora() {
