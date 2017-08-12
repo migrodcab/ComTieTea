@@ -232,7 +232,8 @@ public class CreateActivityScheduleActivity extends AppCompatActivity {
     public void botonGuardar(View v) {
         String antelacion;
         int camSemId, palHabId, color;
-        List<Integer> datos;
+        String url;
+        List<String> datos;
 
         if (spinner2.getSelectedItem().toString().equals("Si")) {
             antelacion = spinner3.getSelectedItem().toString();
@@ -244,12 +245,13 @@ public class CreateActivityScheduleActivity extends AppCompatActivity {
             datos = encuentraPalabraHabitual(autoComplete.getText().toString());
             if (datos != null) {
 
-                camSemId = datos.get(0);
-                color = datos.get(1);
-                palHabId = datos.get(2);
+                camSemId = Integer.parseInt(datos.get(0));
+                color = Integer.parseInt(datos.get(1));
+                palHabId = Integer.parseInt(datos.get(2));
+                url = datos.get(3);
 
                 if (action.equals("crear")) {
-                    final ActivitySchedule activitySchedule = new ActivitySchedule(100, autoComplete.getText().toString(), hora.getText().toString(), spinner1.getSelectedItem().toString(), spinner2.getSelectedItem().toString(), antelacion, camSemId, palHabId, color);
+                    final ActivitySchedule activitySchedule = new ActivitySchedule(100, autoComplete.getText().toString(), hora.getText().toString(), spinner1.getSelectedItem().toString(), spinner2.getSelectedItem().toString(), antelacion, camSemId, palHabId, color, url);
                     dbRef = FirebaseDatabase.getInstance().getReference(
                             FirebaseReferences.USER_REFERENCE + "/" + uid + "/" + FirebaseReferences.SYMBOLIC_CODE_REFERENCE + "/" + codSimId + "/" +
                                     FirebaseReferences.CALENDAR_OBJECT_REFERENCE + "/" + calObjId);
@@ -279,7 +281,7 @@ public class CreateActivityScheduleActivity extends AppCompatActivity {
                                         antelacion = 60;
                                         break;
                                 }
-                                establecerNotificacion(fecha, activitySchedule.getHora(), antelacion, activitySchedule.getId());
+                                establecerNotificacion(fecha, activitySchedule.getHora(), antelacion, activitySchedule.getId(), activitySchedule.getUrl(), activitySchedule.getNombre());
                             }
 
                             Toast.makeText(getApplicationContext(), "La actividad ha sido creada correctamente.", Toast.LENGTH_SHORT).show();
@@ -299,6 +301,9 @@ public class CreateActivityScheduleActivity extends AppCompatActivity {
                         }
                     });
                 } else if (action.equals("editar")) {
+                    String avisoAux = activitySchedule.getAviso();
+
+                    activitySchedule.setHora(hora.getText().toString());
                     activitySchedule.setNombre(autoComplete.getText().toString());
                     activitySchedule.setAlarma(spinner1.getSelectedItem().toString());
                     activitySchedule.setAviso(spinner2.getSelectedItem().toString());
@@ -306,9 +311,35 @@ public class CreateActivityScheduleActivity extends AppCompatActivity {
                     activitySchedule.setCamSemId(camSemId);
                     activitySchedule.setColor(color);
                     activitySchedule.setPalHabId(palHabId);
+                    activitySchedule.setUrl(url);
 
                     dbRef.setValue(activitySchedule);
                     Toast.makeText(getApplicationContext(), "La actividad ha sido editada correctamente.", Toast.LENGTH_SHORT).show();
+
+                    if(activitySchedule.getAviso().equals("Si")) {
+                        int antelacionAux = 0;
+                        switch (activitySchedule.getAntelacion()) {
+                            case "5 Minutos":
+                                antelacionAux = 5;
+                                break;
+                            case "10 Minutos":
+                                antelacionAux = 10;
+                                break;
+                            case "15 Minutos":
+                                antelacionAux = 15;
+                                break;
+                            case "30 Minutos":
+                                antelacionAux = 30;
+                                break;
+                            case "1 Hora":
+                                antelacionAux = 60;
+                                break;
+                        }
+
+                        establecerNotificacion(fecha, activitySchedule.getHora(), antelacionAux, activitySchedule.getId(), activitySchedule.getUrl(), activitySchedule.getNombre());
+                    } else if (activitySchedule.getAviso().equals("No") && avisoAux.equals("Si")) {
+                        borrarNotificacion(activitySchedule.getId());
+                    }
 
                     Intent i = new Intent(this, CommonWordDetailActivity.class);
                     i.putExtra("type", tipo);
@@ -321,6 +352,7 @@ public class CreateActivityScheduleActivity extends AppCompatActivity {
                     i.putExtra("anterior", "agenda");
                     i.putExtra("calObjId", calObjId);
                     i.putExtra("actSchId", ""+activitySchedule.getId());
+                    i.putExtra("fecha", fecha);
                     startActivity(i);
                 }
             } else {
@@ -352,12 +384,13 @@ public class CreateActivityScheduleActivity extends AppCompatActivity {
             i.putExtra("anterior", "agenda");
             i.putExtra("calObjId", calObjId);
             i.putExtra("actSchId", ""+activitySchedule.getId());
+            i.putExtra("fecha", fecha);
             startActivity(i);
         }
     }
 
-    private List<Integer> encuentraPalabraHabitual(String palHab) {
-        List<Integer> res = new ArrayList<>();
+    private List<String> encuentraPalabraHabitual(String palHab) {
+        List<String> res = new ArrayList<>();
         String nombreCampo, nombrePalabra;
 
         if (!palabras.contains(palHab)) {
@@ -372,9 +405,14 @@ public class CreateActivityScheduleActivity extends AppCompatActivity {
             if (nombreCampo.equals(campoSemantico.getNombre())) {
                 for (CommonWord palabraHabitual : campoSemantico.getPalabrasHabituales()) {
                     if (palabraHabitual != null && nombrePalabra.equals(palabraHabitual.getNombre())) {
-                        res.add(campoSemantico.getId());
-                        res.add(campoSemantico.getColor());
-                        res.add(palabraHabitual.getId());
+                        res.add(""+campoSemantico.getId());
+                        res.add(""+campoSemantico.getColor());
+                        res.add(""+palabraHabitual.getId());
+                        if(palabraHabitual.getImagen() != null) {
+                            res.add(palabraHabitual.getImagen().getImagenURL());
+                        } else {
+                            res.add("");
+                        }
 
                         break;
                     }
@@ -386,7 +424,7 @@ public class CreateActivityScheduleActivity extends AppCompatActivity {
         return res;
     }
 
-    private void establecerNotificacion(String fecha, String momento, int antelacion, int id){
+    private void establecerNotificacion(String fecha, String momento, int antelacion, int id, String url, String nombre){
         AlarmManager alarmManager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
         Calendar momentoNotificacion = Calendar.getInstance();
 
@@ -400,9 +438,22 @@ public class CreateActivityScheduleActivity extends AppCompatActivity {
         momentoNotificacion.set(year, month, day, hour, minute);
         momentoNotificacion.add(Calendar.MINUTE, -antelacion);
 
+        String[] nombres = nombre.trim().split(" - ");
+        String nombrePalabra = nombres[0];
+
         Intent intent  = new Intent(this, NotificationClass.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1995, intent,  PendingIntent.FLAG_CANCEL_CURRENT);
+        intent.putExtra("nombre", nombrePalabra);
+        intent.putExtra("url", url);
+        intent.putExtra("id", ""+id);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, id, intent,  PendingIntent.FLAG_CANCEL_CURRENT);
 
         alarmManager.set(AlarmManager.RTC_WAKEUP, momentoNotificacion.getTimeInMillis(), pendingIntent);
+    }
+
+    private void borrarNotificacion(int id) {
+        Intent intent  = new Intent(this, NotificationClass.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), id , intent, PendingIntent.FLAG_NO_CREATE);
+        AlarmManager alarmManager = (AlarmManager)getSystemService(getApplicationContext().ALARM_SERVICE);
+        alarmManager.cancel(pendingIntent);
     }
 }

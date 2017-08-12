@@ -149,6 +149,7 @@ public class ActivityScheduleActivity extends AppCompatActivity implements Activ
         i.putExtra("anterior", "agenda");
         i.putExtra("calObjId", calObjId);
         i.putExtra("actSchId", ""+activitySchedule.getId());
+        i.putExtra("fecha", fecha);
         startActivity(i);
     }
 

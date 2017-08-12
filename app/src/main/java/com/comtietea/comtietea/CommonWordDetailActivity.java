@@ -1,5 +1,7 @@
 package com.comtietea.comtietea;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -42,6 +44,7 @@ public class CommonWordDetailActivity extends AppCompatActivity {
     private String anterior;
     private String calObjId;
     private String actSchId;
+    private String fecha;
 
     private ImageView img;
     private TextView name;
@@ -77,6 +80,7 @@ public class CommonWordDetailActivity extends AppCompatActivity {
         anterior = bundle.getString("anterior");
         calObjId = bundle.getString("calObjId");
         actSchId = bundle.getString("actSchId");
+        fecha = bundle.getString("fecha");
 
         dbRef = FirebaseDatabase.getInstance().getReference(FirebaseReferences.USER_REFERENCE + "/" + uid + "/" +
                 FirebaseReferences.SYMBOLIC_CODE_REFERENCE + "/" + codSimId + "/" + FirebaseReferences.SEMANTIC_FIELD_REFERENCE +
@@ -151,6 +155,7 @@ public class CommonWordDetailActivity extends AppCompatActivity {
                     i.putExtra("calObjId", calObjId);
                     i.putExtra("actSchId", actSchId);
                     i.putExtra("action", "editar");
+                    i.putExtra("fecha", fecha);
                     startActivity(i);
                 }
                 return true;
@@ -243,17 +248,32 @@ public class CommonWordDetailActivity extends AppCompatActivity {
                                         FirebaseReferences.CALENDAR_OBJECT_REFERENCE + "/" + calObjId + "/" + FirebaseReferences.ACTIVITY_SCHEDULE_REFERENCE +
                                         "/" + actSchId);
 
-                        dbRef.setValue(new ActivitySchedule(-1, null, null, null, null, null, -1, -1, -1));
-                        dialogAux.dismiss();
+                        dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                ActivitySchedule activitySchedule = dataSnapshot.getValue(ActivitySchedule.class);
 
-                        Intent i = new Intent(commonWordDetailActivity, ActivityScheduleActivity.class);
-                        i.putExtra("type", type);
-                        i.putExtra("uid", uid);
-                        i.putExtra("codSimId", codSimId);
-                        i.putExtra("calObjId", calObjId);
-                        Toast.makeText(getApplicationContext(), "La actividad ha sido borrada correctamente.", Toast.LENGTH_SHORT).show();
-                        startActivity(i);
+                                if(activitySchedule.getAviso().equals("Si")) {
+                                    borrarNotificacion(Integer.parseInt(actSchId));
+                                }
 
+                                dbRef.setValue(new ActivitySchedule(-1, null, null, null, null, null, -1, -1, -1, null));
+                                dialogAux.dismiss();
+
+                                Intent i = new Intent(commonWordDetailActivity, ActivityScheduleActivity.class);
+                                i.putExtra("type", type);
+                                i.putExtra("uid", uid);
+                                i.putExtra("codSimId", codSimId);
+                                i.putExtra("calObjId", calObjId);
+                                Toast.makeText(getApplicationContext(), "La actividad ha sido borrada correctamente.", Toast.LENGTH_SHORT).show();
+                                startActivity(i);
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
                     }
                 })
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -295,8 +315,16 @@ public class CommonWordDetailActivity extends AppCompatActivity {
             i.putExtra("uid", uid);
             i.putExtra("codSimId", codSimId);
             i.putExtra("calObjId", calObjId);
+            i.putExtra("fecha", fecha);
             startActivity(i);
         }
         return false;
+    }
+
+    private void borrarNotificacion(int id) {
+        Intent intent  = new Intent(this, NotificationClass.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), id , intent, PendingIntent.FLAG_NO_CREATE);
+        AlarmManager alarmManager = (AlarmManager)getSystemService(getApplicationContext().ALARM_SERVICE);
+        alarmManager.cancel(pendingIntent);
     }
 }
