@@ -135,6 +135,7 @@ public class CommonWordActivity extends AppCompatActivity implements CommonWordR
         i.putExtra("calObjId", "");
         i.putExtra("actSchId", "");
         i.putExtra("fecha", "");
+        i.putExtra("alarma", "");
         startActivity(i);
     }
 

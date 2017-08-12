@@ -10,9 +10,12 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -45,10 +48,13 @@ public class CommonWordDetailActivity extends AppCompatActivity {
     private String calObjId;
     private String actSchId;
     private String fecha;
+    private String alarma;
 
     private ImageView img;
     private TextView name;
     private RelativeLayout relativeLayout;
+    private ImageButton imageButton;
+    private Button button;
 
     private CommonWordDetailActivity commonWordDetailActivity;
     private DatabaseReference dbRef;
@@ -65,6 +71,8 @@ public class CommonWordDetailActivity extends AppCompatActivity {
         img = (ImageView) findViewById(R.id.imageView);
         name = (TextView) findViewById(R.id.textView);
         relativeLayout = (RelativeLayout) findViewById(R.id.relativeLayout);
+        imageButton = (ImageButton) findViewById(R.id.imageButton);
+        button = (Button) findViewById(R.id.aceptar);
 
         commonWordDetailActivity = this;
 
@@ -81,6 +89,7 @@ public class CommonWordDetailActivity extends AppCompatActivity {
         calObjId = bundle.getString("calObjId");
         actSchId = bundle.getString("actSchId");
         fecha = bundle.getString("fecha");
+        alarma = bundle.getString("alarma");
 
         dbRef = FirebaseDatabase.getInstance().getReference(FirebaseReferences.USER_REFERENCE + "/" + uid + "/" +
                 FirebaseReferences.SYMBOLIC_CODE_REFERENCE + "/" + codSimId + "/" + FirebaseReferences.SEMANTIC_FIELD_REFERENCE +
@@ -123,12 +132,19 @@ public class CommonWordDetailActivity extends AppCompatActivity {
             }
         });
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if(alarma.equals("alarma")) {
+            imageButton.setVisibility(View.GONE);
+            button.setVisibility(View.VISIBLE);
+        } else {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_activity_actions, menu);
+        if(!alarma.equals("alarma")) {
+            getMenuInflater().inflate(R.menu.main_activity_actions, menu);
+        }
         return true;
     }
 
@@ -257,6 +273,10 @@ public class CommonWordDetailActivity extends AppCompatActivity {
                                     borrarNotificacion(Integer.parseInt(actSchId));
                                 }
 
+                                if(activitySchedule.getAlarma().equals("Si")) {
+                                    borrarAlarma(Integer.parseInt(actSchId));
+                                }
+
                                 dbRef.setValue(new ActivitySchedule(-1, null, null, null, null, null, -1, -1, -1, null));
                                 dialogAux.dismiss();
 
@@ -321,8 +341,37 @@ public class CommonWordDetailActivity extends AppCompatActivity {
         return false;
     }
 
+    public void aceptarAlarma(View view) {
+        dbRef = FirebaseDatabase.getInstance().getReference(
+                FirebaseReferences.USER_REFERENCE + "/" + uid + "/" + FirebaseReferences.SYMBOLIC_CODE_REFERENCE + "/" + codSimId + "/" +
+                        FirebaseReferences.CALENDAR_OBJECT_REFERENCE + "/" + calObjId + "/" + FirebaseReferences.ACTIVITY_SCHEDULE_REFERENCE +
+                        "/" + actSchId);
+        dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                ActivitySchedule activitySchedule = dataSnapshot.getValue(ActivitySchedule.class);
+
+                if(activitySchedule.getAlarma().equals("Si")) {
+                    borrarAlarma(Integer.parseInt(actSchId));
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
     private void borrarNotificacion(int id) {
         Intent intent  = new Intent(this, NotificationClass.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), id , intent, PendingIntent.FLAG_NO_CREATE);
+        AlarmManager alarmManager = (AlarmManager)getSystemService(getApplicationContext().ALARM_SERVICE);
+        alarmManager.cancel(pendingIntent);
+    }
+
+    private void borrarAlarma(int id) {
+        Intent intent  = new Intent(this, AlarmClass.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), id , intent, PendingIntent.FLAG_NO_CREATE);
         AlarmManager alarmManager = (AlarmManager)getSystemService(getApplicationContext().ALARM_SERVICE);
         alarmManager.cancel(pendingIntent);

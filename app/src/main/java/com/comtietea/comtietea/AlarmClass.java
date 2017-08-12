@@ -1,0 +1,73 @@
+package com.comtietea.comtietea;
+
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
+import android.os.Bundle;
+import android.support.v4.app.NotificationCompat;
+import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
+
+/**
+ * Created by HP on 12/08/2017.
+ */
+public class AlarmClass extends BroadcastReceiver {
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        Bundle bundle = intent.getExtras();
+
+        String type = bundle.getString("type");
+        String uid = bundle.getString("uid");
+        String codSimId = bundle.getString("codSimId");
+        String calObjId = bundle.getString("calObjId");
+        String actSchId = bundle.getString("actSchId");
+        String fecha = bundle.getString("fecha");
+        String camSemId = bundle.getString("camSemId");
+        String color = bundle.getString("color");
+        String palHabId = bundle.getString("palHabId");
+        int id = Integer.parseInt(bundle.getString("id"));
+
+        Intent i = createAlarm(context, id , type, uid, codSimId, calObjId, actSchId, fecha, camSemId, color, palHabId);
+
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(i);
+    }
+
+    private Intent createAlarm(final Context context, final int id, String type, String uid,
+                                    String codSimId, String calObjId, String actSchId, String fecha, String camSemId, String color, String palHabId) {
+        Intent i = new Intent(context, CommonWordDetailActivity.class);
+        i.putExtra("type", type);
+        i.putExtra("uid", uid);
+        i.putExtra("codSimId", codSimId);
+        i.putExtra("camSemId", camSemId);
+        i.putExtra("color", color);
+        i.putExtra("nombreCampoSemantico", "");
+        i.putExtra("palHabId", palHabId);
+        i.putExtra("anterior", "agenda");
+        i.putExtra("calObjId", calObjId);
+        i.putExtra("actSchId", actSchId);
+        i.putExtra("fecha", fecha);
+        i.putExtra("alarma", "alarma");
+
+        final PendingIntent notificIntent = PendingIntent.getActivity(context, id, i, 0);
+
+        Uri alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+        if (alarmUri == null)
+        {
+            alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        }
+        Ringtone ringtone = RingtoneManager.getRingtone(context, alarmUri);
+        ringtone.play();
+
+        return i;
+    }
+}

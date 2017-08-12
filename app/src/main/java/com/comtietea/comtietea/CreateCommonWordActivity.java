@@ -283,6 +283,8 @@ public class CreateCommonWordActivity extends AppCompatActivity {
                                     i.putExtra("anterior", "comunicacion");
                                     i.putExtra("calObjId", "");
                                     i.putExtra("actSchId", "");
+                                    i.putExtra("fecha", "");
+                                    i.putExtra("alarma", "");
                                 }
                             });
                         }
@@ -316,6 +318,8 @@ public class CreateCommonWordActivity extends AppCompatActivity {
                             i.putExtra("anterior", "comunicacion");
                             i.putExtra("calObjId", "");
                             i.putExtra("actSchId", "");
+                            i.putExtra("fecha", "");
+                            i.putExtra("alarma", "");
                         }
                     });
                 }
@@ -337,6 +341,8 @@ public class CreateCommonWordActivity extends AppCompatActivity {
                 i.putExtra("anterior", "comunicacion");
                 i.putExtra("calObjId", "");
                 i.putExtra("actSchId", "");
+                i.putExtra("fecha", "");
+                i.putExtra("alarma", "");
             } else {
                 Toast.makeText(getApplicationContext(), "Por favor, rellene todos los campos.", Toast.LENGTH_SHORT).show();
             }
@@ -364,6 +370,8 @@ public class CreateCommonWordActivity extends AppCompatActivity {
             i.putExtra("anterior", "comunicacion");
             i.putExtra("calObjId", "");
             i.putExtra("actSchId", "");
+            i.putExtra("fecha", "");
+            i.putExtra("alarma", "");
             startActivity(i);
         }
     }
