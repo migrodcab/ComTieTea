@@ -1,7 +1,10 @@
 package com.comtietea.comtietea;
 
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -32,6 +35,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 public class CreateActivityScheduleActivity extends AppCompatActivity {
@@ -51,6 +55,7 @@ public class CreateActivityScheduleActivity extends AppCompatActivity {
     private String codSimId;
     private String calObjId;
     private String actSchId;
+    private String fecha;
 
     private List<String> palabras = new ArrayList<String>();
     private List<SemanticField> camposSemanticos = new ArrayList<>();
@@ -81,6 +86,15 @@ public class CreateActivityScheduleActivity extends AppCompatActivity {
         codSimId = bundle.getString("codSimId");
         calObjId = bundle.getString("calObjId");
         actSchId = bundle.getString("actSchId");
+        fecha = bundle.getString("fecha");
+
+        if (action.equals("crear")) {
+            Calendar c = Calendar.getInstance();
+            int hour = c.get(Calendar.HOUR_OF_DAY);
+            int minutes = c.get(Calendar.MINUTE);
+
+            hora.setText(hour + ":" + minutes);
+        }
 
         dbRef = FirebaseDatabase.getInstance().getReference(
                 FirebaseReferences.USER_REFERENCE + "/" + uid + "/" + FirebaseReferences.SYMBOLIC_CODE_REFERENCE + "/" + codSimId);
@@ -246,6 +260,28 @@ public class CreateActivityScheduleActivity extends AppCompatActivity {
                             activitySchedule.setId(new Integer(uploadId));
                             dataSnapshot.child(FirebaseReferences.ACTIVITY_SCHEDULE_REFERENCE).getRef().child(uploadId).setValue(activitySchedule);
 
+                            if(activitySchedule.getAviso().equals("Si")) {
+                                int antelacion = 0;
+                                switch (activitySchedule.getAntelacion()) {
+                                    case "5 Minutos":
+                                        antelacion = 5;
+                                        break;
+                                    case "10 Minutos":
+                                        antelacion = 10;
+                                        break;
+                                    case "15 Minutos":
+                                        antelacion = 15;
+                                        break;
+                                    case "30 Minutos":
+                                        antelacion = 30;
+                                        break;
+                                    case "1 Hora":
+                                        antelacion = 60;
+                                        break;
+                                }
+                                establecerNotificacion(fecha, activitySchedule.getHora(), antelacion, activitySchedule.getId());
+                            }
+
                             Toast.makeText(getApplicationContext(), "La actividad ha sido creada correctamente.", Toast.LENGTH_SHORT).show();
 
                             Intent i = new Intent(createActivityScheduleActivity, ActivityScheduleActivity.class);
@@ -253,6 +289,7 @@ public class CreateActivityScheduleActivity extends AppCompatActivity {
                             i.putExtra("uid", uid);
                             i.putExtra("codSimId", codSimId);
                             i.putExtra("calObjId", calObjId);
+                            i.putExtra("fecha", fecha);
                             startActivity(i);
                         }
 
@@ -301,6 +338,7 @@ public class CreateActivityScheduleActivity extends AppCompatActivity {
             i.putExtra("uid", uid);
             i.putExtra("codSimId", codSimId);
             i.putExtra("calObjId", calObjId);
+            i.putExtra("fecha", fecha);
             startActivity(i);
         } else if (action.equals("editar")) {
             Intent i = new Intent(this, CommonWordDetailActivity.class);
@@ -346,5 +384,25 @@ public class CreateActivityScheduleActivity extends AppCompatActivity {
         }
 
         return res;
+    }
+
+    private void establecerNotificacion(String fecha, String momento, int antelacion, int id){
+        AlarmManager alarmManager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
+        Calendar momentoNotificacion = Calendar.getInstance();
+
+        int year = Integer.parseInt(fecha.substring(0, 4));
+        int month = Integer.parseInt(fecha.substring(5, 7)) - 1;
+        int day = Integer.parseInt(fecha.substring(8, 10));
+
+        int hour = Integer.parseInt(momento.substring(0, 2));
+        int minute = Integer.parseInt(momento.substring(3, 5));
+
+        momentoNotificacion.set(year, month, day, hour, minute);
+        momentoNotificacion.add(Calendar.MINUTE, -antelacion);
+
+        Intent intent  = new Intent(this, NotificationClass.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1995, intent,  PendingIntent.FLAG_CANCEL_CURRENT);
+
+        alarmManager.set(AlarmManager.RTC_WAKEUP, momentoNotificacion.getTimeInMillis(), pendingIntent);
     }
 }

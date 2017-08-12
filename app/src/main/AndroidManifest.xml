@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.comtietea.comtietea">
+    
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM"/>
 
     <application
         android:allowBackup="true"
@@ -25,7 +27,9 @@
         <activity android:name=".ProfileInfoActivity" />
         <activity android:name=".CalendarActivity" />
         <activity android:name=".ActivityScheduleActivity" />
-        <activity android:name=".CreateActivityScheduleActivity"></activity>
+        <activity android:name=".CreateActivityScheduleActivity"/>
+        
+        <receiver android:name=".NotificationClass"/>
     </application>
 
 </manifest>

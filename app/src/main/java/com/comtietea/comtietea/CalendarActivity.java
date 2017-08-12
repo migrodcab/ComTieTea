@@ -181,6 +181,7 @@ public class CalendarActivity extends AppCompatActivity implements CalendarObjec
         i.putExtra("uid", uid);
         i.putExtra("codSimId", codSimId);
         i.putExtra("calObjId", ""+calendarObject.getId());
+        i.putExtra("fecha", calendarObject.getFecha());
         startActivity(i);
     }
 

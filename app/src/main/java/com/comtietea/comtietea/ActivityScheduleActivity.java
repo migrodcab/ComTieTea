@@ -30,6 +30,7 @@ public class ActivityScheduleActivity extends AppCompatActivity implements Activ
     private String uid;
     private String codSimId;
     private String calObjId;
+    private String fecha;
 
     private ActivityScheduleActivity activityScheduleActivity;
 
@@ -49,6 +50,7 @@ public class ActivityScheduleActivity extends AppCompatActivity implements Activ
         uid = bundle.getString("uid");
         codSimId = bundle.getString("codSimId");
         calObjId = bundle.getString("calObjId");
+        fecha = bundle.getString("fecha");
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
 
@@ -126,6 +128,7 @@ public class ActivityScheduleActivity extends AppCompatActivity implements Activ
                 i.putExtra("codSimId", codSimId);
                 i.putExtra("calObjId", calObjId);
                 i.putExtra("action", "crear");
+                i.putExtra("fecha", fecha);
                 startActivity(i);
             }
         });
