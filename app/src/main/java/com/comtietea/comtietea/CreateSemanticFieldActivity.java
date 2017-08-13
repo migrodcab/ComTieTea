@@ -170,7 +170,17 @@ public class CreateSemanticFieldActivity extends AppCompatActivity {
 
                         Random rnd = new Random();
                         int color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
-                        final SemanticField campoSemantico = new SemanticField(100, name.getText().toString(), new FirebaseImage(taskSnapshot.getDownloadUrl().toString(), path), new Integer(spinner.getSelectedItem().toString()), color, new ArrayList<CommonWord>());
+
+                        int relevancia;
+                        if(spinner.getSelectedItem().toString().contains("Menos")) {
+                            relevancia = 1;
+                        } else if (spinner.getSelectedItem().toString().contains("Más")) {
+                            relevancia = 10;
+                        } else {
+                            relevancia = new Integer(spinner.getSelectedItem().toString());
+                        }
+
+                        final SemanticField campoSemantico = new SemanticField(100, name.getText().toString(), new FirebaseImage(taskSnapshot.getDownloadUrl().toString(), path), relevancia, color, new ArrayList<CommonWord>());
 
                         dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
@@ -213,7 +223,17 @@ public class CreateSemanticFieldActivity extends AppCompatActivity {
             } else if (imgUri == null && tipo.equals("Palabras") && !name.getText().toString().equals("")) {
                 Random rnd = new Random();
                 int color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
-                final SemanticField campoSemantico = new SemanticField(100, name.getText().toString(), null, new Integer(spinner.getSelectedItem().toString()), color, new ArrayList<CommonWord>());
+
+                int relevancia;
+                if(spinner.getSelectedItem().toString().contains("Menos")) {
+                    relevancia = 1;
+                } else if (spinner.getSelectedItem().toString().contains("Más")) {
+                    relevancia = 10;
+                } else {
+                    relevancia = new Integer(spinner.getSelectedItem().toString());
+                }
+
+                final SemanticField campoSemantico = new SemanticField(100, name.getText().toString(), null, relevancia, color, new ArrayList<CommonWord>());
 
                 dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -259,8 +279,17 @@ public class CreateSemanticFieldActivity extends AppCompatActivity {
 
                                     Toast.makeText(getApplicationContext(), "Imagen subida", Toast.LENGTH_SHORT).show();
 
+                                    int relevancia;
+                                    if(spinner.getSelectedItem().toString().contains("Menos")) {
+                                        relevancia = 1;
+                                    } else if (spinner.getSelectedItem().toString().contains("Más")) {
+                                        relevancia = 10;
+                                    } else {
+                                        relevancia = new Integer(spinner.getSelectedItem().toString());
+                                    }
+
                                     campoSemantico.setNombre(name.getText().toString());
-                                    campoSemantico.setRelevancia(new Integer(spinner.getSelectedItem().toString()));
+                                    campoSemantico.setRelevancia(relevancia);
                                     campoSemantico.setImagen(new FirebaseImage(taskSnapshot.getDownloadUrl().toString(), path));
 
                                     dbRef.setValue(campoSemantico);
@@ -286,8 +315,17 @@ public class CreateSemanticFieldActivity extends AppCompatActivity {
 
                             Toast.makeText(getApplicationContext(), "Imagen subida", Toast.LENGTH_SHORT).show();
 
+                            int relevancia;
+                            if(spinner.getSelectedItem().toString().contains("Menos")) {
+                                relevancia = 1;
+                            } else if (spinner.getSelectedItem().toString().contains("Más")) {
+                                relevancia = 10;
+                            } else {
+                                relevancia = new Integer(spinner.getSelectedItem().toString());
+                            }
+
                             campoSemantico.setNombre(name.getText().toString());
-                            campoSemantico.setRelevancia(new Integer(spinner.getSelectedItem().toString()));
+                            campoSemantico.setRelevancia(relevancia);
                             campoSemantico.setImagen(new FirebaseImage(taskSnapshot.getDownloadUrl().toString(), path));
 
                             dbRef.setValue(campoSemantico);
@@ -303,8 +341,17 @@ public class CreateSemanticFieldActivity extends AppCompatActivity {
                     });
                 }
             } else if (imgUri == null && !name.getText().toString().equals("")) {
+                int relevancia;
+                if(spinner.getSelectedItem().toString().contains("Menos")) {
+                    relevancia = 1;
+                } else if (spinner.getSelectedItem().toString().contains("Más")) {
+                    relevancia = 10;
+                } else {
+                    relevancia = new Integer(spinner.getSelectedItem().toString());
+                }
+
                 campoSemantico.setNombre(name.getText().toString());
-                campoSemantico.setRelevancia(new Integer(spinner.getSelectedItem().toString()));
+                campoSemantico.setRelevancia(relevancia);
                 dbRef.setValue(campoSemantico);
 
                 Toast.makeText(getApplicationContext(), "El campo semántico ha sido editado correctamente.", Toast.LENGTH_SHORT).show();

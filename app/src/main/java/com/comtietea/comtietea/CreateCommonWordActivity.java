@@ -173,7 +173,16 @@ public class CreateCommonWordActivity extends AppCompatActivity {
 
                         Toast.makeText(getApplicationContext(), "Imagen subida", Toast.LENGTH_SHORT).show();
 
-                        final CommonWord palabraHabitual = new CommonWord(100, name.getText().toString(), new FirebaseImage(taskSnapshot.getDownloadUrl().toString(), path), new Integer(spinner.getSelectedItem().toString()));
+                        int relevancia;
+                        if(spinner.getSelectedItem().toString().contains("Menos")) {
+                            relevancia = 1;
+                        } else if (spinner.getSelectedItem().toString().contains("Más")) {
+                            relevancia = 10;
+                        } else {
+                            relevancia = new Integer(spinner.getSelectedItem().toString());
+                        }
+
+                        final CommonWord palabraHabitual = new CommonWord(100, name.getText().toString(), new FirebaseImage(taskSnapshot.getDownloadUrl().toString(), path), relevancia);
 
                         dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
@@ -216,7 +225,16 @@ public class CreateCommonWordActivity extends AppCompatActivity {
                             }
                         });
             } else if (imgUri == null && tipo.equals("Palabras") && !name.getText().toString().equals("")) {
-                final CommonWord palabraHabitual = new CommonWord(100, name.getText().toString(), null, new Integer(spinner.getSelectedItem().toString()));
+                int relevancia;
+                if(spinner.getSelectedItem().toString().contains("Menos")) {
+                    relevancia = 1;
+                } else if (spinner.getSelectedItem().toString().contains("Más")) {
+                    relevancia = 10;
+                } else {
+                    relevancia = new Integer(spinner.getSelectedItem().toString());
+                }
+
+                final CommonWord palabraHabitual = new CommonWord(100, name.getText().toString(), null, relevancia);
 
                 dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -264,8 +282,17 @@ public class CreateCommonWordActivity extends AppCompatActivity {
 
                                     Toast.makeText(getApplicationContext(), "Imagen subida", Toast.LENGTH_SHORT).show();
 
+                                    int relevancia;
+                                    if(spinner.getSelectedItem().toString().contains("Menos")) {
+                                        relevancia = 1;
+                                    } else if (spinner.getSelectedItem().toString().contains("Más")) {
+                                        relevancia = 10;
+                                    } else {
+                                        relevancia = new Integer(spinner.getSelectedItem().toString());
+                                    }
+
                                     palabraHabitual.setNombre(name.getText().toString());
-                                    palabraHabitual.setRelevancia(new Integer(spinner.getSelectedItem().toString()));
+                                    palabraHabitual.setRelevancia(relevancia);
                                     palabraHabitual.setImagen(new FirebaseImage(taskSnapshot.getDownloadUrl().toString(), path));
 
                                     dbRef.setValue(palabraHabitual);
@@ -299,8 +326,17 @@ public class CreateCommonWordActivity extends AppCompatActivity {
 
                             Toast.makeText(getApplicationContext(), "Imagen subida", Toast.LENGTH_SHORT).show();
 
+                            int relevancia;
+                            if(spinner.getSelectedItem().toString().contains("Menos")) {
+                                relevancia = 1;
+                            } else if (spinner.getSelectedItem().toString().contains("Más")) {
+                                relevancia = 10;
+                            } else {
+                                relevancia = new Integer(spinner.getSelectedItem().toString());
+                            }
+
                             palabraHabitual.setNombre(name.getText().toString());
-                            palabraHabitual.setRelevancia(new Integer(spinner.getSelectedItem().toString()));
+                            palabraHabitual.setRelevancia(relevancia);
                             palabraHabitual.setImagen(new FirebaseImage(taskSnapshot.getDownloadUrl().toString(), path));
 
                             dbRef.setValue(palabraHabitual);
@@ -324,8 +360,17 @@ public class CreateCommonWordActivity extends AppCompatActivity {
                     });
                 }
             } else if (imgUri == null && !name.getText().toString().equals("")) {
+                int relevancia;
+                if(spinner.getSelectedItem().toString().contains("Menos")) {
+                    relevancia = 1;
+                } else if (spinner.getSelectedItem().toString().contains("Más")) {
+                    relevancia = 10;
+                } else {
+                    relevancia = new Integer(spinner.getSelectedItem().toString());
+                }
+
                 palabraHabitual.setNombre(name.getText().toString());
-                palabraHabitual.setRelevancia(new Integer(spinner.getSelectedItem().toString()));
+                palabraHabitual.setRelevancia(relevancia);
                 dbRef.setValue(palabraHabitual);
 
                 Toast.makeText(getApplicationContext(), "La palabra habitual ha sido editada correctamente.", Toast.LENGTH_SHORT).show();

@@ -8,7 +8,7 @@
 
     <string name="numbers_prompt">Importancia (1-10)</string>
     <string-array name="numbers">
-        <item>1</item>
+        <item>1 (Menos importante)</item>
         <item>2</item>
         <item>3</item>
         <item>4</item>
@@ -17,7 +17,7 @@
         <item>7</item>
         <item>8</item>
         <item>9</item>
-        <item>10</item>
+        <item>10 (Más importante)</item>
     </string-array>
 
     <string name="alarma_prompt">Alarma</string>
