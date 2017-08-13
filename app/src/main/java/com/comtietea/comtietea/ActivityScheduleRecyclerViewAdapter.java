@@ -70,8 +70,9 @@ public class ActivityScheduleRecyclerViewAdapter extends RecyclerView.Adapter<Ac
 
         public void setData(final ActivitySchedule actividad) {
             this.actividad = actividad;
+            int id = -10;
             Calendar c = Calendar.getInstance();
-            String horaAux;
+            String horaAux = "";
             String fechaAux;
 
             fechaAux = "" + c.get(Calendar.YEAR);
@@ -86,13 +87,11 @@ public class ActivityScheduleRecyclerViewAdapter extends RecyclerView.Adapter<Ac
                 fechaAux = fechaAux + "-" + c.get(Calendar.DATE);
             }
 
-            int id = -1;
-
             if(fechaAux.equals(fecha)) {
-                if (c.get(Calendar.HOUR) < 10) {
-                    horaAux = "0" + c.get(Calendar.HOUR);
+                if (c.get(Calendar.HOUR_OF_DAY) < 10) {
+                    horaAux = "0" + c.get(Calendar.HOUR_OF_DAY);
                 } else {
-                    horaAux = "" + c.get(Calendar.HOUR);
+                    horaAux = "" + c.get(Calendar.HOUR_OF_DAY);
                 }
                 if (c.get(Calendar.MINUTE) < 10) {
                     horaAux = horaAux + ":0" + c.get(Calendar.MINUTE);
@@ -100,24 +99,11 @@ public class ActivityScheduleRecyclerViewAdapter extends RecyclerView.Adapter<Ac
                     horaAux = horaAux + ":" + c.get(Calendar.MINUTE);
                 }
 
-                for (int i = 0; i < actividades.size(); i++) {
-                    ActivitySchedule actSchActual = actividades.get(i);
-                    ActivitySchedule actSchSiguiente;
-                    if (actSchActual.getHora().compareTo(horaAux) <= 0) {
-                        if (actividades.size() == (i + 1)) {
-                            id = actSchActual.getId();
-                            break;
-                        } else {
-                            actSchSiguiente = actividades.get(i + 1);
-                            if (actSchSiguiente.getHora().compareTo(horaAux) > 0) {
-                                id = actSchActual.getId();
-                                break;
-                            } else {
-                                continue;
-                            }
-                        }
+                for (ActivitySchedule actSch : actividades) {
+                    if(horaAux.compareTo(actSch.getHora()) >= 0) {
+                        id = actSch.getId();
                     } else {
-                        continue;
+                        break;
                     }
                 }
 
