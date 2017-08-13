@@ -105,10 +105,20 @@ public class CreateActivityScheduleActivity extends AppCompatActivity {
 
         if (action.equals("crear")) {
             Calendar c = Calendar.getInstance();
-            int hour = c.get(Calendar.HOUR_OF_DAY);
-            int minutes = c.get(Calendar.MINUTE);
+            String horaAux;
 
-            hora.setText(hour + ":" + minutes);
+            if (c.get(Calendar.HOUR_OF_DAY) < 10) {
+                horaAux = "0" + c.get(Calendar.HOUR_OF_DAY);
+            } else {
+                horaAux = "" + c.get(Calendar.HOUR_OF_DAY);
+            }
+            if (c.get(Calendar.MINUTE) < 10) {
+                horaAux = horaAux + ":0" + c.get(Calendar.MINUTE);
+            } else {
+                horaAux = horaAux + ":" + c.get(Calendar.MINUTE);
+            }
+
+            hora.setText(horaAux);
         }
 
         dbRef = FirebaseDatabase.getInstance().getReference(
