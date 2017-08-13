@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.comtietea.comtietea.Domain.FirebaseReferences;
 
 /**
  * Created by HP on 12/08/2017.
@@ -38,13 +39,12 @@ public class AlarmClass extends BroadcastReceiver {
 
         Intent i = createAlarm(context, id , type, uid, codSimId, calObjId, actSchId, fecha, camSemId, color, palHabId);
 
-        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(i);
     }
 
     private Intent createAlarm(final Context context, final int id, String type, String uid,
                                     String codSimId, String calObjId, String actSchId, String fecha, String camSemId, String color, String palHabId) {
-        Intent i = new Intent(context, CommonWordDetailActivity.class);
+        Intent i = new Intent(context, CreateActivityScheduleActivity.class);
         i.putExtra("type", type);
         i.putExtra("uid", uid);
         i.putExtra("codSimId", codSimId);
@@ -56,9 +56,8 @@ public class AlarmClass extends BroadcastReceiver {
         i.putExtra("calObjId", calObjId);
         i.putExtra("actSchId", actSchId);
         i.putExtra("fecha", fecha);
+        i.putExtra("action", "alarma");
         i.putExtra("alarma", "alarma");
-
-        final PendingIntent notificIntent = PendingIntent.getActivity(context, id, i, 0);
 
         Uri alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
         if (alarmUri == null)
@@ -66,6 +65,7 @@ public class AlarmClass extends BroadcastReceiver {
             alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         }
         Ringtone ringtone = RingtoneManager.getRingtone(context, alarmUri);
+        FirebaseReferences.mapRingtone.put(fecha, ringtone);
         ringtone.play();
 
         return i;

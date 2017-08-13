@@ -1,5 +1,12 @@
 package com.comtietea.comtietea.Domain;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.media.Ringtone;
+
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by HP on 13/07/2017.
  */
@@ -13,4 +20,8 @@ public class FirebaseReferences {
     final public static String ACTIVITY_SCHEDULE_REFERENCE = "actividades";
 
     final public static String FIREBASE_STORAGE_REFERENCE = "gs://comtietea.appspot.com/";
+
+    final public static Map<String, AlarmManager> mapAlarm = new HashMap<>();
+    final public static Map<String, PendingIntent> mapPendingIntent = new HashMap<>();
+    final public static Map<String, Ringtone> mapRingtone = new HashMap<>();
 }

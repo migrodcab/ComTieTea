@@ -6,8 +6,12 @@ import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -16,11 +20,16 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.comtietea.comtietea.Domain.ActivitySchedule;
 import com.comtietea.comtietea.Domain.CommonWord;
 import com.comtietea.comtietea.Domain.FirebaseImage;
@@ -36,10 +45,11 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class CreateActivityScheduleActivity extends AppCompatActivity {
-
     private TextView hora;
     private Spinner spinner1;
     private Spinner spinner2;
@@ -75,6 +85,11 @@ public class CreateActivityScheduleActivity extends AppCompatActivity {
         spinner3 = (Spinner) findViewById(R.id.spinner3);
         textView4 = (TextView) findViewById(R.id.textView4);
         autoComplete = (AutoCompleteTextView) findViewById(R.id.autoComplete);
+
+        LinearLayout linearLayout1 = (LinearLayout) findViewById(R.id.linearLayout);
+        LinearLayout linearLayout2 = (LinearLayout) findViewById(R.id.bottom_bar2);
+        RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.relativeLayout1);
+        relativeLayout.setVisibility(View.GONE);
 
         createActivityScheduleActivity = this;
 
@@ -191,6 +206,53 @@ public class CreateActivityScheduleActivity extends AppCompatActivity {
                         spinner3.setVisibility(View.GONE);
                     }
 
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+        } else if(action.equals("alarma")) {
+            linearLayout1.setVisibility(View.GONE);
+            linearLayout2.setVisibility(View.GONE);
+            relativeLayout.setVisibility(View.VISIBLE);
+
+            dbRef = FirebaseDatabase.getInstance().getReference(
+                    FirebaseReferences.USER_REFERENCE + "/" + uid + "/" + FirebaseReferences.SYMBOLIC_CODE_REFERENCE + "/" + codSimId + "/" +
+                            FirebaseReferences.CALENDAR_OBJECT_REFERENCE + "/" + calObjId + "/" + FirebaseReferences.ACTIVITY_SCHEDULE_REFERENCE +
+                            "/" + actSchId);
+            dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    ImageView imageView = (ImageView) findViewById(R.id.imageView);
+                    TextView text = (TextView) findViewById(R.id.textViewDetail);
+                    Button button = (Button) findViewById(R.id.aceptar);
+
+                    final ActivitySchedule actSch = dataSnapshot.getValue(ActivitySchedule.class);
+
+                    String[] datos = actSch.getNombre().trim().split(" - ");
+
+                    text.setText(datos[0]);
+
+                    if (!tipo.equals("Palabras")) {
+                        Glide.with(createActivityScheduleActivity).load(actSch.getUrl()).into(imageView);
+                    } else {
+                        imageView.setVisibility(View.GONE);
+                        CardView cardView = (CardView) findViewById(R.id.cardView);
+                        RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) cardView.getLayoutParams();
+                        layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT);
+                        cardView.setLayoutParams(layoutParams);
+                    }
+                    ((RelativeLayout) findViewById(R.id.relativeLayout2)).setBackgroundColor(new Integer(actSch.getColor()));
+
+                    button.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Log.i("ID Borrar", ""+actSch.getId());
+                            borrarAlarma(actSch.getId());
+                        }
+                    });
                 }
 
                 @Override
@@ -475,6 +537,7 @@ public class CreateActivityScheduleActivity extends AppCompatActivity {
     }
 
     private void establecerAlarma(String fecha, String momento, int id){
+        Log.i("ID Crear", ""+id);
         AlarmManager alarmManager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
         Calendar momentoNotificacion = Calendar.getInstance();
 
@@ -500,22 +563,29 @@ public class CreateActivityScheduleActivity extends AppCompatActivity {
         intent.putExtra("color", ""+activitySchedule.getColor());
         intent.putExtra("palHabId", ""+activitySchedule.getPalHabId());
 
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, id, intent,  PendingIntent.FLAG_CANCEL_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 123456789, intent,  PendingIntent.FLAG_UPDATE_CURRENT);
 
         alarmManager.set(AlarmManager.RTC_WAKEUP, momentoNotificacion.getTimeInMillis(), pendingIntent);
+
+        FirebaseReferences.mapAlarm.put(fecha, alarmManager);
+        FirebaseReferences.mapPendingIntent.put(fecha, pendingIntent);
     }
 
     private void borrarNotificacion(int id) {
         Intent intent  = new Intent(this, NotificationClass.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), id , intent, PendingIntent.FLAG_NO_CREATE);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, id , intent, PendingIntent.FLAG_NO_CREATE);
+        pendingIntent.cancel();
         AlarmManager alarmManager = (AlarmManager)getSystemService(getApplicationContext().ALARM_SERVICE);
         alarmManager.cancel(pendingIntent);
     }
 
     private void borrarAlarma(int id) {
-        Intent intent  = new Intent(this, AlarmClass.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), id , intent, PendingIntent.FLAG_NO_CREATE);
-        AlarmManager alarmManager = (AlarmManager)getSystemService(getApplicationContext().ALARM_SERVICE);
+        //Intent intent  = new Intent(this, AlarmClass.class);
+        PendingIntent pendingIntent = FirebaseReferences.mapPendingIntent.get(fecha);//PendingIntent.getBroadcast(this, 123456789, intent,  PendingIntent.FLAG_UPDATE_CURRENT);
+        pendingIntent.cancel();
+        AlarmManager alarmManager = FirebaseReferences.mapAlarm.get(fecha);//(AlarmManager)this.getSystemService(getApplicationContext().ALARM_SERVICE);
         alarmManager.cancel(pendingIntent);
+
+        FirebaseReferences.mapRingtone.get(fecha).stop();
     }
 }
