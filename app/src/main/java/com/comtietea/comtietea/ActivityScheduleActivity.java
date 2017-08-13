@@ -54,7 +54,7 @@ public class ActivityScheduleActivity extends AppCompatActivity implements Activ
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
 
-        final ActivityScheduleRecyclerViewAdapter adapter = new ActivityScheduleRecyclerViewAdapter(this, actividades, this, uid, codSimId);
+        final ActivityScheduleRecyclerViewAdapter adapter = new ActivityScheduleRecyclerViewAdapter(this, actividades, this, uid, codSimId, fecha);
         recyclerView.setAdapter(adapter);
 
         GridLayoutManager manager = new GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false);

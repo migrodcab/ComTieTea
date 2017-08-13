@@ -1,6 +1,7 @@
 package com.comtietea.comtietea;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Build;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -25,6 +26,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class ActivityScheduleRecyclerViewAdapter extends RecyclerView.Adapter<ActivityScheduleRecyclerViewAdapter.ViewHolder> {
 
@@ -33,14 +35,16 @@ public class ActivityScheduleRecyclerViewAdapter extends RecyclerView.Adapter<Ac
     protected ItemListener mListener;
     String uid;
     String codSimId;
+    String fecha;
 
-    public ActivityScheduleRecyclerViewAdapter(Context context, ArrayList<ActivitySchedule> values, ItemListener itemListener, String uid, String codSimId) {
+    public ActivityScheduleRecyclerViewAdapter(Context context, ArrayList<ActivitySchedule> values, ItemListener itemListener, String uid, String codSimId, String fecha) {
 
         actividades = values;
         mContext = context;
         mListener=itemListener;
         this.uid = uid;
         this.codSimId = codSimId;
+        this.fecha = fecha;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -48,7 +52,7 @@ public class ActivityScheduleRecyclerViewAdapter extends RecyclerView.Adapter<Ac
         public TextView nombre;
         public TextView hora;
         public ImageView img;
-        public RelativeLayout relativeLayout;
+        public RelativeLayout relativeLayout, relativeLayoutHora;
         ActivitySchedule actividad;
 
         public ViewHolder(View v) {
@@ -60,11 +64,67 @@ public class ActivityScheduleRecyclerViewAdapter extends RecyclerView.Adapter<Ac
             nombre = (TextView) v.findViewById(R.id.nombre);
             img = (ImageView) v.findViewById(R.id.imageView);
             relativeLayout = (RelativeLayout) v.findViewById(R.id.relativeLayout2);
+            relativeLayoutHora = (RelativeLayout) v.findViewById(R.id.relativeLayoutHora);
 
         }
 
         public void setData(final ActivitySchedule actividad) {
             this.actividad = actividad;
+            Calendar c = Calendar.getInstance();
+            String horaAux;
+            String fechaAux;
+
+            fechaAux = "" + c.get(Calendar.YEAR);
+            if(c.get(Calendar.MONTH) < 9) {
+                fechaAux = fechaAux + "-0" + (c.get(Calendar.MONTH) + 1);
+            } else {
+                fechaAux = fechaAux + "-" + (c.get(Calendar.MONTH) + 1);
+            }
+            if (c.get(Calendar.DATE) < 10) {
+                fechaAux = fechaAux + "-0" + c.get(Calendar.DATE);
+            } else {
+                fechaAux = fechaAux + "-" + c.get(Calendar.DATE);
+            }
+
+            int id = -1;
+
+            if(fechaAux.equals(fecha)) {
+                if (c.get(Calendar.HOUR) < 10) {
+                    horaAux = "0" + c.get(Calendar.HOUR);
+                } else {
+                    horaAux = "" + c.get(Calendar.HOUR);
+                }
+                if (c.get(Calendar.MINUTE) < 10) {
+                    horaAux = horaAux + ":0" + c.get(Calendar.MINUTE);
+                } else {
+                    horaAux = horaAux + ":" + c.get(Calendar.MINUTE);
+                }
+
+                for (int i = 0; i < actividades.size(); i++) {
+                    ActivitySchedule actSchActual = actividades.get(i);
+                    ActivitySchedule actSchSiguiente;
+                    if (actSchActual.getHora().compareTo(horaAux) <= 0) {
+                        if (actividades.size() == (i + 1)) {
+                            id = actSchActual.getId();
+                            break;
+                        } else {
+                            actSchSiguiente = actividades.get(i + 1);
+                            if (actSchSiguiente.getHora().compareTo(horaAux) > 0) {
+                                id = actSchActual.getId();
+                                break;
+                            } else {
+                                continue;
+                            }
+                        }
+                    } else {
+                        continue;
+                    }
+                }
+
+                if (id == actividad.getId()) {
+                    relativeLayoutHora.setBackgroundColor(Color.parseColor("#5EB2FC"));
+                }
+            }
 
             FirebaseDatabase.getInstance().getReference(FirebaseReferences.USER_REFERENCE + "/" + uid + "/" +
                     FirebaseReferences.SYMBOLIC_CODE_REFERENCE + "/" + codSimId + "/" + FirebaseReferences.SEMANTIC_FIELD_REFERENCE +
