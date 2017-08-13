@@ -132,7 +132,6 @@ public class SemanticFieldActivity extends AppCompatActivity implements Semantic
         switch (item.getItemId()) {
             case R.id.action_settings:
                 Intent intent = new Intent(this, ProfileInfoActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 return true;
             default:

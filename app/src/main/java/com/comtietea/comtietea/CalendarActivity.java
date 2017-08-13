@@ -195,6 +195,25 @@ public class CalendarActivity extends AppCompatActivity implements CalendarObjec
         return false;
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_activity_actions_profile, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                Intent intent = new Intent(this, ProfileInfoActivity.class);
+                startActivity(intent);
+                return super.onOptionsItemSelected(item);
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
     private String calculaDiaSemana(int day) {
         String res = null;
 

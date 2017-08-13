@@ -48,7 +48,7 @@ public class CommonWordDetailActivity extends AppCompatActivity {
     private String calObjId;
     private String actSchId;
     private String fecha;
-    private String alarma;
+    private String codigoAlarma;
 
     private ImageView img;
     private TextView name;
@@ -89,7 +89,7 @@ public class CommonWordDetailActivity extends AppCompatActivity {
         calObjId = bundle.getString("calObjId");
         actSchId = bundle.getString("actSchId");
         fecha = bundle.getString("fecha");
-        alarma = bundle.getString("alarma");
+        codigoAlarma = bundle.getString("codigoAlarma");
 
         dbRef = FirebaseDatabase.getInstance().getReference(FirebaseReferences.USER_REFERENCE + "/" + uid + "/" +
                 FirebaseReferences.SYMBOLIC_CODE_REFERENCE + "/" + codSimId + "/" + FirebaseReferences.SEMANTIC_FIELD_REFERENCE +
@@ -132,19 +132,15 @@ public class CommonWordDetailActivity extends AppCompatActivity {
             }
         });
 
-        if(alarma.equals("alarma")) {
-            imageButton.setVisibility(View.GONE);
-            button.setVisibility(View.VISIBLE);
-        } else {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if(!alarma.equals("alarma")) {
-            getMenuInflater().inflate(R.menu.main_activity_actions, menu);
-        }
+        getMenuInflater().inflate(R.menu.main_activity_actions, menu);
+
         return true;
     }
 
@@ -184,7 +180,6 @@ public class CommonWordDetailActivity extends AppCompatActivity {
                 return true;
             case R.id.action_settings:
                 Intent intent = new Intent(this, ProfileInfoActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 return true;
             default:
@@ -269,15 +264,15 @@ public class CommonWordDetailActivity extends AppCompatActivity {
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 ActivitySchedule activitySchedule = dataSnapshot.getValue(ActivitySchedule.class);
 
-                                if(activitySchedule.getAviso().equals("Si")) {
+                                if (activitySchedule.getAviso().equals("Si")) {
                                     borrarNotificacion(Integer.parseInt(actSchId));
                                 }
 
-                                if(activitySchedule.getAlarma().equals("Si")) {
-                                    borrarAlarma(Integer.parseInt(actSchId));
+                                if (activitySchedule.getAlarma().equals("Si")) {
+                                    borrarAlarma(Integer.parseInt(codigoAlarma));
                                 }
 
-                                dbRef.setValue(new ActivitySchedule(-1, null, null, null, null, null, -1, -1, -1, null));
+                                dbRef.setValue(new ActivitySchedule(-1, null, null, null, null, null, -1, -1, -1, null, -1));
                                 dialogAux.dismiss();
 
                                 Intent i = new Intent(commonWordDetailActivity, ActivityScheduleActivity.class);
@@ -351,8 +346,8 @@ public class CommonWordDetailActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 ActivitySchedule activitySchedule = dataSnapshot.getValue(ActivitySchedule.class);
 
-                if(activitySchedule.getAlarma().equals("Si")) {
-                    borrarAlarma(Integer.parseInt(actSchId));
+                if (activitySchedule.getAlarma().equals("Si")) {
+                    borrarAlarma(Integer.parseInt(codigoAlarma));
                 }
             }
 
@@ -364,16 +359,17 @@ public class CommonWordDetailActivity extends AppCompatActivity {
     }
 
     private void borrarNotificacion(int id) {
-        Intent intent  = new Intent(this, NotificationClass.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), id , intent, PendingIntent.FLAG_NO_CREATE);
-        AlarmManager alarmManager = (AlarmManager)getSystemService(getApplicationContext().ALARM_SERVICE);
+        Intent intent = new Intent(this, NotificationClass.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), id, intent, PendingIntent.FLAG_NO_CREATE);
+        AlarmManager alarmManager = (AlarmManager) getSystemService(getApplicationContext().ALARM_SERVICE);
         alarmManager.cancel(pendingIntent);
     }
 
     private void borrarAlarma(int id) {
-        Intent intent  = new Intent(this, AlarmClass.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), id , intent, PendingIntent.FLAG_NO_CREATE);
-        AlarmManager alarmManager = (AlarmManager)getSystemService(getApplicationContext().ALARM_SERVICE);
+        Intent intent = new Intent(this, AlarmClass.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, id, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        pendingIntent.cancel();
+        AlarmManager alarmManager = (AlarmManager) getSystemService(getApplicationContext().ALARM_SERVICE);
         alarmManager.cancel(pendingIntent);
     }
 }

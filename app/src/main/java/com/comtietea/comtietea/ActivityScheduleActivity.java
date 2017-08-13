@@ -8,6 +8,8 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.comtietea.comtietea.Domain.ActivitySchedule;
@@ -151,6 +153,7 @@ public class ActivityScheduleActivity extends AppCompatActivity implements Activ
         i.putExtra("actSchId", ""+activitySchedule.getId());
         i.putExtra("fecha", fecha);
         i.putExtra("alarma", "");
+        i.putExtra("codigoAlarma", ""+activitySchedule.getAlarmCode());
         startActivity(i);
     }
 
@@ -162,5 +165,24 @@ public class ActivityScheduleActivity extends AppCompatActivity implements Activ
         i.putExtra("codSimId", codSimId);
         startActivity(i);
         return false;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_activity_actions_profile, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                Intent intent = new Intent(this, ProfileInfoActivity.class);
+                startActivity(intent);
+                return super.onOptionsItemSelected(item);
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

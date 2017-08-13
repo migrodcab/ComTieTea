@@ -10,7 +10,9 @@ import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.RingtonePreference;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -35,15 +37,15 @@ public class AlarmClass extends BroadcastReceiver {
         String camSemId = bundle.getString("camSemId");
         String color = bundle.getString("color");
         String palHabId = bundle.getString("palHabId");
-        int id = Integer.parseInt(bundle.getString("id"));
 
-        Intent i = createAlarm(context, id , type, uid, codSimId, calObjId, actSchId, fecha, camSemId, color, palHabId);
+        Intent i = createAlarm(context, type, uid, codSimId, calObjId, actSchId, fecha, camSemId, color, palHabId);
 
         context.startActivity(i);
+
     }
 
-    private Intent createAlarm(final Context context, final int id, String type, String uid,
-                                    String codSimId, String calObjId, String actSchId, String fecha, String camSemId, String color, String palHabId) {
+    private Intent createAlarm(final Context context, String type, String uid,
+                               String codSimId, String calObjId, String actSchId, String fecha, String camSemId, String color, String palHabId) {
         Intent i = new Intent(context, CreateActivityScheduleActivity.class);
         i.putExtra("type", type);
         i.putExtra("uid", uid);
@@ -57,16 +59,7 @@ public class AlarmClass extends BroadcastReceiver {
         i.putExtra("actSchId", actSchId);
         i.putExtra("fecha", fecha);
         i.putExtra("action", "alarma");
-        i.putExtra("alarma", "alarma");
-
-        Uri alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
-        if (alarmUri == null)
-        {
-            alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        }
-        Ringtone ringtone = RingtoneManager.getRingtone(context, alarmUri);
-        FirebaseReferences.mapRingtone.put(fecha, ringtone);
-        ringtone.play();
+        i.putExtra("calObjId", calObjId);
 
         return i;
     }

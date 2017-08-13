@@ -11,10 +11,11 @@ public class ActivitySchedule implements Comparable<ActivitySchedule> {
     int palHabId;
     int color;
     String url;
+    long alarmCode;
 
     public ActivitySchedule() {}
 
-    public ActivitySchedule(int id, String nombre, String hora, String alarma, String aviso, String antelacion, int camSemId, int palHabId, int color, String url) {
+    public ActivitySchedule(int id, String nombre, String hora, String alarma, String aviso, String antelacion, int camSemId, int palHabId, int color, String url, long alarmCode) {
         this.id = id;
         this.nombre = nombre;
         this.hora = hora;
@@ -25,6 +26,7 @@ public class ActivitySchedule implements Comparable<ActivitySchedule> {
         this.palHabId = palHabId;
         this.color = color;
         this.url = url;
+        this.alarmCode = alarmCode;
     }
 
     public int getId() {
@@ -105,6 +107,14 @@ public class ActivitySchedule implements Comparable<ActivitySchedule> {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public long getAlarmCode() {
+        return alarmCode;
+    }
+
+    public void setAlarmCode(long alarmCode) {
+        this.alarmCode = alarmCode;
     }
 
     @Override
