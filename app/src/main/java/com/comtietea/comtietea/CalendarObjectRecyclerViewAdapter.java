@@ -1,8 +1,10 @@
 package com.comtietea.comtietea;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Build;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,6 +54,24 @@ public class CalendarObjectRecyclerViewAdapter extends RecyclerView.Adapter<Cale
 
         public void setData(CalendarObject diaCalendario) {
             this.diaCalendario = diaCalendario;
+            Calendar c = Calendar.getInstance();
+            String fechaAux;
+
+            fechaAux = "" + c.get(Calendar.YEAR);
+            if(c.get(Calendar.MONTH) < 9) {
+                fechaAux = fechaAux + "-0" + (c.get(Calendar.MONTH) + 1);
+            } else {
+                fechaAux = fechaAux + "-" + (c.get(Calendar.MONTH) + 1);
+            }
+            if (c.get(Calendar.DATE) < 10) {
+                fechaAux = fechaAux + "-0" + c.get(Calendar.DATE);
+            } else {
+                fechaAux = fechaAux + "-" + c.get(Calendar.DATE);
+            }
+            
+            if(fechaAux.equals(diaCalendario.getFecha())) {
+                relativeLayout.setBackgroundColor(Color.parseColor("#5EB2FC"));
+            }
 
             diaSemana.setText(diaCalendario.getDiaSemana());
             diaMes.setText(diaCalendario.getFecha().substring(8,10) + " de " + diaCalendario.getMes());
