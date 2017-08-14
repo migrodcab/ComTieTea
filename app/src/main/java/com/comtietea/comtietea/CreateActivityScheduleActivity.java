@@ -341,7 +341,7 @@ public class CreateActivityScheduleActivity extends AppCompatActivity {
                 url = datos.get(3);
 
                 if (action.equals("crear")) {
-                    activitySchedule = new ActivitySchedule(100, autoComplete.getText().toString(), hora.getText().toString(), spinner1.getSelectedItem().toString(), spinner2.getSelectedItem().toString(), antelacion, camSemId, palHabId, color, url, System.currentTimeMillis());
+                    activitySchedule = new ActivitySchedule(100, autoComplete.getText().toString(), hora.getText().toString(), spinner1.getSelectedItem().toString(), spinner2.getSelectedItem().toString(), antelacion, camSemId, palHabId, color, url, new Integer((""+System.currentTimeMillis()).substring(0,10)));
                     dbRef = FirebaseDatabase.getInstance().getReference(
                             FirebaseReferences.USER_REFERENCE + "/" + uid + "/" + FirebaseReferences.SYMBOLIC_CODE_REFERENCE + "/" + codSimId + "/" +
                                     FirebaseReferences.CALENDAR_OBJECT_REFERENCE + "/" + calObjId);

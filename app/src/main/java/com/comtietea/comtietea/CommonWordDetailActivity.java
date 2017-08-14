@@ -269,7 +269,8 @@ public class CommonWordDetailActivity extends AppCompatActivity {
                                 }
 
                                 if (activitySchedule.getAlarma().equals("Si")) {
-                                    borrarAlarma(Integer.parseInt(codigoAlarma));
+                                    Log.i("CODIGO", codigoAlarma);
+                                    borrarAlarma(new Integer(codigoAlarma));
                                 }
 
                                 dbRef.setValue(new ActivitySchedule(-1, null, null, null, null, null, -1, -1, -1, null, -1));
