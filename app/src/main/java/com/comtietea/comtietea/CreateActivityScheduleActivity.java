@@ -7,6 +7,7 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -137,8 +138,8 @@ public class CreateActivityScheduleActivity extends AppCompatActivity {
                         if (campoSemantico != null && campoSemantico.getId() != -1 && campoSemantico.getPalabrasHabituales() != null) {
                             camposSemanticos.add(campoSemantico);
                             for (CommonWord palabraHabitual : campoSemantico.getPalabrasHabituales()) {
-                                if(palabraHabitual != null && palabraHabitual.getId() != -1)
-                                palabras.add(palabraHabitual.getNombre() + " - " + campoSemantico.getNombre());
+                                if (palabraHabitual != null && palabraHabitual.getId() != -1)
+                                    palabras.add(palabraHabitual.getNombre() + " - " + campoSemantico.getNombre());
                             }
                         }
                     }
@@ -225,7 +226,7 @@ public class CreateActivityScheduleActivity extends AppCompatActivity {
 
                 }
             });
-        } else if(action.equals("alarma")) {
+        } else if (action.equals("alarma")) {
             linearLayout1.setVisibility(View.GONE);
             linearLayout2.setVisibility(View.GONE);
             relativeLayout.setVisibility(View.VISIBLE);
@@ -242,8 +243,7 @@ public class CreateActivityScheduleActivity extends AppCompatActivity {
                     Button button = (Button) findViewById(R.id.aceptar);
 
                     Uri alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
-                    if (alarmUri == null)
-                    {
+                    if (alarmUri == null) {
                         alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
                     }
                     final Ringtone ringtone = RingtoneManager.getRingtone(createActivityScheduleActivity, alarmUri);
@@ -324,6 +324,40 @@ public class CreateActivityScheduleActivity extends AppCompatActivity {
         int camSemId, palHabId, color;
         String url;
         List<String> datos;
+        Calendar c = Calendar.getInstance();
+        String horaAux = "";
+        String fechaAux;
+        Boolean esFuturo = true;
+
+        fechaAux = "" + c.get(Calendar.YEAR);
+        if (c.get(Calendar.MONTH) < 9) {
+            fechaAux = fechaAux + "-0" + (c.get(Calendar.MONTH) + 1);
+        } else {
+            fechaAux = fechaAux + "-" + (c.get(Calendar.MONTH) + 1);
+        }
+        if (c.get(Calendar.DATE) < 10) {
+            fechaAux = fechaAux + "-0" + c.get(Calendar.DATE);
+        } else {
+            fechaAux = fechaAux + "-" + c.get(Calendar.DATE);
+        }
+
+        if (fechaAux.compareTo(fecha) == 0) {
+            if (c.get(Calendar.HOUR_OF_DAY) < 10) {
+                horaAux = "0" + c.get(Calendar.HOUR_OF_DAY);
+            } else {
+                horaAux = "" + c.get(Calendar.HOUR_OF_DAY);
+            }
+            if (c.get(Calendar.MINUTE) < 10) {
+                horaAux = horaAux + ":0" + c.get(Calendar.MINUTE);
+            } else {
+                horaAux = horaAux + ":" + c.get(Calendar.MINUTE);
+            }
+
+            if (horaAux.compareTo(hora.getText().toString()) >= 0) {
+                esFuturo = false;
+            }
+        }
+
 
         if (spinner2.getSelectedItem().toString().equals("Si")) {
             antelacion = spinner3.getSelectedItem().toString();
@@ -331,137 +365,141 @@ public class CreateActivityScheduleActivity extends AppCompatActivity {
             antelacion = null;
         }
 
-        if (!autoComplete.getText().equals("")) {
-            datos = encuentraPalabraHabitual(autoComplete.getText().toString());
-            if (datos != null) {
+        if (esFuturo) {
+            if (!autoComplete.getText().equals("")) {
+                datos = encuentraPalabraHabitual(autoComplete.getText().toString());
+                if (datos != null) {
 
-                camSemId = Integer.parseInt(datos.get(0));
-                color = Integer.parseInt(datos.get(1));
-                palHabId = Integer.parseInt(datos.get(2));
-                url = datos.get(3);
+                    camSemId = Integer.parseInt(datos.get(0));
+                    color = Integer.parseInt(datos.get(1));
+                    palHabId = Integer.parseInt(datos.get(2));
+                    url = datos.get(3);
 
-                if (action.equals("crear")) {
-                    activitySchedule = new ActivitySchedule(100, autoComplete.getText().toString(), hora.getText().toString(), spinner1.getSelectedItem().toString(), spinner2.getSelectedItem().toString(), antelacion, camSemId, palHabId, color, url, new Integer((""+System.currentTimeMillis()).substring(0,10)));
-                    dbRef = FirebaseDatabase.getInstance().getReference(
-                            FirebaseReferences.USER_REFERENCE + "/" + uid + "/" + FirebaseReferences.SYMBOLIC_CODE_REFERENCE + "/" + codSimId + "/" +
-                                    FirebaseReferences.CALENDAR_OBJECT_REFERENCE + "/" + calObjId);
-                    dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            String uploadId = "" + dataSnapshot.child(FirebaseReferences.ACTIVITY_SCHEDULE_REFERENCE).getChildrenCount();
-                            activitySchedule.setId(new Integer(uploadId));
-                            dataSnapshot.child(FirebaseReferences.ACTIVITY_SCHEDULE_REFERENCE).getRef().child(uploadId).setValue(activitySchedule);
+                    if (action.equals("crear")) {
+                        activitySchedule = new ActivitySchedule(100, autoComplete.getText().toString(), hora.getText().toString(), spinner1.getSelectedItem().toString(), spinner2.getSelectedItem().toString(), antelacion, camSemId, palHabId, color, url, new Integer(("" + System.currentTimeMillis()).substring(0, 10)));
+                        dbRef = FirebaseDatabase.getInstance().getReference(
+                                FirebaseReferences.USER_REFERENCE + "/" + uid + "/" + FirebaseReferences.SYMBOLIC_CODE_REFERENCE + "/" + codSimId + "/" +
+                                        FirebaseReferences.CALENDAR_OBJECT_REFERENCE + "/" + calObjId);
+                        dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                String uploadId = "" + dataSnapshot.child(FirebaseReferences.ACTIVITY_SCHEDULE_REFERENCE).getChildrenCount();
+                                activitySchedule.setId(new Integer(uploadId));
+                                dataSnapshot.child(FirebaseReferences.ACTIVITY_SCHEDULE_REFERENCE).getRef().child(uploadId).setValue(activitySchedule);
 
-                            if(activitySchedule.getAviso().equals("Si")) {
-                                int antelacion = 0;
-                                switch (activitySchedule.getAntelacion()) {
-                                    case "5 Minutos":
-                                        antelacion = 5;
-                                        break;
-                                    case "10 Minutos":
-                                        antelacion = 10;
-                                        break;
-                                    case "15 Minutos":
-                                        antelacion = 15;
-                                        break;
-                                    case "30 Minutos":
-                                        antelacion = 30;
-                                        break;
-                                    case "1 Hora":
-                                        antelacion = 60;
-                                        break;
+                                if (activitySchedule.getAviso().equals("Si")) {
+                                    int antelacion = 0;
+                                    switch (activitySchedule.getAntelacion()) {
+                                        case "5 Minutos":
+                                            antelacion = 5;
+                                            break;
+                                        case "10 Minutos":
+                                            antelacion = 10;
+                                            break;
+                                        case "15 Minutos":
+                                            antelacion = 15;
+                                            break;
+                                        case "30 Minutos":
+                                            antelacion = 30;
+                                            break;
+                                        case "1 Hora":
+                                            antelacion = 60;
+                                            break;
+                                    }
+                                    establecerNotificacion(fecha, activitySchedule.getHora(), antelacion, activitySchedule.getId(), activitySchedule.getUrl(), activitySchedule.getNombre());
                                 }
-                                establecerNotificacion(fecha, activitySchedule.getHora(), antelacion, activitySchedule.getId(), activitySchedule.getUrl(), activitySchedule.getNombre());
+
+                                if (activitySchedule.getAlarma().equals("Si")) {
+                                    establecerAlarma(fecha, activitySchedule.getHora(), (int) activitySchedule.getAlarmCode());
+                                }
+
+                                Toast.makeText(getApplicationContext(), "La actividad ha sido creada correctamente.", Toast.LENGTH_SHORT).show();
+
+                                Intent i = new Intent(createActivityScheduleActivity, ActivityScheduleActivity.class);
+                                i.putExtra("type", tipo);
+                                i.putExtra("uid", uid);
+                                i.putExtra("codSimId", codSimId);
+                                i.putExtra("calObjId", calObjId);
+                                i.putExtra("fecha", fecha);
+                                startActivity(i);
                             }
 
-                            if(activitySchedule.getAlarma().equals("Si")) {
-                                establecerAlarma(fecha, activitySchedule.getHora(), (int) activitySchedule.getAlarmCode());
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+                    } else if (action.equals("editar")) {
+                        String avisoAux = activitySchedule.getAviso();
+                        String alarmaAux = activitySchedule.getAlarma();
+
+                        activitySchedule.setHora(hora.getText().toString());
+                        activitySchedule.setNombre(autoComplete.getText().toString());
+                        activitySchedule.setAlarma(spinner1.getSelectedItem().toString());
+                        activitySchedule.setAviso(spinner2.getSelectedItem().toString());
+                        activitySchedule.setAntelacion(antelacion);
+                        activitySchedule.setCamSemId(camSemId);
+                        activitySchedule.setColor(color);
+                        activitySchedule.setPalHabId(palHabId);
+                        activitySchedule.setUrl(url);
+
+                        dbRef.setValue(activitySchedule);
+                        Toast.makeText(getApplicationContext(), "La actividad ha sido editada correctamente.", Toast.LENGTH_SHORT).show();
+
+                        if (activitySchedule.getAviso().equals("Si")) {
+                            int antelacionAux = 0;
+                            switch (activitySchedule.getAntelacion()) {
+                                case "5 Minutos":
+                                    antelacionAux = 5;
+                                    break;
+                                case "10 Minutos":
+                                    antelacionAux = 10;
+                                    break;
+                                case "15 Minutos":
+                                    antelacionAux = 15;
+                                    break;
+                                case "30 Minutos":
+                                    antelacionAux = 30;
+                                    break;
+                                case "1 Hora":
+                                    antelacionAux = 60;
+                                    break;
                             }
 
-                            Toast.makeText(getApplicationContext(), "La actividad ha sido creada correctamente.", Toast.LENGTH_SHORT).show();
-
-                            Intent i = new Intent(createActivityScheduleActivity, ActivityScheduleActivity.class);
-                            i.putExtra("type", tipo);
-                            i.putExtra("uid", uid);
-                            i.putExtra("codSimId", codSimId);
-                            i.putExtra("calObjId", calObjId);
-                            i.putExtra("fecha", fecha);
-                            startActivity(i);
+                            establecerNotificacion(fecha, activitySchedule.getHora(), antelacionAux, activitySchedule.getId(), activitySchedule.getUrl(), activitySchedule.getNombre());
+                        } else if (activitySchedule.getAviso().equals("No") && avisoAux.equals("Si")) {
+                            borrarNotificacion(activitySchedule.getId());
                         }
 
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
-                    });
-                } else if (action.equals("editar")) {
-                    String avisoAux = activitySchedule.getAviso();
-                    String alarmaAux = activitySchedule.getAlarma();
-
-                    activitySchedule.setHora(hora.getText().toString());
-                    activitySchedule.setNombre(autoComplete.getText().toString());
-                    activitySchedule.setAlarma(spinner1.getSelectedItem().toString());
-                    activitySchedule.setAviso(spinner2.getSelectedItem().toString());
-                    activitySchedule.setAntelacion(antelacion);
-                    activitySchedule.setCamSemId(camSemId);
-                    activitySchedule.setColor(color);
-                    activitySchedule.setPalHabId(palHabId);
-                    activitySchedule.setUrl(url);
-
-                    dbRef.setValue(activitySchedule);
-                    Toast.makeText(getApplicationContext(), "La actividad ha sido editada correctamente.", Toast.LENGTH_SHORT).show();
-
-                    if(activitySchedule.getAviso().equals("Si")) {
-                        int antelacionAux = 0;
-                        switch (activitySchedule.getAntelacion()) {
-                            case "5 Minutos":
-                                antelacionAux = 5;
-                                break;
-                            case "10 Minutos":
-                                antelacionAux = 10;
-                                break;
-                            case "15 Minutos":
-                                antelacionAux = 15;
-                                break;
-                            case "30 Minutos":
-                                antelacionAux = 30;
-                                break;
-                            case "1 Hora":
-                                antelacionAux = 60;
-                                break;
+                        if (activitySchedule.getAlarma().equals("Si")) {
+                            establecerAlarma(fecha, activitySchedule.getHora(), (int) activitySchedule.getAlarmCode());
+                        } else if (activitySchedule.getAlarma().equals("No") && alarmaAux.equals("Si")) {
+                            borrarAlarma((int) activitySchedule.getAlarmCode());
                         }
 
-                        establecerNotificacion(fecha, activitySchedule.getHora(), antelacionAux, activitySchedule.getId(), activitySchedule.getUrl(), activitySchedule.getNombre());
-                    } else if (activitySchedule.getAviso().equals("No") && avisoAux.equals("Si")) {
-                        borrarNotificacion(activitySchedule.getId());
+                        Intent i = new Intent(this, CommonWordDetailActivity.class);
+                        i.putExtra("type", tipo);
+                        i.putExtra("uid", uid);
+                        i.putExtra("codSimId", codSimId);
+                        i.putExtra("camSemId", "" + activitySchedule.getCamSemId());
+                        i.putExtra("color", "" + activitySchedule.getColor());
+                        i.putExtra("nombreCampoSemantico", "");
+                        i.putExtra("palHabId", "" + activitySchedule.getPalHabId());
+                        i.putExtra("anterior", "agenda");
+                        i.putExtra("calObjId", calObjId);
+                        i.putExtra("actSchId", "" + activitySchedule.getId());
+                        i.putExtra("fecha", fecha);
+                        i.putExtra("codigoAlarma", "" + activitySchedule.getAlarmCode());
+                        startActivity(i);
                     }
-
-                    if(activitySchedule.getAlarma().equals("Si")) {
-                        establecerAlarma(fecha, activitySchedule.getHora(), (int) activitySchedule.getAlarmCode());
-                    } else if(activitySchedule.getAlarma().equals("No") && alarmaAux.equals("Si")) {
-                        borrarAlarma((int) activitySchedule.getAlarmCode());
-                    }
-
-                    Intent i = new Intent(this, CommonWordDetailActivity.class);
-                    i.putExtra("type", tipo);
-                    i.putExtra("uid", uid);
-                    i.putExtra("codSimId", codSimId);
-                    i.putExtra("camSemId", ""+activitySchedule.getCamSemId());
-                    i.putExtra("color", ""+activitySchedule.getColor());
-                    i.putExtra("nombreCampoSemantico", "");
-                    i.putExtra("palHabId", "" + activitySchedule.getPalHabId());
-                    i.putExtra("anterior", "agenda");
-                    i.putExtra("calObjId", calObjId);
-                    i.putExtra("actSchId", ""+activitySchedule.getId());
-                    i.putExtra("fecha", fecha);
-                    i.putExtra("codigoAlarma", ""+activitySchedule.getAlarmCode());
-                    startActivity(i);
+                } else {
+                    Toast.makeText(getApplicationContext(), "Por favor, indique una tarea ya existente.", Toast.LENGTH_SHORT).show();
                 }
             } else {
-                Toast.makeText(getApplicationContext(), "Por favor, indique una tarea ya existente.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Por favor, rellene todos los campos.", Toast.LENGTH_SHORT).show();
             }
         } else {
-            Toast.makeText(getApplicationContext(), "Por favor, rellene todos los campos.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "No puede programar una tarea para el pasado.", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -479,15 +517,15 @@ public class CreateActivityScheduleActivity extends AppCompatActivity {
             i.putExtra("type", tipo);
             i.putExtra("uid", uid);
             i.putExtra("codSimId", codSimId);
-            i.putExtra("camSemId", ""+activitySchedule.getCamSemId());
-            i.putExtra("color", ""+activitySchedule.getColor());
+            i.putExtra("camSemId", "" + activitySchedule.getCamSemId());
+            i.putExtra("color", "" + activitySchedule.getColor());
             i.putExtra("nombreCampoSemantico", "");
             i.putExtra("palHabId", "" + activitySchedule.getPalHabId());
             i.putExtra("anterior", "agenda");
             i.putExtra("calObjId", calObjId);
-            i.putExtra("actSchId", ""+activitySchedule.getId());
+            i.putExtra("actSchId", "" + activitySchedule.getId());
             i.putExtra("fecha", fecha);
-            i.putExtra("codigoAlarma", ""+activitySchedule.getAlarmCode());
+            i.putExtra("codigoAlarma", "" + activitySchedule.getAlarmCode());
             startActivity(i);
         }
     }
@@ -508,10 +546,10 @@ public class CreateActivityScheduleActivity extends AppCompatActivity {
             if (nombreCampo.equals(campoSemantico.getNombre())) {
                 for (CommonWord palabraHabitual : campoSemantico.getPalabrasHabituales()) {
                     if (palabraHabitual != null && nombrePalabra.equals(palabraHabitual.getNombre())) {
-                        res.add(""+campoSemantico.getId());
-                        res.add(""+campoSemantico.getColor());
-                        res.add(""+palabraHabitual.getId());
-                        if(palabraHabitual.getImagen() != null) {
+                        res.add("" + campoSemantico.getId());
+                        res.add("" + campoSemantico.getColor());
+                        res.add("" + palabraHabitual.getId());
+                        if (palabraHabitual.getImagen() != null) {
                             res.add(palabraHabitual.getImagen().getImagenURL());
                         } else {
                             res.add("");
@@ -527,7 +565,7 @@ public class CreateActivityScheduleActivity extends AppCompatActivity {
         return res;
     }
 
-    private void establecerNotificacion(String fecha, String momento, int antelacion, int id, String url, String nombre){
+    private void establecerNotificacion(String fecha, String momento, int antelacion, int id, String url, String nombre) {
         AlarmManager alarmManager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
         Calendar momentoNotificacion = Calendar.getInstance();
 
@@ -544,27 +582,27 @@ public class CreateActivityScheduleActivity extends AppCompatActivity {
         String[] nombres = nombre.trim().split(" - ");
         String nombrePalabra = nombres[0];
 
-        Intent intent  = new Intent(this, NotificationClass.class);
+        Intent intent = new Intent(this, NotificationClass.class);
         intent.putExtra("nombre", nombrePalabra);
         intent.putExtra("url", url);
-        intent.putExtra("id", ""+id);
+        intent.putExtra("id", "" + id);
 
         intent.putExtra("type", tipo);
         intent.putExtra("uid", uid);
         intent.putExtra("codSimId", codSimId);
         intent.putExtra("calObjId", calObjId);
-        intent.putExtra("actSchId", ""+activitySchedule.getId());
+        intent.putExtra("actSchId", "" + activitySchedule.getId());
         intent.putExtra("fecha", fecha);
-        intent.putExtra("camSemId", ""+activitySchedule.getCamSemId());
-        intent.putExtra("color", ""+activitySchedule.getColor());
-        intent.putExtra("palHabId", ""+activitySchedule.getPalHabId());
+        intent.putExtra("camSemId", "" + activitySchedule.getCamSemId());
+        intent.putExtra("color", "" + activitySchedule.getColor());
+        intent.putExtra("palHabId", "" + activitySchedule.getPalHabId());
 
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, id, intent,  PendingIntent.FLAG_CANCEL_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, id, intent, PendingIntent.FLAG_CANCEL_CURRENT);
 
         alarmManager.set(AlarmManager.RTC_WAKEUP, momentoNotificacion.getTimeInMillis(), pendingIntent);
     }
 
-    private void establecerAlarma(String fecha, String momento, int id){
+    private void establecerAlarma(String fecha, String momento, int id) {
         AlarmManager alarmManager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
         Calendar momentoNotificacion = Calendar.getInstance();
 
@@ -577,36 +615,36 @@ public class CreateActivityScheduleActivity extends AppCompatActivity {
 
         momentoNotificacion.set(year, month, day, hour, minute);
 
-        Intent intent  = new Intent(this, AlarmClass.class);
+        Intent intent = new Intent(this, AlarmClass.class);
 
         intent.putExtra("type", tipo);
         intent.putExtra("uid", uid);
         intent.putExtra("codSimId", codSimId);
         intent.putExtra("calObjId", calObjId);
-        intent.putExtra("actSchId", ""+activitySchedule.getId());
+        intent.putExtra("actSchId", "" + activitySchedule.getId());
         intent.putExtra("fecha", fecha);
-        intent.putExtra("camSemId", ""+activitySchedule.getCamSemId());
-        intent.putExtra("color", ""+activitySchedule.getColor());
-        intent.putExtra("palHabId", ""+activitySchedule.getPalHabId());
+        intent.putExtra("camSemId", "" + activitySchedule.getCamSemId());
+        intent.putExtra("color", "" + activitySchedule.getColor());
+        intent.putExtra("palHabId", "" + activitySchedule.getPalHabId());
 
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, id, intent,  PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, id, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         alarmManager.set(AlarmManager.RTC_WAKEUP, momentoNotificacion.getTimeInMillis(), pendingIntent);
     }
 
     private void borrarNotificacion(int id) {
-        Intent intent  = new Intent(this, NotificationClass.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, id , intent, PendingIntent.FLAG_NO_CREATE);
+        Intent intent = new Intent(this, NotificationClass.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, id, intent, PendingIntent.FLAG_NO_CREATE);
         pendingIntent.cancel();
-        AlarmManager alarmManager = (AlarmManager)getSystemService(getApplicationContext().ALARM_SERVICE);
+        AlarmManager alarmManager = (AlarmManager) getSystemService(getApplicationContext().ALARM_SERVICE);
         alarmManager.cancel(pendingIntent);
     }
 
     private void borrarAlarma(int id) {
-        Intent intent  = new Intent(this, AlarmClass.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, id , intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        Intent intent = new Intent(this, AlarmClass.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, id, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         pendingIntent.cancel();
-        AlarmManager alarmManager = (AlarmManager)getSystemService(getApplicationContext().ALARM_SERVICE);
+        AlarmManager alarmManager = (AlarmManager) getSystemService(getApplicationContext().ALARM_SERVICE);
         alarmManager.cancel(pendingIntent);
     }
 }
