@@ -28,6 +28,14 @@ public class ActionsActivity extends AppCompatActivity {
         uid = bundle.getString("uid");
         codSimId = bundle.getString("codSimId");
 
+        if(codSimId.equals("0")) {
+            setTitle("Palabras");
+        } else if (codSimId.equals("1")) {
+            setTitle("Dibujos");
+        } else if (codSimId.equals("2")) {
+            setTitle("Imágenes");
+        }
+
         comunicacion = (ImageButton) findViewById(R.id.comunicacion);
         agenda = (ImageButton) findViewById(R.id.agenda);
 

@@ -4,15 +4,18 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.comtietea.comtietea.Domain.CommonWord;
@@ -65,6 +68,8 @@ public class CommonWordActivity extends AppCompatActivity implements CommonWordR
         color = new Integer(bundle.getString("color"));
         codSimId = bundle.getString("codSimId");
         camSemId = bundle.getString("camSemId");
+
+        ((ImageView) findViewById(R.id.logo)).setVisibility(View.GONE);
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
 
