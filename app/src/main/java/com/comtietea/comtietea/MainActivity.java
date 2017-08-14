@@ -475,11 +475,57 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                         break;
 
                     case "Familia":
-                        CommonWord papa = new CommonWord(0, "Papá", null, 10);
-                        CommonWord primo = new CommonWord(1, "Primo", null, 3);
+                        CommonWord familia = new CommonWord(0, "Familia", null, 10);
+                        CommonWord padre = new CommonWord(1, "Padre", null, 9);
+                        CommonWord madre = new CommonWord(2, "Madre", null, 9);
+                        CommonWord hijo = new CommonWord(3, "Hijo", null, 9);
+                        CommonWord hija = new CommonWord(4, "Hija", null, 9);
+                        CommonWord marido = new CommonWord(5, "Marido", null, 8);
+                        CommonWord mujer = new CommonWord(6, "Mujer", null, 8);
+                        CommonWord hermano = new CommonWord(7, "Hermano", null, 7);
+                        CommonWord hermana = new CommonWord(8, "Hermana", null, 7);
+                        CommonWord abuelo = new CommonWord(9, "Abuelo", null, 6);
+                        CommonWord abuela = new CommonWord(10, "Abuela", null, 6);
+                        CommonWord nieto = new CommonWord(11, "Nieto", null, 6);
+                        CommonWord nieta = new CommonWord(12, "Nieta", null, 6);
+                        CommonWord tio = new CommonWord(13, "Tío", null, 5);
+                        CommonWord tia = new CommonWord(14, "Tía", null, 5);
+                        CommonWord sobrino = new CommonWord(15, "Sobrino", null, 5);
+                        CommonWord sobrina = new CommonWord(16, "Sobrina", null, 5);
+                        CommonWord primo = new CommonWord(17, "Primo", null, 5);
+                        CommonWord prima = new CommonWord(18, "Prima", null, 5);
+                        CommonWord cunado = new CommonWord(19, "Cuñado", null, 4);
+                        CommonWord cunada = new CommonWord(20, "Cuñada", null, 4);
+                        CommonWord suegro = new CommonWord(21, "Suegro", null, 3);
+                        CommonWord suegra = new CommonWord(22, "Suegra", null, 3);
+                        CommonWord yerno = new CommonWord(23, "Yerno", null, 2);
+                        CommonWord nuera = new CommonWord(24, "Nuera", null, 2);
 
-                        res.add(papa);
+                        res.add(familia);
+                        res.add(padre);
+                        res.add(madre);
+                        res.add(hijo);
+                        res.add(hija);
+                        res.add(marido);
+                        res.add(mujer);
+                        res.add(hermano);
+                        res.add(hermana);
+                        res.add(abuelo);
+                        res.add(abuela);
+                        res.add(nieto);
+                        res.add(nieta);
+                        res.add(tio);
+                        res.add(tia);
+                        res.add(sobrino);
+                        res.add(sobrina);
                         res.add(primo);
+                        res.add(prima);
+                        res.add(cunado);
+                        res.add(cunada);
+                        res.add(suegro);
+                        res.add(suegra);
+                        res.add(yerno);
+                        res.add(nuera);
                         break;
                 }
                 break;
@@ -495,11 +541,81 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                         break;
 
                     case "Familia":
-                        CommonWord papa = new CommonWord(0, "Papá", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fpadre_dibujo.png?alt=media&token=0d5bc5a1-775b-4200-8e2c-194623e62eb6", "gs://comtietea.appspot.com/images/default/padre_dibujo.png"), 10);
-                        CommonWord primo = new CommonWord(1, "Primo", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fprimo_dibujo.jpg?alt=media&token=864e1ae7-d38e-4888-820c-e61ff6888f3f", "gs://comtietea.appspot.com/images/default/primo_dibujo.png"), 3);
+                        CommonWord familia = new CommonWord(0, "Familia", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Ffamilia_dibujo.png?alt=media&token=deba80eb-a62e-4b18-ad8e-a2f0c7de8b0d","gs://comtietea.appspot.com/images/default/familia_dibujo.png"), 10);
 
-                        res.add(papa);
+                        CommonWord padre = new CommonWord(1, "Padre", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fpadre_dibujo.png?alt=media&token=0d5bc5a1-775b-4200-8e2c-194623e62eb6","gs://comtietea.appspot.com/images/default/padre_dibujo.png"), 9);
+
+                        CommonWord madre = new CommonWord(2, "Madre", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fmadre_dibujo.png?alt=media&token=9dc431ed-362d-4f93-bc13-30ac2c935f7e","gs://comtietea.appspot.com/images/default/madre_dibujo.png"), 9);
+
+                        CommonWord hijo = new CommonWord(3, "Hijo", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fhijo_dibujo.png?alt=media&token=385ec5de-b58d-4728-b9ce-2a31c688c590","gs://comtietea.appspot.com/images/default/hijo_dibujo.png"), 9);
+
+                        CommonWord hija = new CommonWord(4, "Hija", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fhija_dibujo.jpg?alt=media&token=dbc92c37-25b8-4609-b3ff-66017d327333","gs://comtietea.appspot.com/images/default/hija_dibujo.jpg"), 9);
+
+                        CommonWord marido = new CommonWord(5, "Marido", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fmarido_dibujo.png?alt=media&token=0c1d99f7-380d-474c-b1f7-9cb2beda7755","gs://comtietea.appspot.com/images/default/marido_dibujo.png"), 8);
+
+                        CommonWord mujer = new CommonWord(6, "Mujer", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fmujer_dibujo.png?alt=media&token=05c71367-48af-49e0-94ef-00c40e5f7071","gs://comtietea.appspot.com/images/default/mujer_dibujo.png"), 8);
+
+                        CommonWord hermano = new CommonWord(7, "Hermano", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fhermano_dibujo.jpg?alt=media&token=5d432bf2-c830-4c7f-a31a-f595874c9e47","gs://comtietea.appspot.com/images/default/hermano_dibujo.jpg"), 7);
+
+                        CommonWord hermana = new CommonWord(8, "Hermana", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fhermana_dibujo.jpg?alt=media&token=2945d751-21d6-4c94-9257-9ce77fb204db","gs://comtietea.appspot.com/images/default/hermana_dibujo.jpg"), 7);
+
+                        CommonWord abuelo = new CommonWord(9, "Abuelo", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fabuelo_dibujo.png?alt=media&token=7161db0b-9b56-4b08-ad59-60bab1f02244","gs://comtietea.appspot.com/images/default/abuelo_dibujo.png"), 6);
+
+                        CommonWord abuela = new CommonWord(10, "Abuela", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fabuela_dibujo.png?alt=media&token=390624c2-4045-4297-829c-f63dd9f1d8c0","gs://comtietea.appspot.com/images/default/abuela_dibujo.png"), 6);
+
+                        CommonWord nieto = new CommonWord(11, "Nieto", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fnieto_dibujo.jpg?alt=media&token=a99f4b7c-c9bb-4d22-a3f0-585aea636038", "gs://comtietea.appspot.com/images/default/nieto_dibujo.jpg"), 6);
+
+                        CommonWord nieta = new CommonWord(12, "Nieta", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fnieta_dibujo.jpg?alt=media&token=3ff3a5a0-3e49-4624-adf3-2a954a022e59","gs://comtietea.appspot.com/images/default/nieta_dibujo.jpg"), 6);
+
+                        CommonWord tio = new CommonWord(13, "Tío", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Ftio_dibujo.jpg?alt=media&token=45976433-6bf2-490f-8d14-c9be07f835e8","gs://comtietea.appspot.com/images/default/tio_dibujo.jpg"), 5);
+
+                        CommonWord tia = new CommonWord(14, "Tía", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Ft%C3%ADa_dibujo.png?alt=media&token=be3f028d-c505-4f48-9beb-56e6d9502d44","gs://comtietea.appspot.com/images/default/tía_dibujo.png"), 5);
+
+                        CommonWord sobrino = new CommonWord(15, "Sobrino", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fsobrino_dibujo.png?alt=media&token=afb20299-8990-4b53-9554-6295447a8182","gs://comtietea.appspot.com/images/default/sobrino_dibujo.png"), 5);
+
+                        CommonWord sobrina = new CommonWord(16, "Sobrina", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fsobrina_dibujo.png?alt=media&token=4ae39f2f-fb8c-4ab8-8bda-972af68c739e","gs://comtietea.appspot.com/images/default/sobrina_dibujo.png"), 5);
+
+                        CommonWord primo = new CommonWord(17, "Primo", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fprimo_dibujo.jpg?alt=media&token=864e1ae7-d38e-4888-820c-e61ff6888f3f","gs://comtietea.appspot.com/images/default/primo_dibujo.jpg"), 5);
+
+                        CommonWord prima = new CommonWord(18, "Prima", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fprima_dibujo.jpg?alt=media&token=b69d0b93-0347-48a3-a89a-1c5b051cd917","gs://comtietea.appspot.com/images/default/prima_dibujo.jpg"), 5);
+
+                        CommonWord cunado = new CommonWord(19, "Cuñado", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fcu%C3%B1ado_dibujo.png?alt=media&token=7db99065-2c5f-4acc-8b47-5c6e83784d8b","gs://comtietea.appspot.com/images/default/cuñado_dibujo.png"), 4);
+
+                        CommonWord cunada = new CommonWord(20, "Cuñada", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fcu%C3%B1ada_dibujo.jpg?alt=media&token=61607b85-32ea-4a56-85bb-5c96e6112802","gs://comtietea.appspot.com/images/default/cuñada_dibujo.jpg"), 4);
+
+                        CommonWord suegro = new CommonWord(21, "Suegro", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fsuegro_dibujo.png?alt=media&token=1c9dfc4f-2d43-48d7-9ac6-ba06022f6023", "gs://comtietea.appspot.com/images/default/suegro_dibujo.png"), 3);
+
+                        CommonWord suegra = new CommonWord(22, "Suegra", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fsuegra_dibujo.png?alt=media&token=c70e6b97-93cd-4a82-ba92-a0c20404f370", "gs://comtietea.appspot.com/images/default/suegra_dibujo.png"), 3);
+
+                        CommonWord yerno = new CommonWord(23, "Yerno", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fyerno_dibujo.jpg?alt=media&token=09eddef1-69cb-44e9-8fb3-8de38b6d2f1d","gs://comtietea.appspot.com/images/default/yerno_dibujo.jpg"), 2);
+
+                        CommonWord nuera = new CommonWord(24, "Nuera", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fnuera_dibujo.png?alt=media&token=80d2441f-74c1-408c-8170-3378a35d0b71","gs://comtietea.appspot.com/images/default/nuera_dibujo.png"), 2);
+
+                        res.add(familia);
+                        res.add(padre);
+                        res.add(madre);
+                        res.add(hijo);
+                        res.add(hija);
+                        res.add(marido);
+                        res.add(mujer);
+                        res.add(hermano);
+                        res.add(hermana);
+                        res.add(abuelo);
+                        res.add(abuela);
+                        res.add(nieto);
+                        res.add(nieta);
+                        res.add(tio);
+                        res.add(tia);
+                        res.add(sobrino);
+                        res.add(sobrina);
                         res.add(primo);
+                        res.add(prima);
+                        res.add(cunado);
+                        res.add(cunada);
+                        res.add(suegro);
+                        res.add(suegra);
+                        res.add(yerno);
+                        res.add(nuera);
                         break;
                 }
                 break;
