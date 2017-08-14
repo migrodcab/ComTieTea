@@ -281,6 +281,7 @@ public class CommonWordDetailActivity extends AppCompatActivity {
                                 i.putExtra("uid", uid);
                                 i.putExtra("codSimId", codSimId);
                                 i.putExtra("calObjId", calObjId);
+                                i.putExtra("fecha", fecha);
                                 Toast.makeText(getApplicationContext(), "La actividad ha sido borrada correctamente.", Toast.LENGTH_SHORT).show();
                                 startActivity(i);
                             }
