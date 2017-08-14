@@ -159,7 +159,7 @@ public class CreateSemanticFieldActivity extends AppCompatActivity {
                 dialog.setTitle("Subiendo imagen");
                 dialog.show();
 
-                final String path = "images/" + uid + "/" + tipo + "/" + name.getText().toString() + "/" + name.getText().toString() + "." + getImageExt(imgUri);
+                final String path = "images/" + uid + "/" + tipo + "/" + name.getText().toString() + "/" + name.getText().toString() + "_CampoSemantico." + getImageExt(imgUri);
                 StorageReference ref = storageReference.child(path);
                 ref.putFile(imgUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
@@ -270,7 +270,7 @@ public class CreateSemanticFieldActivity extends AppCompatActivity {
                     sf.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            final String path = "images/" + uid + "/" + tipo + "/" + name.getText().toString() + "/" + name.getText().toString() + "." + getImageExt(imgUri);
+                            final String path = "images/" + uid + "/" + tipo + "/" + name.getText().toString() + "/" + name.getText().toString() + "_CampoSemantico." + getImageExt(imgUri);
                             StorageReference sfAux = storageReference.child(path);
                             sfAux.putFile(imgUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                                 @Override
@@ -306,7 +306,7 @@ public class CreateSemanticFieldActivity extends AppCompatActivity {
                         }
                     });
                 } else {
-                    final String path = "images/" + uid + "/" + tipo +  "/" + name.getText().toString() + "/" + name.getText().toString() + "." + getImageExt(imgUri);
+                    final String path = "images/" + uid + "/" + tipo +  "/" + name.getText().toString() + "/" + name.getText().toString() + "_CampoSemantico." + getImageExt(imgUri);
                     StorageReference ref = storageReference.child(path);
                     ref.putFile(imgUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
