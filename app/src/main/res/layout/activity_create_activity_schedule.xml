@@ -139,7 +139,7 @@
             android:id="@+id/cardView"
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:layout_marginTop="2dp"
+            android:layout_marginTop="20dp"
             android:layout_marginRight="2dp"
             android:layout_below="@+id/imageView"
             card_view:cardCornerRadius="10dp"
@@ -162,9 +162,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:textColor="@android:color/black"
                     android:textSize="80dp"
-                    />
+                    android:shadowColor="@android:color/black"
+                    android:shadowDx="1.5"
+                    android:shadowDy="1.3"
+                    android:shadowRadius="3.5"
+                    android:textAllCaps="true"
+                    android:textColor="@android:color/white"/>
 
             </RelativeLayout>
 
