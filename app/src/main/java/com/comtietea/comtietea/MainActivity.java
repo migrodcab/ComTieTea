@@ -221,29 +221,173 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     private List<SemanticField> cargaCamposSemanticos(String codigoSimbolico) {
         List<SemanticField> res = new ArrayList<SemanticField>();
 
-        List<CommonWord> palabrasColegio;
-        SemanticField colegio = null;
         List<CommonWord> palabrasFamilia;
         SemanticField familia = null;
 
-        int colorColegio = Color.argb(255, 255, 255, 0);
+        List<CommonWord> palabrasAcciones;
+        SemanticField acciones = null;
+
+        List<CommonWord> palabrasColegio;
+        SemanticField colegio = null;
+
+        List<CommonWord> palabrasCasa;
+        SemanticField casa = null;
+
+        List<CommonWord> palabrasOcio;
+        SemanticField ocio = null;
+
+        List<CommonWord> palabrasAnimales;
+        SemanticField animales = null;
+
+        List<CommonWord> palabrasColores;
+        SemanticField colores = null;
+
+        List<CommonWord> palabrasAdjetivos;
+        SemanticField adjetivos = null;
+
+        List<CommonWord> palabrasEmociones;
+        SemanticField emociones = null;
+
+        List<CommonWord> palabrasProfesiones;
+        SemanticField profesiones = null;
+
+        List<CommonWord> palabrasComida;
+        SemanticField comida = null;
+
+        List<CommonWord> palabrasAseo;
+        SemanticField aseo = null;
+
+        List<CommonWord> palabrasEstacionesYTiempo;
+        SemanticField estacionesYTiempo = null;
+
+        List<CommonWord> palabrasRopa;
+        SemanticField ropa = null;
+
+        List<CommonWord> palabrasSaludYCuerpoHumano;
+        SemanticField saludYCuerpoHumano = null;
+
+        List<CommonWord> palabrasTransportes;
+        SemanticField transportes = null;
+
         int colorFamilia = Color.argb(255, 180, 4, 0);
+        int colorAcciones = Color.parseColor("#366BB3");
+        int colorColegio = Color.argb(255, 255, 255, 0);
+        int colorCasa = Color.parseColor("#88AF6A");
+        int colorOcio = Color.parseColor("#405D73");
+        int colorAnimales = Color.parseColor("#6E4505");
+        int colorColores = Color.parseColor("#5A056E");
+        int colorAdjetivos = Color.parseColor("#04600E");
+        int colorEmociones = Color.parseColor("#562353");
+        int colorProfesiones = Color.parseColor("#CF6E3B");
+        int colorComida = Color.parseColor("#EDC160");
+        int colorAseo = Color.parseColor("#F908F9");
+        int colorEstacionesYTiempo = Color.parseColor("#08F9F2");
+        int colorRopa = Color.parseColor("#B0B9B9");
+        int colorSaludYCuerpoHumano = Color.parseColor("#9472BB");
+        int colorTransportes = Color.parseColor("#9C4A4A");
 
         switch (codigoSimbolico) {
             case "Palabras":
-                palabrasColegio = cargaPalabrasHabituales(codigoSimbolico, "Colegio");
-
-                colegio = new SemanticField(0, "Colegio", null, 8, colorColegio, palabrasColegio);
                 palabrasFamilia = cargaPalabrasHabituales(codigoSimbolico, "Familia");
-                familia = new SemanticField(1, "Familia", null, 8, colorFamilia, palabrasFamilia);
+                familia = new SemanticField(0, "Familia", null, 10, colorFamilia, palabrasFamilia);
+
+                palabrasAcciones = cargaPalabrasHabituales(codigoSimbolico, "Acciones");
+                acciones = new SemanticField(1, "Acciones", null, 9, colorAcciones, palabrasAcciones);
+
+                palabrasColegio = cargaPalabrasHabituales(codigoSimbolico, "Colegio");
+                colegio = new SemanticField(2, "Colegio", null, 8, colorColegio, palabrasColegio);
+
+                palabrasCasa = cargaPalabrasHabituales(codigoSimbolico, "Casa");
+                casa = new SemanticField(3, "Casa", null, 7, colorCasa, palabrasCasa);
+
+                palabrasOcio = cargaPalabrasHabituales(codigoSimbolico, "Ocio");
+                ocio = new SemanticField(4, "Ocio", null, 7, colorOcio, palabrasOcio);
+
+                palabrasAnimales = cargaPalabrasHabituales(codigoSimbolico, "Animales");
+                animales = new SemanticField(5, "Animales", null, 6, colorAnimales, palabrasAnimales);
+
+                palabrasColores = cargaPalabrasHabituales(codigoSimbolico, "Colores");
+                colores = new SemanticField(6, "Colores", null, 6, colorColores, palabrasColores);
+
+                palabrasAdjetivos = cargaPalabrasHabituales(codigoSimbolico, "Adjetivos");
+                adjetivos = new SemanticField(7, "Adjetivos", null, 5, colorAdjetivos, palabrasAdjetivos);
+
+                palabrasEmociones = cargaPalabrasHabituales(codigoSimbolico, "Emociones");
+                emociones = new SemanticField(8, "Emociones", null, 5, colorEmociones, palabrasEmociones);
+
+                palabrasProfesiones = cargaPalabrasHabituales(codigoSimbolico, "Profesiones");
+                profesiones = new SemanticField(9, "Profesiones", null, 4, colorProfesiones, palabrasProfesiones);
+
+                palabrasComida = cargaPalabrasHabituales(codigoSimbolico, "Comida");
+                comida = new SemanticField(10, "Comida", null, 4, colorComida, palabrasComida);
+
+                palabrasAseo = cargaPalabrasHabituales(codigoSimbolico, "Aseo");
+                aseo = new SemanticField(11, "Aseo", null, 3, colorAseo, palabrasAseo);
+
+                palabrasEstacionesYTiempo = cargaPalabrasHabituales(codigoSimbolico, "Estaciones y Tiempo");
+                estacionesYTiempo = new SemanticField(12, "Estaciones y Tiempo", null, 3, colorEstacionesYTiempo, palabrasEstacionesYTiempo);
+
+                palabrasRopa = cargaPalabrasHabituales(codigoSimbolico, "Ropa");
+                ropa = new SemanticField(13, "Ropa", null, 2, colorRopa, palabrasRopa);
+
+                palabrasSaludYCuerpoHumano = cargaPalabrasHabituales(codigoSimbolico, "Salud y Cuerpo Humano");
+                saludYCuerpoHumano = new SemanticField(14, "Salud y Cuerpo Humano", null, 2, colorSaludYCuerpoHumano, palabrasSaludYCuerpoHumano);
+
+                palabrasTransportes = cargaPalabrasHabituales(codigoSimbolico, "Transportes");
+                transportes = new SemanticField(15, "Transportes", null, 1, colorTransportes, palabrasTransportes);
                 break;
+
             case "Dibujos":
-                palabrasColegio = cargaPalabrasHabituales(codigoSimbolico, "Colegio");
-                colegio = new SemanticField(0, "Colegio", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fcolegio_dibujo.jpg?alt=media&token=dce6f6bd-ffb2-499b-b316-d6bdb33889a7", "gs://comtietea.appspot.com/images/default/colegio_dibujo.jpg"), 8, colorColegio, palabrasColegio);
-
                 palabrasFamilia = cargaPalabrasHabituales(codigoSimbolico, "Familia");
-                familia = new SemanticField(1, "Familia", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Ffamilia_dibujo.png?alt=media&token=deba80eb-a62e-4b18-ad8e-a2f0c7de8b0d", "gs://comtietea.appspot.com/images/default/familia_dibujo.png"), 8, colorFamilia, palabrasFamilia);
+                familia = new SemanticField(0, "Familia", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Ffamilia_dibujo.png?alt=media&token=deba80eb-a62e-4b18-ad8e-a2f0c7de8b0d", "gs://comtietea.appspot.com/images/default/familia_dibujo.png"), 10, colorFamilia, palabrasFamilia);
+
+                palabrasAcciones = cargaPalabrasHabituales(codigoSimbolico, "Acciones");
+                acciones = new SemanticField(1, "Acciones", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Facci%C3%B3n_dibujo.jpg?alt=media&token=22d0bc48-f6fe-4bdf-a531-eef7bd8c333c","gs://comtietea.appspot.com/images/default/acción_dibujo.jpg"), 9, colorAcciones, palabrasAcciones);
+
+                palabrasColegio = cargaPalabrasHabituales(codigoSimbolico, "Colegio");
+                colegio = new SemanticField(2, "Colegio", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fcolegio_dibujo.jpg?alt=media&token=dce6f6bd-ffb2-499b-b316-d6bdb33889a7", "gs://comtietea.appspot.com/images/default/colegio_dibujo.jpg"), 8, colorColegio, palabrasColegio);
+
+                palabrasCasa = cargaPalabrasHabituales(codigoSimbolico, "Casa");
+                casa = new SemanticField(3, "Casa", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fcasa_dibujo.png?alt=media&token=749512fa-cf70-4707-b880-7156ad4ab125","gs://comtietea.appspot.com/images/default/casa_dibujo.png"), 7, colorCasa, palabrasCasa);
+
+                palabrasOcio = cargaPalabrasHabituales(codigoSimbolico, "Ocio");
+                ocio = new SemanticField(4, "Ocio", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Focio_dibujo.jpg?alt=media&token=29f9467f-1844-4b80-9ec6-50dd460a7cdf","gs://comtietea.appspot.com/images/default/ocio_dibujo.jpg"), 7, colorOcio, palabrasOcio);
+
+                palabrasAnimales = cargaPalabrasHabituales(codigoSimbolico, "Animales");
+                animales = new SemanticField(5, "Animales", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fanimales_dibujo.jpg?alt=media&token=37441298-ccc4-43e0-8bf1-a1a515fc1ae0", "gs://comtietea.appspot.com/images/default/animales_dibujo.jpg"), 6, colorAnimales, palabrasAnimales);
+
+                palabrasColores = cargaPalabrasHabituales(codigoSimbolico, "Colores");
+                colores = new SemanticField(6, "Colores", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fcolores_dibujo.png?alt=media&token=ef37a0f3-b00f-4114-9ab5-92ee5ba6017a","gs://comtietea.appspot.com/images/default/colores_dibujo.png"), 6, colorColores, palabrasColores);
+
+                palabrasAdjetivos = cargaPalabrasHabituales(codigoSimbolico, "Adjetivos");
+                adjetivos = new SemanticField(7, "Adjetivos", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fadjetivo_dibujo.png?alt=media&token=3b3869a1-9856-45a3-9f63-210b2684f369","gs://comtietea.appspot.com/images/default/adjetivo_dibujo.png"), 5, colorAdjetivos, palabrasAdjetivos);
+
+                palabrasEmociones = cargaPalabrasHabituales(codigoSimbolico, "Emociones");
+                emociones = new SemanticField(8, "Emociones", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Femociones_dibujo.png?alt=media&token=e9782282-7464-49bd-aadd-4032c726e681","gs://comtietea.appspot.com/images/default/emociones_dibujo.png"), 5, colorEmociones, palabrasEmociones);
+
+                palabrasProfesiones = cargaPalabrasHabituales(codigoSimbolico, "Profesiones");
+                profesiones = new SemanticField(9, "Profesiones", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fprofesi%C3%B3n_dibujo.jpg?alt=media&token=3ddad120-4994-4eb1-a6d7-d17b2149a7a3","gs://comtietea.appspot.com/images/default/profesión_dibujo.jpg"), 4, colorProfesiones, palabrasProfesiones);
+
+                palabrasComida = cargaPalabrasHabituales(codigoSimbolico, "Comida");
+                comida = new SemanticField(10, "Comida", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fcomida_dibujo.png?alt=media&token=27e177d6-f557-4174-b288-ab78eab800bb","gs://comtietea.appspot.com/images/default/comida_dibujo.png"), 4, colorComida, palabrasComida);
+
+                palabrasAseo = cargaPalabrasHabituales(codigoSimbolico, "Aseo");
+                aseo = new SemanticField(11, "Aseo", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Faseo_dibujo.jpg?alt=media&token=20eac5ed-3962-49f3-bb71-1b4ee1360cde","gs://comtietea.appspot.com/images/default/aseo_dibujo.jpg"), 3, colorAseo, palabrasAseo);
+
+                palabrasEstacionesYTiempo = cargaPalabrasHabituales(codigoSimbolico, "Estaciones y Tiempo");
+                estacionesYTiempo = new SemanticField(12, "Estaciones y Tiempo", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Festaciones_dibujo.PNG?alt=media&token=74f53d8e-827c-4b31-a9da-bc8f5e6604f9","gs://comtietea.appspot.com/images/default/estaciones_dibujo.PNG"), 3, colorEstacionesYTiempo, palabrasEstacionesYTiempo);
+
+                palabrasRopa = cargaPalabrasHabituales(codigoSimbolico, "Ropa");
+                ropa = new SemanticField(13, "Ropa", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fropa_dibujo.png?alt=media&token=83cd1677-d21a-4a40-8511-070319383a1f","gs://comtietea.appspot.com/images/default/ropa_dibujo.png"), 2, colorRopa, palabrasRopa);
+
+                palabrasSaludYCuerpoHumano = cargaPalabrasHabituales(codigoSimbolico, "Salud y Cuerpo Humano");
+                saludYCuerpoHumano = new SemanticField(14, "Salud y Cuerpo Humano", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fsalud_dibujo.jpg?alt=media&token=ecbf2350-dc97-4d54-a648-d3696ad87d7a","gs://comtietea.appspot.com/images/default/salud_dibujo.jpg"), 2, colorSaludYCuerpoHumano, palabrasSaludYCuerpoHumano);
+
+                palabrasTransportes = cargaPalabrasHabituales(codigoSimbolico, "Transportes");
+                transportes = new SemanticField(15, "Transportes", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Ftransporte_dibujo.jpg?alt=media&token=18e1ec0b-3426-4b7d-ad2f-a30b91db56cf","gs://comtietea.appspot.com/images/default/transporte_dibujo.jpg"), 1, colorTransportes, palabrasTransportes);
+
                 break;
+
             case "Imagenes":
                 palabrasColegio = cargaPalabrasHabituales(codigoSimbolico, "Colegio");
                 colegio = new SemanticField(0, "Colegio", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fcolegio_foto.jpg?alt=media&token=9f92d73d-a040-4716-8bdd-c67bd37bc27d", "gs://comtietea.appspot.com/images/default/colegio_foto.png"), 8, colorColegio, palabrasColegio);
@@ -253,8 +397,22 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 break;
         }
 
-        res.add(colegio);
         res.add(familia);
+        res.add(acciones);
+        res.add(colegio);
+        res.add(casa);
+        res.add(ocio);
+        res.add(animales);
+        res.add(colores);
+        res.add(adjetivos);
+        res.add(emociones);
+        res.add(profesiones);
+        res.add(comida);
+        res.add(aseo);
+        res.add(estacionesYTiempo);
+        res.add(ropa);
+        res.add(saludYCuerpoHumano);
+        res.add(transportes);
 
         return res;
     }
