@@ -180,7 +180,8 @@ public class CreateSemanticFieldActivity extends AppCompatActivity {
                             relevancia = new Integer(spinner.getSelectedItem().toString());
                         }
 
-                        final SemanticField campoSemantico = new SemanticField(100, name.getText().toString(), new FirebaseImage(taskSnapshot.getDownloadUrl().toString(), path), relevancia, color, new ArrayList<CommonWord>());
+                        final SemanticField campoSemantico = new SemanticField(100, name.getText().toString(),
+                                new FirebaseImage(taskSnapshot.getDownloadUrl().toString(), path), relevancia, color, new ArrayList<CommonWord>());
 
                         dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override

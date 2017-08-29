@@ -604,7 +604,7 @@ public class CreateActivityScheduleActivity extends AppCompatActivity {
 
     private void establecerAlarma(String fecha, String momento, int id) {
         AlarmManager alarmManager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
-        Calendar momentoNotificacion = Calendar.getInstance();
+        Calendar momentoAlarma = Calendar.getInstance();
 
         int year = Integer.parseInt(fecha.substring(0, 4));
         int month = Integer.parseInt(fecha.substring(5, 7)) - 1;
@@ -613,7 +613,7 @@ public class CreateActivityScheduleActivity extends AppCompatActivity {
         int hour = Integer.parseInt(momento.substring(0, 2));
         int minute = Integer.parseInt(momento.substring(3, 5));
 
-        momentoNotificacion.set(year, month, day, hour, minute);
+        momentoAlarma.set(year, month, day, hour, minute);
 
         Intent intent = new Intent(this, AlarmClass.class);
 
@@ -629,7 +629,7 @@ public class CreateActivityScheduleActivity extends AppCompatActivity {
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, id, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        alarmManager.set(AlarmManager.RTC_WAKEUP, momentoNotificacion.getTimeInMillis(), pendingIntent);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, momentoAlarma.getTimeInMillis(), pendingIntent);
     }
 
     private void borrarNotificacion(int id) {
