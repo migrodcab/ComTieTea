@@ -2471,21 +2471,21 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                         break;
 
                     case "Casa":
-                        CommonWord casa = new CommonWord(0, "Casa", new FirebaseImage(), 10);
+                        CommonWord casa = new CommonWord(0, "Casa", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fcasa_foto.jpg?alt=media&token=09e4b609-19dd-406e-a0a2-56c478bf184e", "gs://comtietea.appspot.com/images/default/casa_foto.jpg"), 10);
 
-                        CommonWord cocina = new CommonWord(1, "Cocina", new FirebaseImage(), 9);
+                        CommonWord cocina = new CommonWord(1, "Cocina", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fcocina_foto.jpg?alt=media&token=753ba696-6a0b-458b-9ce0-b5dc405629b3", "gs://comtietea.appspot.com/images/default/cocina_foto.jpg"), 9);
 
-                        CommonWord bano = new CommonWord(2, "Baño", new FirebaseImage(), 8);
+                        CommonWord bano = new CommonWord(2, "Baño", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fba%C3%B1o_foto.jpg?alt=media&token=592975e1-f5c7-40b3-bc7c-6414274a2ad0", "gs://comtietea.appspot.com/images/default/baño_foto.jpg"), 8);
 
-                        CommonWord dormitorio = new CommonWord(3, "Dormitorio", new FirebaseImage(), 7);
+                        CommonWord dormitorio = new CommonWord(3, "Dormitorio", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fdormitorio_foto.jpg?alt=media&token=e515e8cc-0c4f-4a61-98ac-e493f624bfdf", "gs://comtietea.appspot.com/images/default/dormitorio_foto.jpg"), 7);
 
-                        CommonWord salon = new CommonWord(4, "Salón", new FirebaseImage(), 6);
+                        CommonWord salon = new CommonWord(4, "Salón", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fsal%C3%B3n_foto.jpg?alt=media&token=fc506c78-2480-453f-91e2-794cd844bb63", "gs://comtietea.appspot.com/images/default/salón_foto.jpg"), 6);
 
-                        CommonWord comedor = new CommonWord(5, "Comedor", new FirebaseImage(), 5);
+                        CommonWord comedor = new CommonWord(5, "Comedor", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fcomedor_foto.jpg?alt=media&token=3a543719-b2e2-4619-90ed-6d9ea821401b", "gs://comtietea.appspot.com/images/default/comedor_foto.jpg"), 5);
 
-                        CommonWord jardin = new CommonWord(6, "Jardín", new FirebaseImage(), 4);
+                        CommonWord jardin = new CommonWord(6, "Jardín", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fjard%C3%ADn_foto.jpg?alt=media&token=29798fdc-e96a-464d-a795-c3f3bb6317b5", "gs://comtietea.appspot.com/images/default/jardín_foto.jpg"), 4);
 
-                        CommonWord balcon = new CommonWord(7, "Balcón", new FirebaseImage(), 3);
+                        CommonWord balcon = new CommonWord(7, "Balcón", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fbalc%C3%B3n_foto.jpg?alt=media&token=1b250b2a-20ee-4942-8738-00320ce558ab", "gs://comtietea.appspot.com/images/default/balcón_foto.jpg"), 3);
 
                         res.add(casa);
                         res.add(cocina);
