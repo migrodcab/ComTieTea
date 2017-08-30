@@ -2642,29 +2642,29 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                         break;
 
                     case "Colores":
-                        CommonWord color = new CommonWord(0, "Color", new FirebaseImage(), 10);
+                        CommonWord color = new CommonWord(0, "Color", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fcolor_foto.jpg?alt=media&token=f8b48ec4-f686-4d84-b805-68a14cb0ac5b", "gs://comtietea.appspot.com/images/default/color_foto.jpg"), 10);
 
-                        CommonWord negro = new CommonWord(1, "Negro", new FirebaseImage(), 9);
+                        CommonWord negro = new CommonWord(1, "Negro", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fnegro.PNG?alt=media&token=1a51e037-6eb5-4516-996b-d34a322d200e", "gs://comtietea.appspot.com/images/default/negro.PNG"), 9);
 
-                        CommonWord blanco = new CommonWord(2, "Blanco", new FirebaseImage(), 9);
+                        CommonWord blanco = new CommonWord(2, "Blanco", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fblanco.PNG?alt=media&token=93486d07-3935-44f3-bfc2-c948078183ae", "gs://comtietea.appspot.com/images/default/blanco.PNG"), 9);
 
-                        CommonWord azul = new CommonWord(3, "Azul", new FirebaseImage(), 8);
+                        CommonWord azul = new CommonWord(3, "Azul", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fazul.PNG?alt=media&token=30ffbce4-8587-4742-92a4-dae9d927ab39", "gs://comtietea.appspot.com/images/default/azul.PNG"), 8);
 
-                        CommonWord verde = new CommonWord(4, "Verde", new FirebaseImage(), 8);
+                        CommonWord verde = new CommonWord(4, "Verde", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fverde.PNG?alt=media&token=a24733f3-b560-4767-aee7-19ffdf2c8ecc", "gs://comtietea.appspot.com/images/default/verde.PNG"), 8);
 
-                        CommonWord rosa = new CommonWord(5, "Rosa", new FirebaseImage(), 7);
+                        CommonWord rosa = new CommonWord(5, "Rosa", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Frosa.PNG?alt=media&token=a40a0b8a-e5d2-48af-9b45-653b40d4409a", "gs://comtietea.appspot.com/images/default/rosa.PNG"), 7);
 
-                        CommonWord rojo = new CommonWord(6, "Rojo", new FirebaseImage(), 7);
+                        CommonWord rojo = new CommonWord(6, "Rojo", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Frojo.PNG?alt=media&token=f2be6ee5-dcb0-4df7-bcf6-6889fe345fdb", "gs://comtietea.appspot.com/images/default/rojo.PNG"), 7);
 
-                        CommonWord amarillo = new CommonWord(7, "Amarillo", new FirebaseImage(), 6);
+                        CommonWord amarillo = new CommonWord(7, "Amarillo", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Famarillo.PNG?alt=media&token=88f6388c-ce7d-445d-a300-de15219edaf8", "gs://comtietea.appspot.com/images/default/amarillo.PNG"), 6);
 
-                        CommonWord naranja = new CommonWord(8, "Naranja", new FirebaseImage(), 5);
+                        CommonWord naranja = new CommonWord(8, "Naranja", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fnaranja.PNG?alt=media&token=03c9e9fd-cab4-4080-9550-62f7668c608b", "gs://comtietea.appspot.com/images/default/naranja.PNG"), 5);
 
-                        CommonWord marron = new CommonWord(9, "Marrón", new FirebaseImage(), 4);
+                        CommonWord marron = new CommonWord(9, "Marrón", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fmarr%C3%B3n.PNG?alt=media&token=e757ed4c-16de-4376-b2d2-d6f6c959fee2", "gs://comtietea.appspot.com/images/default/marrón.PNG"), 4);
 
-                        CommonWord morado = new CommonWord(10, "Morado", new FirebaseImage(), 3);
+                        CommonWord morado = new CommonWord(10, "Morado", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fmorado.PNG?alt=media&token=bf63525c-09e9-4a72-867c-01ec6d4b7ef4", "gs://comtietea.appspot.com/images/default/morado.PNG"), 3);
 
-                        CommonWord gris = new CommonWord(11, "Gris", new FirebaseImage(), 2);
+                        CommonWord gris = new CommonWord(11, "Gris", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fgris.PNG?alt=media&token=c7836319-e4a7-410f-8157-52419c2eb4c0", "gs://comtietea.appspot.com/images/default/gris.PNG"), 2);
 
                         res.add(color);
                         res.add(negro);
