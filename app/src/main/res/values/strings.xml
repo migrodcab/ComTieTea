@@ -5,6 +5,7 @@
     <string name="action_edit">Editar</string>
     <string name="action_delete">Borrar</string>
     <string name="action_settings">Cuenta asociada</string>
+    <string name="action_info">Acerca de</string>
 
     <string name="numbers_prompt">Importancia (1-10)</string>
     <string-array name="numbers">

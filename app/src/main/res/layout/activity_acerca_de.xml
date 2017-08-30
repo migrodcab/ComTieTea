@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.comtietea.comtietea.AcercaDeActivity">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/logo"
+        android:layout_alignParentTop="true"
+        android:src="@drawable/logo_exp"
+        android:layout_centerHorizontal="true"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Acerca de"
+        android:textSize="25sp"
+        android:textColor="@android:color/black"
+        android:layout_below="@+id/logo"
+        android:layout_marginTop="50dp"
+        android:id="@+id/textView1" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="ComTieTea es una aplicación diseñada y desarrollada, como Trabajo de Fin de Grado, por los alumnos de la Universidad de Sevilla: Ana Pozo Llorente (Psicología) y Miguel Rodríguez Caballero (Ingeniería Informática - Ingeniería del Software)."
+        android:textColor="@android:color/black"
+        android:layout_below="@+id/textView1"
+        android:layout_marginTop="10dp"
+        android:id="@+id/textView2" />
+
+    <TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textAppearance="?android:attr/textAppearanceSmall"
+    android:text="Email de contacto:"
+    android:textColor="@android:color/black"
+    android:layout_below="@+id/textView2"
+    android:layout_marginTop="20dp"
+    android:id="@+id/textView3" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="anapozllo@alum.us.es"
+        android:textColor="@android:color/black"
+        android:layout_below="@+id/textView3"
+        android:id="@+id/textView4" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="migrodcab@alum.us.es"
+        android:textColor="@android:color/black"
+        android:layout_below="@+id/textView4"
+        android:id="@+id/textView5" />
+</RelativeLayout>

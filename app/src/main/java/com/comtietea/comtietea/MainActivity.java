@@ -190,6 +190,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 Intent intent = new Intent(this, ProfileInfoActivity.class);
                 startActivity(intent);
                 return true;
+            case R.id.action_info:
+                Intent intent2 = new Intent(this, AcercaDeActivity.class);
+                startActivity(intent2);
+                return super.onOptionsItemSelected(item);
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -805,7 +809,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                         CommonWord gordo = new CommonWord(7, "Gordo", null, 6);
                         CommonWord delgado = new CommonWord(8, "Delgado", null, 6);
                         CommonWord pesado = new CommonWord(9, "Pesado", null, 5);
-                        CommonWord ligero = new CommonWord(10, "Delgado", null, 5);
+                        CommonWord ligero = new CommonWord(10, "Ligero", null, 5);
                         CommonWord claro = new CommonWord(11, "Claro", null, 4);
                         CommonWord oscuro = new CommonWord(12, "Oscuro", null, 4);
                         CommonWord viejo = new CommonWord(13, "Viejo", null, 3);
@@ -993,7 +997,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                         CommonWord papelHigienico = new CommonWord(7, "Papel higiénico", null, 5);
                         CommonWord toallitas = new CommonWord(8, "Toallitas", null, 5);
                         CommonWord maquillaje = new CommonWord(9, "Maquillaje", null, 4);
-                        CommonWord ducharse = new CommonWord(10, "Fresa", null, 3);
+                        CommonWord ducharse = new CommonWord(10, "Ducharse", null, 3);
                         CommonWord cepillarseDientes = new CommonWord(11, "Cepillarse los dientes", null, 3);
 
                         res.add(aseo);
@@ -1020,7 +1024,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                         CommonWord frio = new CommonWord(6, "Frío", null, 7);
                         CommonWord calor = new CommonWord(7, "Calor", null, 7);
                         CommonWord sol = new CommonWord(8, "Sol", null, 6);
-                        CommonWord nube = new CommonWord(9, "Plátano", null, 5);
+                        CommonWord nube = new CommonWord(9, "Nube", null, 5);
                         CommonWord lluvia = new CommonWord(10, "Lluvia", null, 4);
                         CommonWord tormenta = new CommonWord(11, "Tormenta", null, 3);
                         CommonWord nieve = new CommonWord(12, "Nieve", null, 2);
@@ -2697,7 +2701,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
                         CommonWord pesado = new CommonWord(9, "Pesado", new FirebaseImage(), 5);
 
-                        CommonWord ligero = new CommonWord(10, "Delgado", new FirebaseImage(), 5);
+                        CommonWord ligero = new CommonWord(10, "Ligero", new FirebaseImage(), 5);
 
                         CommonWord claro = new CommonWord(11, "Claro", new FirebaseImage(), 4);
 
@@ -2967,7 +2971,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
                         CommonWord maquillaje = new CommonWord(9, "Maquillaje", new FirebaseImage(), 4);
 
-                        CommonWord ducharse = new CommonWord(10, "Fresa", new FirebaseImage(), 3);
+                        CommonWord ducharse = new CommonWord(10, "Ducharse", new FirebaseImage(), 3);
 
                         CommonWord cepillarseDientes = new CommonWord(11, "Cepillarse los dientes", new FirebaseImage(), 3);
 
@@ -3004,7 +3008,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
                         CommonWord sol = new CommonWord(8, "Sol", new FirebaseImage(), 6);
 
-                        CommonWord nube = new CommonWord(9, "Plátano", new FirebaseImage(), 5);
+                        CommonWord nube = new CommonWord(9, "Nube", new FirebaseImage(), 5);
 
                         CommonWord lluvia = new CommonWord(10, "Lluvia", new FirebaseImage(), 4);
 

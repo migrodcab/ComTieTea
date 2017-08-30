@@ -209,6 +209,10 @@ public class CalendarActivity extends AppCompatActivity implements CalendarObjec
                 Intent intent = new Intent(this, ProfileInfoActivity.class);
                 startActivity(intent);
                 return super.onOptionsItemSelected(item);
+            case R.id.action_info:
+                Intent intent2 = new Intent(this, AcercaDeActivity.class);
+                startActivity(intent2);
+                return super.onOptionsItemSelected(item);
             default:
                 return super.onOptionsItemSelected(item);
         }

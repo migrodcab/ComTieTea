@@ -171,6 +171,10 @@ public class CommonWordActivity extends AppCompatActivity implements CommonWordR
                 Intent intent = new Intent(this, ProfileInfoActivity.class);
                 startActivity(intent);
                 return true;
+            case R.id.action_info:
+                Intent intent2 = new Intent(this, AcercaDeActivity.class);
+                startActivity(intent2);
+                return super.onOptionsItemSelected(item);
             default:
                 return super.onOptionsItemSelected(item);
         }
