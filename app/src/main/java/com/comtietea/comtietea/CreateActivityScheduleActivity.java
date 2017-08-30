@@ -256,6 +256,8 @@ public class CreateActivityScheduleActivity extends AppCompatActivity {
 
                     final ActivitySchedule actSch = dataSnapshot.getValue(ActivitySchedule.class);
 
+                    setTitle(actSch.getHora());
+
                     String[] datos = actSch.getNombre().trim().split(" - ");
 
                     text.setText(datos[0]);
