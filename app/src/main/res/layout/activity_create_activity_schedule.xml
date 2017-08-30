@@ -183,6 +183,12 @@
             android:textSize="50sp"
             android:text="Aceptar"
             android:background="@drawable/rectangle"
+            android:shadowColor="@android:color/black"
+            android:shadowDx="1.5"
+            android:shadowDy="1.3"
+            android:shadowRadius="3.5"
+            android:textAllCaps="true"
+            android:textColor="@android:color/white"
             android:foreground="?android:attr/selectableItemBackground"
             android:onClick="aceptarAlarma"/>
 
