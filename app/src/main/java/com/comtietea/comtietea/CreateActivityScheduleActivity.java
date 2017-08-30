@@ -89,6 +89,8 @@ public class CreateActivityScheduleActivity extends AppCompatActivity {
         textView4 = (TextView) findViewById(R.id.textView4);
         autoComplete = (AutoCompleteTextView) findViewById(R.id.autoComplete);
 
+        setTitle("Añadir");
+
         LinearLayout linearLayout1 = (LinearLayout) findViewById(R.id.linearLayout);
         LinearLayout linearLayout2 = (LinearLayout) findViewById(R.id.bottom_bar2);
         RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.relativeLayout1);
@@ -177,6 +179,9 @@ public class CreateActivityScheduleActivity extends AppCompatActivity {
         });
 
         if (action.equals("editar")) {
+
+            setTitle("Editar");
+
             dbRef = FirebaseDatabase.getInstance().getReference(
                     FirebaseReferences.USER_REFERENCE + "/" + uid + "/" + FirebaseReferences.SYMBOLIC_CODE_REFERENCE + "/" + codSimId + "/" +
                             FirebaseReferences.CALENDAR_OBJECT_REFERENCE + "/" + calObjId + "/" + FirebaseReferences.ACTIVITY_SCHEDULE_REFERENCE +

@@ -69,6 +69,9 @@ public class ActivityScheduleActivity extends AppCompatActivity implements Activ
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         actividades.clear();
                         CalendarObject calendarObject = dataSnapshot.getValue(CalendarObject.class);
+
+                        setTitle(calendarObject.getDiaSemana() + " de " + calendarObject.getMes());
+
                         if (calendarObject.getActividades() != null) {
                             for (final ActivitySchedule activitySchedule : calendarObject.getActividades()) {
                                 if (activitySchedule != null && activitySchedule.getId() != -1) {

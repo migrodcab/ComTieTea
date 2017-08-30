@@ -85,10 +85,11 @@ public class CommonWordActivity extends AppCompatActivity implements CommonWordR
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 palabrasHabituales.clear();
-                SemanticField camposSemantico = dataSnapshot.getValue(SemanticField.class);
-                nombreCampoSemantico = camposSemantico.getNombre();
-                if (camposSemantico.getPalabrasHabituales() != null) {
-                    for (CommonWord palabraHabitual : camposSemantico.getPalabrasHabituales()) {
+                SemanticField campoSemantico = dataSnapshot.getValue(SemanticField.class);
+                setTitle(campoSemantico.getNombre());
+                nombreCampoSemantico = campoSemantico.getNombre();
+                if (campoSemantico.getPalabrasHabituales() != null) {
+                    for (CommonWord palabraHabitual : campoSemantico.getPalabrasHabituales()) {
                         if (palabraHabitual != null && palabraHabitual.getId() != -1) {
                             palabrasHabituales.add(palabraHabitual);
                         }

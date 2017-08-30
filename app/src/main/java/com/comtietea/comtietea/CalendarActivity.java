@@ -49,6 +49,8 @@ public class CalendarActivity extends AppCompatActivity implements CalendarObjec
         uid = bundle.getString("uid");
         codSimId = bundle.getString("codSimId");
 
+        setTitle("Agenda Visual");
+
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
 
         final CalendarObjectRecyclerViewAdapter adapter = new CalendarObjectRecyclerViewAdapter(this, calendario, this);

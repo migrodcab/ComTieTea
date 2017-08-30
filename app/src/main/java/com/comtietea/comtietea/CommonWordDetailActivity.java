@@ -99,6 +99,8 @@ public class CommonWordDetailActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 palabraHabitual = dataSnapshot.getValue(CommonWord.class);
 
+                setTitle(palabraHabitual.getNombre());
+
                 name.setText(palabraHabitual.getNombre());
                 if (!type.equals("Palabras")) {
                     Glide.with(commonWordDetailActivity).load(palabraHabitual.getImagen().getImagenURL()).into(img);

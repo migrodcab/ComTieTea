@@ -40,6 +40,8 @@ public class ProfileInfoActivity extends AppCompatActivity implements GoogleApiC
         textView = (TextView) findViewById(R.id.textView);
         emailTextView = (TextView) findViewById(R.id.emailTextView);
 
+        setTitle("Cuenta Asociada");
+
         GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
 
         googleApiClient =  new GoogleApiClient.Builder(this).enableAutoManage(this, this).addApi(Auth.GOOGLE_SIGN_IN_API, googleSignInOptions).build();

@@ -46,6 +46,8 @@ public class SemanticFieldActivity extends AppCompatActivity implements Semantic
         uid = bundle.getString("uid");
         codSimId = bundle.getString("codSimId");
 
+        setTitle("Tablero de Comunicación");
+
         semanticFieldActivity = this;
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);

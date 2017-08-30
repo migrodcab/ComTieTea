@@ -77,6 +77,8 @@ public class CreateSemanticFieldActivity extends AppCompatActivity {
         spinner = (Spinner) findViewById(R.id.spinner);
         textView = (TextView) findViewById(R.id.textView3);
 
+        setTitle("Añadir");
+
         Bundle bundle = getIntent().getExtras();
 
         tipo = bundle.getString("type");
@@ -90,6 +92,8 @@ public class CreateSemanticFieldActivity extends AppCompatActivity {
         name.setText("");
 
         if (action.equals("editar")) {
+            setTitle("Editar");
+
             dbRef = FirebaseDatabase.getInstance().getReference(
                     FirebaseReferences.USER_REFERENCE + "/" + uid + "/" + FirebaseReferences.SYMBOLIC_CODE_REFERENCE + "/" + codSimId +
                             "/" + FirebaseReferences.SEMANTIC_FIELD_REFERENCE + "/" + camSemId);
