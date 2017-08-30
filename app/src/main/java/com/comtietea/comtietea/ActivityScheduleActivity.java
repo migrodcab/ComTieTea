@@ -70,7 +70,9 @@ public class ActivityScheduleActivity extends AppCompatActivity implements Activ
                         actividades.clear();
                         CalendarObject calendarObject = dataSnapshot.getValue(CalendarObject.class);
 
-                        setTitle(calendarObject.getDiaSemana() + " de " + calendarObject.getMes());
+                        String[] fechaAux = calendarObject.getFecha().split("-");
+
+                        setTitle(calendarObject.getDiaSemana() + " " + fechaAux[2] + " de " + calendarObject.getMes());
 
                         if (calendarObject.getActividades() != null) {
                             for (final ActivitySchedule activitySchedule : calendarObject.getActividades()) {
@@ -157,6 +159,7 @@ public class ActivityScheduleActivity extends AppCompatActivity implements Activ
         i.putExtra("fecha", fecha);
         i.putExtra("alarma", "");
         i.putExtra("codigoAlarma", ""+activitySchedule.getAlarmCode());
+        i.putExtra("hora", activitySchedule.getHora());
         startActivity(i);
     }
 

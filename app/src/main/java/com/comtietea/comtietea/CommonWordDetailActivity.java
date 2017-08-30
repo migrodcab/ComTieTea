@@ -49,6 +49,7 @@ public class CommonWordDetailActivity extends AppCompatActivity {
     private String actSchId;
     private String fecha;
     private String codigoAlarma;
+    private String hora;
 
     private ImageView img;
     private TextView name;
@@ -90,6 +91,7 @@ public class CommonWordDetailActivity extends AppCompatActivity {
         actSchId = bundle.getString("actSchId");
         fecha = bundle.getString("fecha");
         codigoAlarma = bundle.getString("codigoAlarma");
+        hora = bundle.getString("hora");
 
         dbRef = FirebaseDatabase.getInstance().getReference(FirebaseReferences.USER_REFERENCE + "/" + uid + "/" +
                 FirebaseReferences.SYMBOLIC_CODE_REFERENCE + "/" + codSimId + "/" + FirebaseReferences.SEMANTIC_FIELD_REFERENCE +
@@ -98,8 +100,6 @@ public class CommonWordDetailActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 palabraHabitual = dataSnapshot.getValue(CommonWord.class);
-
-                setTitle(palabraHabitual.getNombre());
 
                 name.setText(palabraHabitual.getNombre());
                 if (!type.equals("Palabras")) {
@@ -133,6 +133,12 @@ public class CommonWordDetailActivity extends AppCompatActivity {
 
             }
         });
+
+        if(anterior.equals("comunicacion")) {
+            setTitle(nombreCampoSemantico);
+        } else if(anterior.equals("agenda")) {
+            setTitle(hora);
+        }
 
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

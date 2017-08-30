@@ -495,6 +495,7 @@ public class CreateActivityScheduleActivity extends AppCompatActivity {
                         i.putExtra("actSchId", "" + activitySchedule.getId());
                         i.putExtra("fecha", fecha);
                         i.putExtra("codigoAlarma", "" + activitySchedule.getAlarmCode());
+                        i.putExtra("hora", activitySchedule.getHora());
                         startActivity(i);
                     }
                 } else {
@@ -531,6 +532,7 @@ public class CreateActivityScheduleActivity extends AppCompatActivity {
             i.putExtra("actSchId", "" + activitySchedule.getId());
             i.putExtra("fecha", fecha);
             i.putExtra("codigoAlarma", "" + activitySchedule.getAlarmCode());
+            i.putExtra("hora", activitySchedule.getHora());
             startActivity(i);
         }
     }
