@@ -3032,55 +3032,55 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                         break;
 
                     case "Ropa":
-                        CommonWord ropa = new CommonWord(0, "Ropa", new FirebaseImage(), 10);
+                        CommonWord ropa = new CommonWord(0, "Ropa", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fropa_foto.PNG?alt=media&token=2cbd1099-234c-40f2-9776-b171ef352860", "gs://comtietea.appspot.com/images/default/ropa_foto.PNG"), 10);
 
-                        CommonWord camiseta = new CommonWord(1, "Camiseta", new FirebaseImage(), 9);
+                        CommonWord camiseta = new CommonWord(1, "Camiseta", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fcamiseta_foto.jpg?alt=media&token=a47424d4-b28a-40cd-a372-f6fae173855e", "gs://comtietea.appspot.com/images/default/camiseta_foto.jpg"), 9);
 
-                        CommonWord camisa = new CommonWord(2, "Camisa", new FirebaseImage(), 9);
+                        CommonWord camisa = new CommonWord(2, "Camisa", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fcamisa_foto.jpg?alt=media&token=714f0c9c-5175-45ab-93a2-07a3bb0f1e4a", "gs://comtietea.appspot.com/images/default/camisa_foto.jpg"), 9);
 
-                        CommonWord pantalon = new CommonWord(3, "Pantalón", new FirebaseImage(), 9);
+                        CommonWord pantalon = new CommonWord(3, "Pantalón", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fpantal%C3%B3n_foto.jpg?alt=media&token=62acfbd6-8ad9-4b0d-87a4-b4274bd867f3", "gs://comtietea.appspot.com/images/default/pantalón_foto.jpg"), 9);
 
-                        CommonWord falda = new CommonWord(4, "Falda", new FirebaseImage(), 8);
+                        CommonWord falda = new CommonWord(4, "Falda", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Ffalda_foto.jpg?alt=media&token=5a26aa7b-d81b-4b3a-b296-dd068beb44f3", "gs://comtietea.appspot.com/images/default/falda_foto.jpg"), 8);
 
-                        CommonWord vestido = new CommonWord(5, "Vestido", new FirebaseImage(), 8);
+                        CommonWord vestido = new CommonWord(5, "Vestido", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fvestido_foto.jpg?alt=media&token=29d3bb77-99a2-42cf-8704-547cb097dfd7", "gs://comtietea.appspot.com/images/default/vestido_foto.jpg"), 8);
 
-                        CommonWord sudadera = new CommonWord(6, "Sudadera", new FirebaseImage(), 8);
+                        CommonWord sudadera = new CommonWord(6, "Sudadera", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fsudadera_foto.jpg?alt=media&token=7bf6dafc-7b02-43ed-957a-e6e12af4b509", "gs://comtietea.appspot.com/images/default/sudadera_foto.jpg"), 8);
 
-                        CommonWord jersey = new CommonWord(7, "Jersey", new FirebaseImage(), 7);
+                        CommonWord jersey = new CommonWord(7, "Jersey", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fjersey_foto.jpg?alt=media&token=f59941b4-4cb9-4f29-a7e5-f1fc3375b509", "gs://comtietea.appspot.com/images/default/jersey_foto.jpg"), 7);
 
-                        CommonWord chaqueta = new CommonWord(8, "Chaqueta", new FirebaseImage(), 7);
+                        CommonWord chaqueta = new CommonWord(8, "Chaqueta", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fchaqueta_foto.jpg?alt=media&token=3646a463-89a3-4e2a-a103-4273203bc382", "gs://comtietea.appspot.com/images/default/chaqueta_foto.jpg"), 7);
 
-                        CommonWord abrigo = new CommonWord(9, "Abrigo", new FirebaseImage(), 7);
+                        CommonWord abrigo = new CommonWord(9, "Abrigo", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fabrigo_foto.jpg?alt=media&token=3135dd74-f457-4fdb-8336-23f3a58981e6", "gs://comtietea.appspot.com/images/default/abrigo_foto.jpg"), 7);
 
-                        CommonWord chandal = new CommonWord(10, "Chándal", new FirebaseImage(), 6);
+                        CommonWord chandal = new CommonWord(10, "Chándal", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fchandal_foto.jpg?alt=media&token=b7e7f7f7-5289-4307-854d-d9f175280049", "gs://comtietea.appspot.com/images/default/chandal_foto.jpg"), 6);
 
-                        CommonWord pijama = new CommonWord(11, "Pijama", new FirebaseImage(), 6);
+                        CommonWord pijama = new CommonWord(11, "Pijama", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fpijama_foto.jpg?alt=media&token=70a4a322-340a-4daf-8dba-4e5092747fcc", "gs://comtietea.appspot.com/images/default/pijama_foto.jpg"), 6);
 
-                        CommonWord bragas = new CommonWord(12, "Bragas", new FirebaseImage(), 5);
+                        CommonWord bragas = new CommonWord(12, "Bragas", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fbragas_foto.png?alt=media&token=58d3cd19-79bd-497d-95f5-83314e5ceaa4", "gs://comtietea.appspot.com/images/default/bragas_foto.png"), 5);
 
-                        CommonWord sujetador = new CommonWord(13, "Sujetador", new FirebaseImage(), 5);
+                        CommonWord sujetador = new CommonWord(13, "Sujetador", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fsujetador_foto.PNG?alt=media&token=56e51567-480c-412a-83a7-605da336b254", "gs://comtietea.appspot.com/images/default/sujetador_foto.PNG"), 5);
 
-                        CommonWord calzoncillos = new CommonWord(14, "Calzoncillos", new FirebaseImage(), 5);
+                        CommonWord calzoncillos = new CommonWord(14, "Calzoncillos", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fcalzoncillos_foto.jpg?alt=media&token=1037f97e-6d2a-4e7f-9d97-6c798a48f358", "gs://comtietea.appspot.com/images/default/calzoncillos_foto.jpg"), 5);
 
-                        CommonWord calcetines = new CommonWord(15, "Calcetines", new FirebaseImage(), 4);
+                        CommonWord calcetines = new CommonWord(15, "Calcetines", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fcalcetines_foto.jpg?alt=media&token=d7e36e26-8b3a-4731-b7b7-18542c99dbb9", "gs://comtietea.appspot.com/images/default/calcetines_foto.jpg"), 4);
 
-                        CommonWord zapatos = new CommonWord(16, "Zapatos", new FirebaseImage(), 4);
+                        CommonWord zapatos = new CommonWord(16, "Zapatos", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fzapatos_foto.jpg?alt=media&token=57ad24c7-b42d-4f68-ab59-723137ee7df3", "gs://comtietea.appspot.com/images/default/zapatos_foto.jpg"), 4);
 
-                        CommonWord chanclas = new CommonWord(17, "Chanclas", new FirebaseImage(), 3);
+                        CommonWord chanclas = new CommonWord(17, "Chanclas", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fchanclas_foto.jpg?alt=media&token=847c41ff-44df-41cc-b839-d27afcd208c3", "gs://comtietea.appspot.com/images/default/chanclas_foto.jpg"), 3);
 
-                        CommonWord zapatosTacon = new CommonWord(18, "Zapatos de tacón", new FirebaseImage(), 3);
+                        CommonWord zapatosTacon = new CommonWord(18, "Zapatos de tacón", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fzapato_tacon_foto.jpg?alt=media&token=89f21c6f-8fa4-4bc3-bf28-f93f5d7509dc", "gs://comtietea.appspot.com/images/default/zapato_tacon_foto.jpg"), 3);
 
-                        CommonWord zapatillas = new CommonWord(19, "Zapatillas", new FirebaseImage(), 3);
+                        CommonWord zapatillas = new CommonWord(19, "Zapatillas", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fzapatillas_foto.jpg?alt=media&token=42c4d079-4953-4aa8-90bc-07c6f8a8046f", "gs://comtietea.appspot.com/images/default/zapatillas_foto.jpg"), 3);
 
-                        CommonWord deportes = new CommonWord(20, "Deportes", new FirebaseImage(), 2);
+                        CommonWord deportes = new CommonWord(20, "Deportes", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fdeportes_foto.jpg?alt=media&token=882ba1f5-0774-452e-a18f-863907d4e307", "gs://comtietea.appspot.com/images/default/deportes_foto.jpg"), 2);
 
-                        CommonWord sandalias = new CommonWord(21, "Sandalias", new FirebaseImage(), 2);
+                        CommonWord sandalias = new CommonWord(21, "Sandalias", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fsandalia_foto.jpg?alt=media&token=d377eef1-2940-4dd1-9f40-193647b665a6", "gs://comtietea.appspot.com/images/default/sandalia_foto.jpg"), 2);
 
-                        CommonWord bufanda = new CommonWord(22, "Bufanda", new FirebaseImage(), 1);
+                        CommonWord bufanda = new CommonWord(22, "Bufanda", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fbufanda_foto.jpg?alt=media&token=2492a424-3e85-45d1-b611-ea2e633f79ba", "gs://comtietea.appspot.com/images/default/bufanda_foto.jpg"), 1);
 
-                        CommonWord gorro = new CommonWord(23, "Gorro", new FirebaseImage(), 1);
+                        CommonWord gorro = new CommonWord(23, "Gorro", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fgorro__foto.jpg?alt=media&token=79f56bbf-a8eb-4728-90dd-b78d1f9061e3", "gs://comtietea.appspot.com/images/default/gorro__foto.jpg"), 1);
 
-                        CommonWord guantes = new CommonWord(24, "Guantes", new FirebaseImage(), 1);
+                        CommonWord guantes = new CommonWord(24, "Guantes", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fguantes_foto.jpg?alt=media&token=7c6bc727-9178-44c0-be7f-978ac175d093", "gs://comtietea.appspot.com/images/default/guantes_foto.jpg"), 1);
 
                         res.add(ropa);
                         res.add(camiseta);
