@@ -3212,29 +3212,29 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                         break;
 
                     case "Transportes":
-                        CommonWord transporte = new CommonWord(0, "Transporte", new FirebaseImage(), 10);
+                        CommonWord transporte = new CommonWord(0, "Transporte", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Ftransporte_foto.jpg?alt=media&token=de79dde7-3ce3-4320-bc04-746bdbfa9e00", "gs://comtietea.appspot.com/images/default/transporte_foto.jpg"), 10);
 
-                        CommonWord coche = new CommonWord(1, "Coche", new FirebaseImage(), 9);
+                        CommonWord coche = new CommonWord(1, "Coche", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fcoche_foto.jpg?alt=media&token=1f477733-2bca-4578-8dc8-3d8395914884", "gs://comtietea.appspot.com/images/default/coche_foto.jpg"), 9);
 
-                        CommonWord moto = new CommonWord(2, "Moto", new FirebaseImage(), 9);
+                        CommonWord moto = new CommonWord(2, "Moto", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fmoto_foto.jpg?alt=media&token=e8c48f81-8c4c-4038-b234-57c597b2545d", "gs://comtietea.appspot.com/images/default/moto_foto.jpg"), 9);
 
-                        CommonWord camion = new CommonWord(3, "Camión", new FirebaseImage(), 8);
+                        CommonWord camion = new CommonWord(3, "Camión", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fcami%C3%B3n_foto.jpg?alt=media&token=5291bdac-6b5f-4aee-ae10-466746b7bfa4", "gs://comtietea.appspot.com/images/default/camión_foto.jpg"), 8);
 
-                        CommonWord furgoneta = new CommonWord(4, "Furgoneta", new FirebaseImage(), 8);
+                        CommonWord furgoneta = new CommonWord(4, "Furgoneta", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Ffurgoneta_foto.png?alt=media&token=1cc1bb1e-d8e4-4ff0-a2ac-4d869a157f76", "gs://comtietea.appspot.com/images/default/furgoneta_foto.png"), 8);
 
-                        CommonWord avion = new CommonWord(5, "Avión", new FirebaseImage(), 7);
+                        CommonWord avion = new CommonWord(5, "Avión", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Favi%C3%B3n_foto.jpg?alt=media&token=e6935b7d-f87f-4663-8856-e661ab4c8aa7", "gs://comtietea.appspot.com/images/default/avión_foto.jpg"), 7);
 
-                        CommonWord barco = new CommonWord(6, "Barco", new FirebaseImage(), 6);
+                        CommonWord barco = new CommonWord(6, "Barco", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fbarco_foto.jpg?alt=media&token=ab942a2c-2f17-4b87-8f5e-98c9fadabcaf", "gs://comtietea.appspot.com/images/default/barco_foto.jpg"), 6);
 
-                        CommonWord bicicleta = new CommonWord(7, "Bicicleta", new FirebaseImage(), 5);
+                        CommonWord bicicleta = new CommonWord(7, "Bicicleta", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fbici_foto.jpg?alt=media&token=e59a9b04-0c6a-4e1d-bdac-031de58dc2b6", "gs://comtietea.appspot.com/images/default/bici_foto.jpg"), 5);
 
-                        CommonWord tractor = new CommonWord(8, "Tractor", new FirebaseImage(), 4);
+                        CommonWord tractor = new CommonWord(8, "Tractor", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Ftractor_foto.jpg?alt=media&token=7ab10f68-8028-4de8-92ce-69aa30397c43", "gs://comtietea.appspot.com/images/default/tractor_foto.jpg"), 4);
 
-                        CommonWord helicoptero = new CommonWord(9, "Helicóptero", new FirebaseImage(), 3);
+                        CommonWord helicoptero = new CommonWord(9, "Helicóptero", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fhelicoptero_foto.jpg?alt=media&token=c23bca23-9b51-43dd-bd31-ae9588c6a669", "gs://comtietea.appspot.com/images/default/helicoptero_foto.jpg"), 3);
 
-                        CommonWord autobus = new CommonWord(10, "Autobús", new FirebaseImage(), 2);
+                        CommonWord autobus = new CommonWord(10, "Autobús", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fautobus_foto.jpg?alt=media&token=e17fcd47-24ea-4dc8-9395-2b91bccfd232", "gs://comtietea.appspot.com/images/default/autobus_foto.jpg"), 2);
 
-                        CommonWord tren = new CommonWord(11, "Tren", new FirebaseImage(), 1);
+                        CommonWord tren = new CommonWord(11, "Tren", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Ftren_foto.jpg?alt=media&token=b4ea6794-3ef9-47ab-870d-6903ad4d29e0", "gs://comtietea.appspot.com/images/default/tren_foto.jpg"), 1);
 
                         res.add(transporte);
                         res.add(coche);
@@ -3248,7 +3248,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                         res.add(helicoptero);
                         res.add(autobus);
                         res.add(tren);
-                        break;*/
+                        break;
                 }
                 break;
         }
