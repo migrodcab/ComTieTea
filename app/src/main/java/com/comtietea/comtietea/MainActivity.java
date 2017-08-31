@@ -2240,7 +2240,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
                         CommonWord gimnasio = new CommonWord(5, "Gimnasio", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fgimnasio_foto.jpg?alt=media&token=03f509e6-24e0-4fe2-b9d5-5bf72ece2f7c", "gs://comtietea.appspot.com/images/default/gimnasio_foto.jpg"), 8);
 
-                        CommonWord lengua = new CommonWord(6, "Lengua", new FirebaseImage(a), 7);
+                        CommonWord lengua = new CommonWord(6, "Lengua", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Flengua_foto.JPG?alt=media&token=f7f2dc96-dd29-4655-82fa-ab70eec8dd7e", "gs://comtietea.appspot.com/images/default/lengua_foto.JPG"), 7);
 
                         CommonWord mates = new CommonWord(7, "Matemáticas", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fmatem%C3%A1ticas_foto.jpg?alt=media&token=062c1afb-3fb7-4fa3-95e2-20d1b619a58c", "gs://comtietea.appspot.com/images/default/matemáticas_foto.jpg"), 7);
 
@@ -2788,7 +2788,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
                         CommonWord electricista = new CommonWord(6, "Electricista", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Felectricista_foto.jpg?alt=media&token=af5c0799-1c9f-47ca-85a6-407bf5fafae4", "gs://comtietea.appspot.com/images/default/electricista_foto.jpg"), 6);
 
-                        CommonWord enfermero = new CommonWord(7, "Enfermero", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fenfermo_foto.jpg?alt=media&token=22b881d2-036f-4871-8bd8-327f629bcbf0", "gs://comtietea.appspot.com/images/default/enfermo_foto.jpg"), 5);
+                        CommonWord enfermero = new CommonWord(7, "Enfermero", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fenfermero_foto.png?alt=media&token=c779e921-895c-47d4-9ca8-cc306713c34b", "gs://comtietea.appspot.com/images/default/enfermero_foto.png"), 5);
 
                         CommonWord psicologo = new CommonWord(8, "Psicólogo", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fpsicologo_foto.jpg?alt=media&token=20642e53-b6fe-41d2-92f9-5db16db88d5c", "gs://comtietea.appspot.com/images/default/psicologo_foto.jpg"), 4);
 
@@ -2967,7 +2967,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
                         CommonWord papelHigienico = new CommonWord(7, "Papel higiénico", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fpapel_higi%C3%A9nico_foto.jpg?alt=media&token=d41fa21c-c7a2-482c-93dc-36f1c93a24d5", "gs://comtietea.appspot.com/images/default/papel_higiénico_foto.jpg"), 5);
 
-                        CommonWord toallitas = new CommonWord(8, "Toallitas", new FirebaseImage(a), 5);
+                        CommonWord toallitas = new CommonWord(8, "Toallitas", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Ftoallitas_foto.JPG?alt=media&token=7296a30f-fc9f-4d7f-be23-d5d29abc6e43", "gs://comtietea.appspot.com/images/default/toallitas_foto.JPG"), 5);
 
                         CommonWord maquillaje = new CommonWord(9, "Maquillaje", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fmaquillaje_foto.jpg?alt=media&token=6315a4c7-97d8-4b71-b036-1c710799e8be", "gs://comtietea.appspot.com/images/default/maquillaje_foto.jpg"), 4);
 
