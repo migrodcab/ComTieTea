@@ -2681,47 +2681,47 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                         break;
 
                     case "Adjetivos":
-                        CommonWord adjetivo = new CommonWord(0, "Adjetivo", new FirebaseImage(), 10);
+                        CommonWord adjetivo = new CommonWord(0, "Adjetivo", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fadjetivo_foto.jpg?alt=media&token=dd868878-be30-4aca-b49f-4b889477ffbc", "gs://comtietea.appspot.com/images/default/adjetivo_foto.jpg"), 10);
 
-                        CommonWord grande = new CommonWord(1, "Grande", new FirebaseImage(), 9);
+                        CommonWord grande = new CommonWord(1, "Grande", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fgrande_foto.PNG?alt=media&token=648c9c49-3d4e-4cca-a907-02034e1fcec5", "gs://comtietea.appspot.com/images/default/grande_foto.PNG"), 9);
 
-                        CommonWord pequeno = new CommonWord(2, "Pequeño", new FirebaseImage(), 9);
+                        CommonWord pequeno = new CommonWord(2, "Pequeño", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fpeque%C3%B1o_foto.PNG?alt=media&token=66b0144c-f687-42c2-a1b6-b1ee6cd96587", "gs://comtietea.appspot.com/images/default/pequeño_foto.PNG"), 9);
 
-                        CommonWord alto = new CommonWord(3, "Alto", new FirebaseImage(), 8);
+                        CommonWord alto = new CommonWord(3, "Alto", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Falto_foto.PNG?alt=media&token=550a2857-6cea-4b1f-a50d-fed728370d88", "gs://comtietea.appspot.com/images/default/alto_foto.PNG"), 8);
 
-                        CommonWord bajo = new CommonWord(4, "Bajo", new FirebaseImage(), 8);
+                        CommonWord bajo = new CommonWord(4, "Bajo", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fbajo_foto.PNG?alt=media&token=6b579177-ded4-44fe-b8c0-3ea3275cc485", "gs://comtietea.appspot.com/images/default/bajo_foto.PNG"), 8);
 
-                        CommonWord largo = new CommonWord(5, "Largo", new FirebaseImage(), 7);
+                        CommonWord largo = new CommonWord(5, "Largo", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Flargo_foto.jpg?alt=media&token=2a758ac1-d3bb-413c-ab21-e2ebc4c6fa66", "gs://comtietea.appspot.com/images/default/largo_foto.jpg"), 7);
 
-                        CommonWord corto = new CommonWord(6, "Corto", new FirebaseImage(), 7);
+                        CommonWord corto = new CommonWord(6, "Corto", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fcorto_foto.jpg?alt=media&token=b0b458d4-7aee-4352-9bd7-22983cbd3f55", "gs://comtietea.appspot.com/images/default/corto_foto.jpg"), 7);
 
-                        CommonWord gordo = new CommonWord(7, "Gordo", new FirebaseImage(), 6);
+                        CommonWord gordo = new CommonWord(7, "Gordo", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fgordo_foto.jpg?alt=media&token=339f9acc-2233-454a-aa81-416a8e4cd437", "gs://comtietea.appspot.com/images/default/gordo_foto.jpg"), 6);
 
-                        CommonWord delgado = new CommonWord(8, "Delgado", new FirebaseImage(), 6);
+                        CommonWord delgado = new CommonWord(8, "Delgado", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fdelgado_foto.jpg?alt=media&token=3a2f970d-dee3-44b8-bc31-6ed3a5a2adc4", "gs://comtietea.appspot.com/images/default/delgado_foto.jpg"), 6);
 
-                        CommonWord pesado = new CommonWord(9, "Pesado", new FirebaseImage(), 5);
+                        CommonWord pesado = new CommonWord(9, "Pesado", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fpesado_foto.PNG?alt=media&token=f8d1a020-329a-4f82-a6ea-e39edc494aec", "gs://comtietea.appspot.com/images/default/pesado_foto.PNG"), 5);
 
-                        CommonWord ligero = new CommonWord(10, "Ligero", new FirebaseImage(), 5);
+                        CommonWord ligero = new CommonWord(10, "Ligero", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fligero_foto.jpg?alt=media&token=3366802a-1a09-4b71-bad7-2602ad9637c8", "gs://comtietea.appspot.com/images/default/ligero_foto.jpg"), 5);
 
-                        CommonWord claro = new CommonWord(11, "Claro", new FirebaseImage(), 4);
+                        CommonWord claro = new CommonWord(11, "Claro", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fclaro_foto.jpg?alt=media&token=32c4a8d7-5781-4be2-80bc-522ff999a909", "gs://comtietea.appspot.com/images/default/claro_foto.jpg"), 4);
 
-                        CommonWord oscuro = new CommonWord(12, "Oscuro", new FirebaseImage(), 4);
+                        CommonWord oscuro = new CommonWord(12, "Oscuro", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Foscuro_foto.jpg?alt=media&token=caac8b37-3bc6-4e4e-87bc-14dcc45bf743", "gs://comtietea.appspot.com/images/default/oscuro_foto.jpg"), 4);
 
-                        CommonWord viejo = new CommonWord(13, "Viejo", new FirebaseImage(), 3);
+                        CommonWord viejo = new CommonWord(13, "Viejo", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fviejo_foto.jpg?alt=media&token=10c44742-0475-40ce-8584-437aa715b9e4", "gs://comtietea.appspot.com/images/default/viejo_foto.jpg"), 3);
 
-                        CommonWord nuevo = new CommonWord(14, "Nuevo", new FirebaseImage(), 3);
+                        CommonWord nuevo = new CommonWord(14, "Nuevo", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fnuevo_foto.jpg?alt=media&token=09449325-6252-469c-88d4-30da6e46da73", "gs://comtietea.appspot.com/images/default/nuevo_foto.jpg"), 3);
 
-                        CommonWord joven = new CommonWord(15, "Joven", new FirebaseImage(), 3);
+                        CommonWord joven = new CommonWord(15, "Joven", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fjoven_foto.jpg?alt=media&token=dcee0abd-f0ce-4124-b527-b96eadc2cd21", "gs://comtietea.appspot.com/images/default/joven_foto.jpg"), 3);
 
-                        CommonWord antiguo = new CommonWord(16, "Antiguo", new FirebaseImage(), 3);
+                        CommonWord antiguo = new CommonWord(16, "Antiguo", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fantiguo_foto.jpg?alt=media&token=9e6056f2-0049-4640-af97-fe5985b68676", "gs://comtietea.appspot.com/images/default/antiguo_foto.jpg"), 3);
 
-                        CommonWord liso = new CommonWord(17, "Liso", new FirebaseImage(), 2);
+                        CommonWord liso = new CommonWord(17, "Liso", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fliso_foto.jpg?alt=media&token=4a886630-c9bf-4c5c-a89a-49261b04b131", "gs://comtietea.appspot.com/images/default/liso_foto.jpg"), 2);
 
-                        CommonWord rugoso = new CommonWord(18, "Rugoso", new FirebaseImage(), 2);
+                        CommonWord rugoso = new CommonWord(18, "Rugoso", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Farrugado_foto.jpg?alt=media&token=cf4d281c-07fd-4665-b738-e8dbc142c3a8", "gs://comtietea.appspot.com/images/default/arrugado_foto.jpg"), 2);
 
-                        CommonWord feo = new CommonWord(19, "Feo", new FirebaseImage(), 1);
+                        CommonWord feo = new CommonWord(19, "Feo", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Ffeo_foto.jpg?alt=media&token=e4b309e8-cf88-4be0-a7a8-791a36374c46", "gs://comtietea.appspot.com/images/default/feo_foto.jpg"), 1);
 
-                        CommonWord guapo = new CommonWord (20, "Guapo", new FirebaseImage(), 1);
+                        CommonWord guapo = new CommonWord (20, "Guapo", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fguapa_foto.jpg?alt=media&token=da273a20-efae-4e92-905f-15fd03a680d9", "gs://comtietea.appspot.com/images/default/guapa_foto.jpg"), 1);
 
                         res.add(adjetivo);
                         res.add(grande);
