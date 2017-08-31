@@ -2774,27 +2774,27 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                         break;
 
                     case "Profesiones":
-                        CommonWord profesion = new CommonWord(0, "Profesión", new FirebaseImage(), 10);
+                        CommonWord profesion = new CommonWord(0, "Profesión", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fprofesi%C3%B3n_foto.jpg?alt=media&token=d6731d11-2abe-4387-8640-442a0e764747", "gs://comtietea.appspot.com/images/default/profesión_foto.jpg"), 10);
 
-                        CommonWord profesora = new CommonWord(1, "Profesora", new FirebaseImage(), 9);
+                        CommonWord profesora = new CommonWord(1, "Profesora", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fprofesora_foto.jpg?alt=media&token=108b7f87-b728-489c-8523-e56a541b1f83", "gs://comtietea.appspot.com/images/default/profesora_foto.jpg"), 9);
 
-                        CommonWord medico = new CommonWord(2, "Médico", new FirebaseImage(), 9);
+                        CommonWord medico = new CommonWord(2, "Médico", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fmedico_foto.jpg?alt=media&token=fb8aeaba-d763-4244-b66f-53df9c6e4651", "gs://comtietea.appspot.com/images/default/medico_foto.jpg"), 9);
 
-                        CommonWord policia = new CommonWord(3, "Policía", new FirebaseImage(), 9);
+                        CommonWord policia = new CommonWord(3, "Policía", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fpolicia_foto.jpg?alt=media&token=e9ad0800-493f-43dc-8c15-a1ef3e8f82b2", "gs://comtietea.appspot.com/images/default/policia_foto.jpg"), 9);
 
-                        CommonWord bombero = new CommonWord(4, "Bombero", new FirebaseImage(), 8);
+                        CommonWord bombero = new CommonWord(4, "Bombero", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fbombero_foto.jpg?alt=media&token=f8e93b40-42bf-4995-8f95-c519c59a9b56", "gs://comtietea.appspot.com/images/default/bombero_foto.jpg"), 8);
 
-                        CommonWord camarero = new CommonWord(5, "Camarero", new FirebaseImage(), 7);
+                        CommonWord camarero = new CommonWord(5, "Camarero", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fcamarero_foto.jpg?alt=media&token=21031a5d-b3f1-4b33-a5a9-890e7ab666c5", "gs://comtietea.appspot.com/images/default/camarero_foto.jpg"), 7);
 
-                        CommonWord electricista = new CommonWord(6, "Electricista", new FirebaseImage(), 6);
+                        CommonWord electricista = new CommonWord(6, "Electricista", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Felectricista_foto.jpg?alt=media&token=af5c0799-1c9f-47ca-85a6-407bf5fafae4", "gs://comtietea.appspot.com/images/default/electricista_foto.jpg"), 6);
 
-                        CommonWord enfermero = new CommonWord(7, "Enfermero", new FirebaseImage(), 5);
+                        CommonWord enfermero = new CommonWord(7, "Enfermero", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fenfermo_foto.jpg?alt=media&token=22b881d2-036f-4871-8bd8-327f629bcbf0", "gs://comtietea.appspot.com/images/default/enfermo_foto.jpg"), 5);
 
-                        CommonWord psicologo = new CommonWord(8, "Psicólogo", new FirebaseImage(), 4);
+                        CommonWord psicologo = new CommonWord(8, "Psicólogo", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fpsicologo_foto.jpg?alt=media&token=20642e53-b6fe-41d2-92f9-5db16db88d5c", "gs://comtietea.appspot.com/images/default/psicologo_foto.jpg"), 4);
 
-                        CommonWord abogado = new CommonWord(9, "Abogado", new FirebaseImage(), 3);
+                        CommonWord abogado = new CommonWord(9, "Abogado", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fabogado_foto.jpg?alt=media&token=2e96962a-172a-40aa-9024-5acff8f895f0", "gs://comtietea.appspot.com/images/default/abogado_foto.jpg"), 3);
 
-                        CommonWord cocinero = new CommonWord(10, "Cocinero", new FirebaseImage(), 2);
+                        CommonWord cocinero = new CommonWord(10, "Cocinero", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fcocinero_foto.jpg?alt=media&token=8cdcd67d-50c0-4936-9a39-e39ee6ff4a63", "gs://comtietea.appspot.com/images/default/cocinero_foto.jpg"), 2);
 
                         res.add(profesion);
                         res.add(profesora);
