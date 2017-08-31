@@ -2951,29 +2951,29 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                         break;
 
                     case "Aseo":
-                        CommonWord aseo = new CommonWord(0, "Aseo", new FirebaseImage(), 10);
+                        CommonWord aseo = new CommonWord(0, "Aseo", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Faseo_foto.jpg?alt=media&token=f122d38f-19c3-430e-bc49-af8096b3c642", "gs://comtietea.appspot.com/images/default/aseo_foto.jpg"), 10);
 
-                        CommonWord ducha = new CommonWord(1, "Ducha", new FirebaseImage(), 9);
+                        CommonWord ducha = new CommonWord(1, "Ducha", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fducha_foto.jpg?alt=media&token=ef4e7972-063b-4bc6-8487-e1686cb18817", "gs://comtietea.appspot.com/images/default/ducha_foto.jpg"), 9);
 
-                        CommonWord banera = new CommonWord(2, "Bañera", new FirebaseImage(), 9);
+                        CommonWord banera = new CommonWord(2, "Bañera", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fba%C3%B1era_foto.jpg?alt=media&token=349546c5-863c-4d73-8e55-0130b635fbf0", "gs://comtietea.appspot.com/images/default/bañera_foto.jpg"), 9);
 
-                        CommonWord wc = new CommonWord(3, "WC", new FirebaseImage(), 8);
+                        CommonWord wc = new CommonWord(3, "WC", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fwc_foto.jpg?alt=media&token=7c04abc5-136c-4ae6-9b0d-a6b9a09b012e", "gs://comtietea.appspot.com/images/default/wc_foto.jpg"), 8);
 
-                        CommonWord peine = new CommonWord(4, "Peine", new FirebaseImage(), 7);
+                        CommonWord peine = new CommonWord(4, "Peine", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fpeine_foto.jpg?alt=media&token=49bbe2cb-4e34-4a56-a446-9576a5a66ae5", "gs://comtietea.appspot.com/images/default/peine_foto.jpg"), 7);
 
-                        CommonWord cepilloDientes = new CommonWord(5, "Cepillo de dientes", new FirebaseImage(), 7);
+                        CommonWord cepilloDientes = new CommonWord(5, "Cepillo de dientes", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fcepillo_de_dientes_foto.jpg?alt=media&token=440ba3da-b44d-4813-80a3-0fa3c4b40aa6", "gs://comtietea.appspot.com/images/default/cepillo_de_dientes_foto.jpg"), 7);
 
-                        CommonWord toalla = new CommonWord(6, "Toalla", new FirebaseImage(), 6);
+                        CommonWord toalla = new CommonWord(6, "Toalla", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Ftoalla_foto.jpg?alt=media&token=1b5bcee7-0d7d-4390-aaad-587dbe850fdd", "gs://comtietea.appspot.com/images/default/toalla_foto.jpg"), 6);
 
-                        CommonWord papelHigienico = new CommonWord(7, "Papel higiénico", new FirebaseImage(), 5);
+                        CommonWord papelHigienico = new CommonWord(7, "Papel higiénico", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fpapel_higi%C3%A9nico_foto.jpg?alt=media&token=d41fa21c-c7a2-482c-93dc-36f1c93a24d5", "gs://comtietea.appspot.com/images/default/papel_higiénico_foto.jpg"), 5);
 
-                        CommonWord toallitas = new CommonWord(8, "Toallitas", new FirebaseImage(), 5);
+                        CommonWord toallitas = new CommonWord(8, "Toallitas", new FirebaseImage(a), 5);
 
-                        CommonWord maquillaje = new CommonWord(9, "Maquillaje", new FirebaseImage(), 4);
+                        CommonWord maquillaje = new CommonWord(9, "Maquillaje", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fmaquillaje_foto.jpg?alt=media&token=6315a4c7-97d8-4b71-b036-1c710799e8be", "gs://comtietea.appspot.com/images/default/maquillaje_foto.jpg"), 4);
 
-                        CommonWord ducharse = new CommonWord(10, "Ducharse", new FirebaseImage(), 3);
+                        CommonWord ducharse = new CommonWord(10, "Ducharse", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fducharse_foto.jpg?alt=media&token=f0d4b6ba-2109-4777-a55e-447e62df753e", "gs://comtietea.appspot.com/images/default/ducharse_foto.jpg"), 3);
 
-                        CommonWord cepillarseDientes = new CommonWord(11, "Cepillarse los dientes", new FirebaseImage(), 3);
+                        CommonWord cepillarseDientes = new CommonWord(11, "Cepillarse los dientes", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fcepillar_dientes_foto.jpg?alt=media&token=d169cc73-0583-44ce-8e8d-baa829878ead", "gs://comtietea.appspot.com/images/default/cepillar_dientes_foto.jpg"), 3);
 
                         res.add(aseo);
                         res.add(ducha);
