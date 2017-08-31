@@ -2990,31 +2990,31 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                         break;
 
                     case "Estaciones y Tiempo":
-                        CommonWord estaciones = new CommonWord(0, "Estaciones", new FirebaseImage(), 10);
+                        CommonWord estaciones = new CommonWord(0, "Estaciones", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Festaciones_foto.PNG?alt=media&token=067b5e16-15a4-4347-a6f7-5f8be9393844", "gs://comtietea.appspot.com/images/default/estaciones_foto.PNG"), 10);
 
-                        CommonWord primavera = new CommonWord(1, "Primavera", new FirebaseImage(), 9);
+                        CommonWord primavera = new CommonWord(1, "Primavera", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fprimavera_foto.jpg?alt=media&token=5e2ed7bd-b923-46dc-8982-9ff4af0d712b", "gs://comtietea.appspot.com/images/default/primavera_foto.jpg"), 9);
 
-                        CommonWord verano = new CommonWord(2, "Verano", new FirebaseImage(), 9);
+                        CommonWord verano = new CommonWord(2, "Verano", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fverano_foto.jpg?alt=media&token=efa9401a-1e48-4594-a3af-a1a764accfa8", "gs://comtietea.appspot.com/images/default/verano_foto.jpg"), 9);
 
-                        CommonWord otono = new CommonWord(3, "Otoño", new FirebaseImage(), 9);
+                        CommonWord otono = new CommonWord(3, "Otoño", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Foto%C3%B1o_foto.jpg?alt=media&token=44b6a19c-353b-4415-8f1a-060674fa0b00", "gs://comtietea.appspot.com/images/default/otoño_foto.jpg"), 9);
 
-                        CommonWord invierno = new CommonWord(4, "Invierno", new FirebaseImage(), 9);
+                        CommonWord invierno = new CommonWord(4, "Invierno", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Finvierno_foto.jpg?alt=media&token=1c2b9a19-d40e-4e34-b54b-e56c53ea3d3b", "gs://comtietea.appspot.com/images/default/invierno_foto.jpg"), 9);
 
-                        CommonWord tiempo = new CommonWord(5, "Tiempo", new FirebaseImage(), 8);
+                        CommonWord tiempo = new CommonWord(5, "Tiempo", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Ftiempo_foto.jpg?alt=media&token=536d25c3-c0a6-4819-a199-aae56ccaeb27", "gs://comtietea.appspot.com/images/default/tiempo_foto.jpg"), 8);
 
-                        CommonWord frio = new CommonWord(6, "Frío", new FirebaseImage(), 7);
+                        CommonWord frio = new CommonWord(6, "Frío", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Ffrio_foto.jpg?alt=media&token=1cea8454-a966-425f-924f-47fc5ab246e6", "gs://comtietea.appspot.com/images/default/frio_foto.jpg"), 7);
 
-                        CommonWord calor = new CommonWord(7, "Calor", new FirebaseImage(), 7);
+                        CommonWord calor = new CommonWord(7, "Calor", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fcalor_foto.PNG?alt=media&token=2bb8dc22-faee-4e9d-839d-532b9a3a3c68", "gs://comtietea.appspot.com/images/default/calor_foto.PNG"), 7);
 
-                        CommonWord sol = new CommonWord(8, "Sol", new FirebaseImage(), 6);
+                        CommonWord sol = new CommonWord(8, "Sol", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fsol_foto.jpg?alt=media&token=ba5fb687-e048-46a9-9d3b-f6cc9d94c818", "gs://comtietea.appspot.com/images/default/sol_foto.jpg"), 6);
 
-                        CommonWord nube = new CommonWord(9, "Nube", new FirebaseImage(), 5);
+                        CommonWord nube = new CommonWord(9, "Nube", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fnube_foto.jpg?alt=media&token=b5ef8ab5-183e-4d46-ac43-6a745bfc3cae", "gs://comtietea.appspot.com/images/default/nube_foto.jpg"), 5);
 
-                        CommonWord lluvia = new CommonWord(10, "Lluvia", new FirebaseImage(), 4);
+                        CommonWord lluvia = new CommonWord(10, "Lluvia", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Flluvia_foto.jpg?alt=media&token=042dc741-0063-45af-8577-76b52ddbfaaf", "gs://comtietea.appspot.com/images/default/lluvia_foto.jpg"), 4);
 
-                        CommonWord tormenta = new CommonWord(11, "Tormenta", new FirebaseImage(), 3);
+                        CommonWord tormenta = new CommonWord(11, "Tormenta", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Ftormenta_foto.jpg?alt=media&token=ce9d6c18-65ce-4cb3-ac47-a7ce340e9a95", "gs://comtietea.appspot.com/images/default/tormenta_foto.jpg"), 3);
 
-                        CommonWord nieve = new CommonWord(12, "Nieve", new FirebaseImage(), 2);
+                        CommonWord nieve = new CommonWord(12, "Nieve", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fnieve_foto.jpg?alt=media&token=5114391e-4e88-4447-ab42-d476833287e1", "gs://comtietea.appspot.com/images/default/nieve_foto.jpg"), 2);
 
                         res.add(estaciones);
                         res.add(primavera);
