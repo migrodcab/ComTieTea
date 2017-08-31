@@ -2747,21 +2747,21 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                         break;
 
                     case "Emociones":
-                        CommonWord emocion = new CommonWord(0, "Emoción", new FirebaseImage(), 10);
+                        CommonWord emocion = new CommonWord(0, "Emoción", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Femociones_foto.jpg?alt=media&token=100bf43c-dc99-4548-ad46-484aee559575", "gs://comtietea.appspot.com/images/default/emociones_foto.jpg"), 10);
 
-                        CommonWord tristeza = new CommonWord(1, "Tristeza", new FirebaseImage(), 9);
+                        CommonWord tristeza = new CommonWord(1, "Tristeza", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Ftristeza_foto.jpg?alt=media&token=26455a01-38df-44ec-bea9-4d712a5ff41d", "gs://comtietea.appspot.com/images/default/tristeza_foto.jpg"), 9);
 
-                        CommonWord felicidad = new CommonWord(2, "Felicidad", new FirebaseImage(), 8);
+                        CommonWord felicidad = new CommonWord(2, "Felicidad", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Ffeliz_foto.jpg?alt=media&token=0ba5472b-7212-4791-9ee8-e30694678c32", "gs://comtietea.appspot.com/images/default/feliz_foto.jpg"), 8);
 
-                        CommonWord miedo = new CommonWord(3, "Miedo", new FirebaseImage(), 7);
+                        CommonWord miedo = new CommonWord(3, "Miedo", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fmiedo_foto.jpg?alt=media&token=4c5f6c58-45ab-4ad4-bd9c-bea8d497e311", "gs://comtietea.appspot.com/images/default/miedo_foto.jpg"), 7);
 
-                        CommonWord asco = new CommonWord(4, "Ascoo", new FirebaseImage(), 6);
+                        CommonWord asco = new CommonWord(4, "Asco", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fasco_foto.jpg?alt=media&token=07957fc5-9f50-4618-b35c-c058495944c6", "gs://comtietea.appspot.com/images/default/asco_foto.jpg"), 6);
 
-                        CommonWord enfado = new CommonWord(5, "Enfado", new FirebaseImage(), 5);
+                        CommonWord enfado = new CommonWord(5, "Enfado", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fenfado_foto.jpg?alt=media&token=9c5c0c1e-3b85-4979-b6d2-9c14ea937924", "gs://comtietea.appspot.com/images/default/enfado_foto.jpg"), 5);
 
-                        CommonWord sorpresa = new CommonWord(6, "Sorpresa", new FirebaseImage(), 4);
+                        CommonWord sorpresa = new CommonWord(6, "Sorpresa", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Fsorpresa_foto.jpg?alt=media&token=fd92f525-3433-4f15-97a5-2457519c8dc8", "gs://comtietea.appspot.com/images/default/sorpresa_foto.jpg"), 4);
 
-                        CommonWord amor = new CommonWord(7, "Amor", new FirebaseImage(), 3);
+                        CommonWord amor = new CommonWord(7, "Amor", new FirebaseImage("https://firebasestorage.googleapis.com/v0/b/comtietea.appspot.com/o/images%2Fdefault%2Famor_foto.jpg?alt=media&token=35672da2-cd57-455b-8238-3f7c8d7a5d95", "gs://comtietea.appspot.com/images/default/amor_foto.jpg"), 3);
 
                         res.add(emocion);
                         res.add(tristeza);
