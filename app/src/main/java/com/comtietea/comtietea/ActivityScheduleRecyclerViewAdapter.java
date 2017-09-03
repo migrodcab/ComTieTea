@@ -6,6 +6,7 @@ import android.os.Build;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,6 +55,7 @@ public class ActivityScheduleRecyclerViewAdapter extends RecyclerView.Adapter<Ac
         public ImageView img;
         public RelativeLayout relativeLayout, relativeLayoutHora;
         ActivitySchedule actividad;
+        int id = -10;
 
         public ViewHolder(View v) {
 
@@ -66,11 +68,6 @@ public class ActivityScheduleRecyclerViewAdapter extends RecyclerView.Adapter<Ac
             relativeLayout = (RelativeLayout) v.findViewById(R.id.relativeLayout2);
             relativeLayoutHora = (RelativeLayout) v.findViewById(R.id.relativeLayoutHora);
 
-        }
-
-        public void setData(final ActivitySchedule actividad) {
-            this.actividad = actividad;
-            int id = -10;
             Calendar c = Calendar.getInstance();
             String horaAux = "";
             String fechaAux;
@@ -100,17 +97,24 @@ public class ActivityScheduleRecyclerViewAdapter extends RecyclerView.Adapter<Ac
                 }
 
                 for (ActivitySchedule actSch : actividades) {
-                    if(horaAux.compareTo(actSch.getHora()) >= 0) {
-                        id = actSch.getId();
+                    if (horaAux.compareTo(actSch.getHora()) >= 0) {
+                        this.id = actSch.getId();
                     } else {
                         break;
                     }
                 }
+            }
+
+        }
+
+        public void setData(final ActivitySchedule actividad) {
+            this.actividad = actividad;
+
 
                 if (id == actividad.getId()) {
                     relativeLayoutHora.setBackgroundColor(Color.parseColor("#5EB2FC"));
                 }
-            }
+
 
             FirebaseDatabase.getInstance().getReference(FirebaseReferences.USER_REFERENCE + "/" + uid + "/" +
                     FirebaseReferences.SYMBOLIC_CODE_REFERENCE + "/" + codSimId + "/" + FirebaseReferences.SEMANTIC_FIELD_REFERENCE +
@@ -122,12 +126,6 @@ public class ActivityScheduleRecyclerViewAdapter extends RecyclerView.Adapter<Ac
                     nombre.setText(palabraHabitual.getNombre());
 
                     if(palabraHabitual.getImagen() == null) {
-                        if (nombre.getText().toString().length() > 7) {
-                            //textView.setTextSize(textView.getTextSize()*1.125f);
-                        } else {
-                            //textView.setTextSize(textView.getTextSize()*1.25f);
-                        }
-
                         img.setVisibility(View.GONE);
 
                         RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) nombre.getLayoutParams();
@@ -138,6 +136,12 @@ public class ActivityScheduleRecyclerViewAdapter extends RecyclerView.Adapter<Ac
                         nombre.setLayoutParams(layoutParams);
                     } else {
                         Glide.with(mContext).load(palabraHabitual.getImagen().getImagenURL()).into(img);
+
+                        if (nombre.getText().toString().length() >= 15) {
+                            nombre.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+                        } else if (nombre.getText().toString().length() >= 10) {
+                            nombre.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25);
+                        }
                     }
 
                     relativeLayout.setBackgroundColor(actividad.getColor());

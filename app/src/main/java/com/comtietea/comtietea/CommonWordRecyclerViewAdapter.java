@@ -3,6 +3,7 @@ package com.comtietea.comtietea;
 import android.content.Context;
 import android.os.Build;
 import android.support.v7.widget.RecyclerView;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,10 +58,14 @@ public class CommonWordRecyclerViewAdapter extends RecyclerView.Adapter<CommonWo
             relativeLayout.setBackgroundColor(color);
 
             if(type.equals("Palabras")) {
-                if (textView.getText().toString().length() > 7) {
-                    //textView.setTextSize(textView.getTextSize()*1.125f);
+                if (textView.getText().toString().length() >= 13) {
+                    textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 25);
+                } else if (textView.getText().toString().length() >= 9) {
+                    textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+                } else if (textView.getText().toString().length() >= 5) {
+                    textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30);
                 } else {
-                    //textView.setTextSize(textView.getTextSize()*1.25f);
+                    textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 45);
                 }
 
                 imageView.setVisibility(View.GONE);
@@ -73,6 +78,12 @@ public class CommonWordRecyclerViewAdapter extends RecyclerView.Adapter<CommonWo
                 textView.setLayoutParams(layoutParams);
             } else {
                 Glide.with(mContext).load(palabraHabitual.getImagen().getImagenURL()).into(imageView);
+
+                if (textView.getText().toString().length() >= 13) {
+                    textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
+                } else if (textView.getText().toString().length() >= 10) {
+                    textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+                }
             }
         }
 

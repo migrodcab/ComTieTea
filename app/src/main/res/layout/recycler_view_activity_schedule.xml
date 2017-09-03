@@ -78,6 +78,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
+                android:textSize="35sp"
                 android:shadowColor="@android:color/black"
                 android:shadowDx="1.5"
                 android:shadowDy="1.3"

@@ -29,16 +29,17 @@ public class NotificationClass extends BroadcastReceiver {
         String camSemId = bundle.getString("camSemId");
         String color = bundle.getString("color");
         String palHabId = bundle.getString("palHabId");
+        String hora = bundle.getString("hora");
 
         String url = bundle.getString("url");
         String nombre = bundle.getString("nombre");
         int id = Integer.parseInt(bundle.getString("id"));
 
-        createNotification(context, nombre, url, id , type, uid, codSimId, calObjId, actSchId, fecha, camSemId, color, palHabId);
+        createNotification(context, nombre, url, id , type, uid, codSimId, calObjId, actSchId, fecha, camSemId, color, palHabId, hora);
     }
 
     private void createNotification(final Context context, final String nombre, String url, final int id, String type, String uid,
-                                    String codSimId, String calObjId, String actSchId, String fecha, String camSemId, String color, String palHabId) {
+                                    String codSimId, String calObjId, String actSchId, String fecha, String camSemId, String color, String palHabId, String hora) {
         Intent i = new Intent(context, CommonWordDetailActivity.class);
         i.putExtra("type", type);
         i.putExtra("uid", uid);
@@ -52,6 +53,7 @@ public class NotificationClass extends BroadcastReceiver {
         i.putExtra("actSchId", actSchId);
         i.putExtra("fecha", fecha);
         i.putExtra("alarma", "");
+        i.putExtra("hora", hora);
         final PendingIntent notificIntent = PendingIntent.getActivity(context, id, i, 0);
 
         if(url.equals("")) {

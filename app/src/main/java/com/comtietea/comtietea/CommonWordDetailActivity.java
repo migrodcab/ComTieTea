@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -102,6 +103,15 @@ public class CommonWordDetailActivity extends AppCompatActivity {
                 palabraHabitual = dataSnapshot.getValue(CommonWord.class);
 
                 name.setText(palabraHabitual.getNombre());
+
+                if (name.getText().toString().length() >= 15) {
+                    name.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30);
+                } else if (name.getText().toString().length() >= 10) {
+                    name.setTextSize(TypedValue.COMPLEX_UNIT_SP, 40);
+                } else if (name.getText().toString().length() >= 7) {
+                    name.setTextSize(TypedValue.COMPLEX_UNIT_SP, 50);
+                }
+
                 if (!type.equals("Palabras")) {
                     Glide.with(commonWordDetailActivity).load(palabraHabitual.getImagen().getImagenURL()).into(img);
                 } else {
@@ -122,10 +132,6 @@ public class CommonWordDetailActivity extends AppCompatActivity {
                         }
                     }
                 });
-
-                if (name.getText().toString().length() > 7) {
-                    name.setTextSize(50f);
-                }
             }
 
             @Override

@@ -16,6 +16,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -261,6 +262,14 @@ public class CreateActivityScheduleActivity extends AppCompatActivity {
                     String[] datos = actSch.getNombre().trim().split(" - ");
 
                     text.setText(datos[0]);
+
+                    if (text.getText().toString().length() >= 15) {
+                        text.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30);
+                    } else if (text.getText().toString().length() >= 10) {
+                        text.setTextSize(TypedValue.COMPLEX_UNIT_SP, 40);
+                    } else if (text.getText().toString().length() >= 7) {
+                        text.setTextSize(TypedValue.COMPLEX_UNIT_SP, 50);
+                    }
 
                     if (!tipo.equals("Palabras")) {
                         Glide.with(createActivityScheduleActivity).load(actSch.getUrl()).into(imageView);
@@ -605,6 +614,7 @@ public class CreateActivityScheduleActivity extends AppCompatActivity {
         intent.putExtra("camSemId", "" + activitySchedule.getCamSemId());
         intent.putExtra("color", "" + activitySchedule.getColor());
         intent.putExtra("palHabId", "" + activitySchedule.getPalHabId());
+        intent.putExtra("hora", activitySchedule.getHora());
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, id, intent, PendingIntent.FLAG_CANCEL_CURRENT);
 
