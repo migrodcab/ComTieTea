@@ -1,28 +1,10 @@
 package com.comtietea.comtietea;
 
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.media.Ringtone;
-import android.media.RingtoneManager;
-import android.net.Uri;
 import android.os.Bundle;
-import android.preference.RingtonePreference;
-import android.support.v4.app.NotificationCompat;
-import android.util.Log;
-import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.animation.GlideAnimation;
-import com.bumptech.glide.request.target.SimpleTarget;
-import com.comtietea.comtietea.Domain.FirebaseReferences;
-
-/**
- * Created by HP on 12/08/2017.
- */
 public class AlarmClass extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {

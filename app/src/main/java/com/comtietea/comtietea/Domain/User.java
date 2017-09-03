@@ -2,9 +2,6 @@ package com.comtietea.comtietea.Domain;
 
 import java.util.List;
 
-/**
- * Created by HP on 23/07/2017.
- */
 public class User {
     String nombre;
     String email;

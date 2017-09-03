@@ -1,8 +1,5 @@
 package com.comtietea.comtietea.Domain;
 
-/**
- * Created by HP on 27/07/2017.
- */
 public class FirebaseImage {
     String imagenURL;
     String imagenRuta;

@@ -4,19 +4,14 @@ import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ListView;
 
-import com.comtietea.comtietea.Domain.ActivitySchedule;
 import com.comtietea.comtietea.Domain.CalendarObject;
 import com.comtietea.comtietea.Domain.FirebaseReferences;
-import com.comtietea.comtietea.Domain.SemanticField;
 import com.comtietea.comtietea.Domain.SymbolicCode;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -26,7 +21,6 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.Date;
 
 public class CalendarActivity extends AppCompatActivity implements CalendarObjectRecyclerViewAdapter.ItemListener {
     private String type;

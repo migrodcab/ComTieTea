@@ -8,8 +8,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 
-import com.bumptech.glide.Glide;
-
 public class ActionsActivity extends AppCompatActivity {
     private String type;
     private String uid;
